@@ -1,5 +1,6 @@
 #include "activeNode.h"
 
+
 void ActiveNode::init()
 {
     m_activeNode[0].X = 120;

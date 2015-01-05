@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+class ActiveNode;
+
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
@@ -19,6 +21,12 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
+
+	virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+
+private:
+    cocos2d::CCSprite *pMetric;
+	ActiveNode *pactiveNode;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

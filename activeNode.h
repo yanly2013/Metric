@@ -13,6 +13,8 @@ typedef enum nodeType
 	TWOTWOUPRIGHT,
 	TWOTWOUPLEFT
 }NodeType;
+
+
 class ActiveNode
 {
 public:
@@ -22,6 +24,7 @@ public:
     virtual void moveDown() = 0;
 	virtual void quickDown() = 0;
 	virtual void rotate() = 0;
+
 private:
     NodeType m_activeNodeType;
     T_MetricNode m_activeNode[4];

@@ -27,7 +27,9 @@ bool HelloWorld::init()
     {
         return false;
     }
-    
+    /////////////////
+	setTouchEnabled(true);
+
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
@@ -75,29 +77,43 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
 
-
-
-	this->schedule(schedule_selector(HelloWorld::updateGame));
+	pMetric = CCSprite::create("metric.png");
+    // position the sprite on the center of the screen
+    pMetric->setScale(0.5f);               // 精灵的缩放
+    pMetric->setPosition(ccp(30, 600));
+    // add the sprite as a child to this layer
+    this->addChild(pMetric, 0);
+    pactiveNode = new SquareNode();
+	pactiveNode->init();
+	
+	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
 
     return true;
 }
 
+void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+	CCTouch *touch = (CCTouch *)pTouches->anyObject();
+	CCPoint point = touch->getLocation();
+	CCLog("%.2f,%.2f",point.x,point.y);
+
+	
+	if (point.x < 60.0 && point.y < 60.0)
+	{
+		pMetric->setPosition(ccp(60,600));
+	}
+}
+
 void HelloWorld::updateGame(float f)
 {
-    CCSprite *pMetric = CCSprite::create("metric.png");
-	    // position the sprite on the center of the screen
-	pMetric->setScale(0.5f);               // 精灵的缩放
-    pMetric->setPosition(ccp(30, 600));
-    // add the sprite as a child to this layer
-    this->addChild(pMetric, 0);   
+   
 
-	CCMoveTo *pmove = CCMoveTo::create(10.0f, ccp(30,200));
+	//CCMoveTo *pmove = CCMoveTo::create(10.0f, ccp(30,200));
+	static int i=20;
 
-	ActiveNode *pactiveNode = new SquareNode();
-	pactiveNode->init();
-	pactiveNode->moveLeft();
-
-	pMetric->runAction(pmove);
+	pMetric->setPosition(ccp(30, 600-i));
+	i+=20;
+	//pMetric->runAction(pmove);
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
