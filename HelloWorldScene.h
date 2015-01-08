@@ -18,7 +18,7 @@ public:
     void menuCloseCallback(CCObject* pSender);
 
 	void updateGame(float f);
-    
+    void checkConflid(float f);
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
@@ -26,6 +26,7 @@ public:
 
 private:
     cocos2d::CCSprite *pMetric;
+	cocos2d::CCSprite *pMetric1;
 	ActiveNode *pactiveNode;
 };
 

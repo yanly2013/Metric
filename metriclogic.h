@@ -16,17 +16,14 @@ typedef struct
 	unsigned char number;
 	unsigned char color;
 	unsigned char tools;
+	unsigned char conflidpoint;
 }T_MetricNode;
 
 class MetricLogic
 {
 public:
 	void init();
-	void moveLeft();
-	void moveRight();
-	void moveDown();
-	void quickDown();
-	void rotate();
+    T_MetricNode* getmetricnode();
 
 
 private:

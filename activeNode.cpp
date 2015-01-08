@@ -27,3 +27,9 @@ void ActiveNode::init()
 	m_activeNode[3].color = RED;
 	m_activeNode[3].tools = 0;
 }
+
+T_MetricNode* ActiveNode::getActiveNode()
+{
+	return &m_activeNode[0];
+}
+
