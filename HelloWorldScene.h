@@ -2,9 +2,11 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "metriclogic.h"
 
 class ActiveNode;
-
+class MetricLogic;
+class MetricFactory;
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
@@ -18,16 +20,33 @@ public:
     void menuCloseCallback(CCObject* pSender);
 
 	void updateGame(float f);
-    void checkConflid(float f);
+    bool checkConflid();
+
+	void createNextNode();
+	void ActivenextNode();
+	void destroyActiveNode();
+	void saveActiveNode(T_MetricNode activenode[]);
+	void displayMetric();
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
 	virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-    cocos2d::CCSprite *pMetric;
+    MetricFactory *factory;
+    cocos2d::CCSprite *pMetric0;
 	cocos2d::CCSprite *pMetric1;
+	cocos2d::CCSprite *pMetric2;
+	cocos2d::CCSprite *pMetric3;
+    cocos2d::CCSprite *pnextMetric0;
+	cocos2d::CCSprite *pnextMetric1;
+	cocos2d::CCSprite *pnextMetric2;
+	cocos2d::CCSprite *pnextMetric3;
+
 	ActiveNode *pactiveNode;
+	ActiveNode *pnextactiveNode;
+	T_MetricNode oldactivenode[4];
+	MetricLogic *metriclogic;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

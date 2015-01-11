@@ -6,6 +6,7 @@ class SquareNode:public ActiveNode
 {
 public:
 	void init();
+	void initnext();
     void moveLeft();
     void moveRight();
     void moveDown();
