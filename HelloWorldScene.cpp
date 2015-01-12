@@ -173,7 +173,7 @@ void HelloWorld::ActivenextNode()
 {
 		//pactiveNode = new SquareNode();
 	//MetricFactory *factory = new MetricFactory();
-	pactiveNode = factory->create(SQUARE);
+	pactiveNode = factory->create(THREEONE);
 	pactiveNode->init();
 
 	pMetric0 = CCSprite::create("nodeblue.png"); //改为从next中判断创建正确的精灵

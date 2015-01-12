@@ -1,8 +1,8 @@
-#ifndef __SQUARE_NODE_H__
-#define __SQUARE_NODE_H__
+#ifndef __THREEONE_NODE_H__
+#define __THREEONE_NODE_H__
 
 #include "activeNode.h"
-class SquareNode:public ActiveNode
+class ThreeOneNode:public ActiveNode
 {
 public:
 	void init();
