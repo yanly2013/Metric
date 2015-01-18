@@ -3,9 +3,11 @@
 
 typedef enum color
 {
+	BLUE,
 	RED,
 	YELLOW,
-	PURPLE
+	PURPLE,
+	GREEN
 }NodeColor;
 
 const unsigned short XLogictoPhysic[10] = 
@@ -18,6 +20,17 @@ const unsigned short YLogictoPhysic[24]	=
 	335, 355, 375, 395, 415, 435, 455, 475, 495, 515,
 	535, 555, 575, 595
 };
+
+/*
+const char* SpriteNodeName[5][2] = 
+{
+	"nodeblue.png", "nodeblue.png",
+	"nodered.png", "nodered.png",
+	"nodeyellow.png", "nodeyellow.png",
+	"nodepurple.png", "nodepurple.png",
+	"nodegreen.png", "nodegreen.png"
+};*/
+
 typedef struct 
 {
 	unsigned short X;
@@ -34,6 +47,7 @@ public:
     T_MetricNode* getmetricnode();
 	unsigned char*  getmaxposition();
 	void addnewNode(T_MetricNode a[4]);
+	void dismissLine();
 
 
 private:

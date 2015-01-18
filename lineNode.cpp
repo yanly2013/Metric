@@ -2,26 +2,26 @@
 
 void LineNode::initnext()
 {
-	m_activeNode[0].X = 300;
-	m_activeNode[0].Y = 550;
+	m_activeNode[0].X = 285;
+	m_activeNode[0].Y = 560;
 	m_activeNode[0].number = 2;
 	m_activeNode[0].color = RED;
 	m_activeNode[0].tools = 0;
     
-	m_activeNode[1].X = 320;
-	m_activeNode[1].Y = 550;
+	m_activeNode[1].X = 305;
+	m_activeNode[1].Y = 560;
 	m_activeNode[1].number = 2;
 	m_activeNode[1].color = RED;
 	m_activeNode[1].tools = 0;
    
-	m_activeNode[2].X = 300;
-	m_activeNode[2].Y = 530;
+	m_activeNode[2].X = 325;
+	m_activeNode[2].Y = 560;
 	m_activeNode[2].number = 2;
 	m_activeNode[2].color = RED;
 	m_activeNode[2].tools = 0;
     
-	m_activeNode[3].X = 320;
-	m_activeNode[3].Y = 530;
+	m_activeNode[3].X = 345;
+	m_activeNode[3].Y = 560;
 	m_activeNode[3].number = 2;
 	m_activeNode[3].color = RED;
 	m_activeNode[3].tools = 0;
@@ -57,6 +57,14 @@ void LineNode::init()
 void LineNode::rotate()
 {
 	static int i = 0;
+	int flag = 0;
+	for (int j=0; j< 4; j++)
+	{
+		if (m_activeNode[j].X == 0)
+		{
+			flag = 1;
+		}
+	}
 	switch(i)
 	{
 	case 0:

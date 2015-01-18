@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "metriclogic.h"
+#include "activeNode.h"
 
 class ActiveNode;
 class MetricLogic;
@@ -21,6 +22,7 @@ public:
 
 	void updateGame(float f);
     bool checkConflid();
+	NodeType createNodeType();
 
 	void createNextNode();
 	void ActivenextNode();
@@ -47,6 +49,9 @@ private:
 	ActiveNode *pnextactiveNode;
 	T_MetricNode oldactivenode[4];
 	MetricLogic *metriclogic;
+
+	NodeType m_nexttype;
+	NodeType m_activetype;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

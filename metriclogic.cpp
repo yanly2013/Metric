@@ -66,16 +66,16 @@ void MetricLogic::init()
 	m_metricNode[1][9].Y = 1;
 	m_metricNode[1][9].number = 20;
 
-	m_maxposition[0] = 0;
-	m_maxposition[1] = 0;
-    m_maxposition[2] = 0;
-	m_maxposition[3] = 1;
-	m_maxposition[4] = 1;
-    m_maxposition[5] = 0;
-	m_maxposition[6] = 1;
-	m_maxposition[7] = 0;
-    m_maxposition[8] = 1;
-    m_maxposition[9] = 0;
+	m_maxposition[0] = 1;
+	m_maxposition[1] = 1;
+    m_maxposition[2] = 1;
+	m_maxposition[3] = 2;
+	m_maxposition[4] = 2;
+    m_maxposition[5] = 1;
+	m_maxposition[6] = 2;
+	m_maxposition[7] = 1;
+    m_maxposition[8] = 2;
+    m_maxposition[9] = 1;
 }
 
 T_MetricNode* MetricLogic::getmetricnode()
@@ -100,4 +100,57 @@ void MetricLogic::addnewNode(T_MetricNode a[4])
         m_maxposition[a[i].X] = a[i].Y;
 	}
 	}
+}
+
+void MetricLogic::dismissLine()
+{
+	int linecount = 0;
+	int dismissnum = 0;
+	int dismisscount[10];
+    for (int i = 0; i<23; i++)
+	{
+		linecount = 0;
+		for (int j = 0; j<10; j++)
+		{
+			if (m_metricNode[i][j].number < 10)
+			{
+				linecount++;
+			}
+		}
+		if (linecount == 10)
+		{
+			dismisscount[dismissnum]=i;
+			dismissnum++;
+		}
+	}
+	int delnum = 0;
+	int tempnode[23][10];
+	int tempnum = 0;
+	memset(&tempnode, 0xff, sizeof(tempnode));
+		for (int k= 0; k <23 ; k++)
+		{
+			if (delnum == dismissnum)
+			{
+				break;
+			}
+
+			if (k != dismisscount[delnum])
+			{
+
+			memcpy(&tempnode[tempnum], &m_metricNode[k], sizeof(T_MetricNode)*10);
+			
+			for (int m = 0; m< 10;m++)
+			{
+				m_metricNode[k][m].Y-=1;
+				
+			}
+			delnum++;
+			}
+		}
+		for (int j = 0; j<10; j++)
+		{
+			m_maxposition[j]-=delnum;
+		}
+
+		
 }

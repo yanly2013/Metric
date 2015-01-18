@@ -118,6 +118,7 @@ bool HelloWorld::init()
 void HelloWorld::displayMetric()
 {
 	T_MetricNode *metricNode;
+	metriclogic->dismissLine();
 	metricNode = metriclogic->getmetricnode();
 
 	for (int i = 0; i< 10; i++)
@@ -139,7 +140,9 @@ void HelloWorld::displayMetric()
 void HelloWorld::createNextNode()
 {
 	factory = new MetricFactory();
-    pnextactiveNode = factory->create(SQUARE);
+	NodeType nodetype = createNodeType();
+    m_nexttype = nodetype;
+    pnextactiveNode = factory->create(m_nexttype);
 	pnextactiveNode->initnext();
 	
 	T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
@@ -169,11 +172,54 @@ void HelloWorld::createNextNode()
     this->addChild(pnextMetric3, 0);
 
 }
+NodeType HelloWorld::createNodeType()
+{
+		cc_timeval psv;   
+CCTime::gettimeofdayCocos2d( &psv, NULL );    // 计算时间种子   
+unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000;    // 初始化随机数   
+srand( tsrans ); 
+ int i = CCRANDOM_0_1() * 100;
+
+ if (i >= 0 && i < 5)
+ {
+	 return LINE;
+ }
+ else if (i >= 5 && i< 15)
+ {
+	 return SQUARE;
+ }
+  else if (i >= 15 && i< 35)
+ {
+	 return THREEONE;
+ }
+  else if (i >= 35 && i< 55)
+ {
+	 return ONETHREE;
+ }
+   else if (i >= 55 && i< 75)
+ {
+	 return TWOTWOLEFT;
+ }
+   else if (i >= 75 && i< 95)
+ {
+	 return TWOTWORIGHT;
+ }
+    else if (i >= 95 && i<=100)
+ {
+	 return TTYPE;
+ }
+
+}
 void HelloWorld::ActivenextNode()
 {
 		//pactiveNode = new SquareNode();
 	//MetricFactory *factory = new MetricFactory();
-	pactiveNode = factory->create(THREEONE);
+
+
+   m_activetype = m_nexttype;
+
+	//pactiveNode = factory->create(m_activetype);
+	pactiveNode = factory->create(SQUARE);
 	pactiveNode->init();
 
 	pMetric0 = CCSprite::create("nodeblue.png"); //改为从next中判断创建正确的精灵
@@ -294,9 +340,9 @@ bool HelloWorld::checkConflid()
 	{
 		for (int j = 0; j< 10; j++)
 		{
-			for (int k = toppos[j]+1; k > 0; k--)
+			for (int k = toppos[j]; k > 0; k--)
 			{
-				if (activenode[i].X == tempnode[k][j].X && activenode[i].Y == tempnode[k][j].Y)
+				if ((activenode[i].Y==65535) || (activenode[i].X == tempnode[k][j].X && activenode[i].Y == tempnode[k][j].Y && tempnode[k][j].number < 10))
 				{
 					flag = 1;
 					break;
