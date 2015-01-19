@@ -52,11 +52,12 @@ void LineNode::init()
 	m_activeNode[3].number = 2;
 	m_activeNode[3].color = RED;
 	m_activeNode[3].tools = 0;
+    rotatenum=0;
 }
 
 void LineNode::rotate()
 {
-	static int i = 0;
+
 	int flag = 0;
 	for (int j=0; j< 4; j++)
 	{
@@ -65,7 +66,7 @@ void LineNode::rotate()
 			flag = 1;
 		}
 	}
-	switch(i)
+	switch(rotatenum)
 	{
 	case 0:
 	m_activeNode[0].X+=1;
@@ -74,7 +75,7 @@ void LineNode::rotate()
 	m_activeNode[2].X-=1;
 	m_activeNode[3].X-=2;
 	m_activeNode[3].Y+=1;
-	i=1;
+	rotatenum=1;
 	break;
 	case 1:
 	m_activeNode[0].X+=2;
@@ -83,7 +84,7 @@ void LineNode::rotate()
 	m_activeNode[1].Y+=1;
 	m_activeNode[3].X-=1;
 	m_activeNode[3].Y-=1;
-	i=2;	
+	rotatenum=2;	
 	break;
     case 2:
 	m_activeNode[0].X-=2;
@@ -92,7 +93,7 @@ void LineNode::rotate()
 	m_activeNode[2].Y-=1;
 	m_activeNode[3].X+=1;
 	m_activeNode[3].Y-=2;
-	i=3;	
+	rotatenum=3;	
 	break;
     case 3:
 	m_activeNode[0].X-=1;
@@ -101,7 +102,7 @@ void LineNode::rotate()
 	m_activeNode[2].Y+=1;
 	m_activeNode[3].X+=2;
 	m_activeNode[3].Y+=2;
-	i=0;	
+	rotatenum=0;	
 	break;
 	}
 }

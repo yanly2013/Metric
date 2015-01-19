@@ -52,40 +52,40 @@ void SquareNode::init()
 	m_activeNode[3].number = 2;
 	m_activeNode[3].color = RED;
 	m_activeNode[3].tools = 0;
+	rotatenum=0;
 }
 
 void SquareNode::rotate()
 {
-	static int i = 0;
-	switch(i)
+	switch(rotatenum)
 	{
 	case 0:
 	m_activeNode[0].Y-=1;
 	m_activeNode[1].X-=1;
 	m_activeNode[2].X+=1;
 	m_activeNode[3].Y+=1;
-	i=1;
+	rotatenum=1;
 	break;
 	case 1:
 	m_activeNode[0].X+=1;
 	m_activeNode[1].Y-=1;
 	m_activeNode[2].Y+=1;
 	m_activeNode[3].X-=1;
-	i=2;	
+	rotatenum=2;	
 	break;
     case 2:
 	m_activeNode[0].Y+=1;
 	m_activeNode[1].X+=1;
 	m_activeNode[2].X-=1;
 	m_activeNode[3].Y-=1;
-	i=3;	
+	rotatenum=3;	
 	break;
     case 3:
 	m_activeNode[0].X-=1;
 	m_activeNode[1].Y+=1;
 	m_activeNode[2].Y-=1;
 	m_activeNode[3].X+=1;
-	i=0;	
+	rotatenum=0;	
 	break;
 	}
 }

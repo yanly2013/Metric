@@ -44,7 +44,8 @@ private:
 	cocos2d::CCSprite *pnextMetric1;
 	cocos2d::CCSprite *pnextMetric2;
 	cocos2d::CCSprite *pnextMetric3;
-
+	cocos2d::CCSprite *pNodeSprite[24*10];
+	unsigned int deadSpriteNum;
 	ActiveNode *pactiveNode;
 	ActiveNode *pnextactiveNode;
 	T_MetricNode oldactivenode[4];

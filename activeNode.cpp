@@ -3,6 +3,7 @@
 
 void ActiveNode::init()
 {
+	rotatenum = 0;
     m_activeNode[0].X = 120;
 	m_activeNode[0].Y = 120;
 	m_activeNode[0].number = 2;

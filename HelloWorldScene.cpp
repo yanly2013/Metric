@@ -81,7 +81,7 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-
+		deadSpriteNum = 0;
 	createNextNode();
     ActivenextNode();
     this->removeChild(pnextMetric0);
@@ -90,7 +90,7 @@ bool HelloWorld::init()
     this->removeChild(pnextMetric3);
 	createNextNode();
 	//createNextNode();	
-	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
+	this->schedule(schedule_selector(HelloWorld::updateGame), 0.5f);
 	//this->schedule(schedule_selector(HelloWorld::checkConflid), 0.5f);
 
 	metriclogic = new MetricLogic();
@@ -120,7 +120,13 @@ void HelloWorld::displayMetric()
 	T_MetricNode *metricNode;
 	metriclogic->dismissLine();
 	metricNode = metriclogic->getmetricnode();
+	for (int i = 0; i < deadSpriteNum; i++)
+	{
+		this->removeChild(pNodeSprite[i]);
 
+
+	}
+	deadSpriteNum = 0;
 	for (int i = 0; i< 10; i++)
 	{
 		for (int j = 0; j<24; j++)
@@ -129,6 +135,8 @@ void HelloWorld::displayMetric()
 			if (metricNode->number < 10)
 			{
                 CCSprite *spritenode = CCSprite::create("nodered.png");
+				pNodeSprite[deadSpriteNum] = spritenode;
+				deadSpriteNum++;
 			    spritenode->setScale(0.5f); 
 			    spritenode->setPosition(ccp(XLogictoPhysic[metricNode->X], YLogictoPhysic[metricNode->Y]));
 			    this->addChild(spritenode);
@@ -218,8 +226,8 @@ void HelloWorld::ActivenextNode()
 
    m_activetype = m_nexttype;
 
-	//pactiveNode = factory->create(m_activetype);
-	pactiveNode = factory->create(SQUARE);
+	pactiveNode = factory->create(m_activetype);
+	//pactiveNode = factory->create(SQUARE);
 	pactiveNode->init();
 
 	pMetric0 = CCSprite::create("nodeblue.png"); //改为从next中判断创建正确的精灵
@@ -340,7 +348,7 @@ bool HelloWorld::checkConflid()
 	{
 		for (int j = 0; j< 10; j++)
 		{
-			for (int k = toppos[j]; k > 0; k--)
+			for (int k = toppos[j]-1; k >= 0; k--)
 			{
 				if ((activenode[i].Y==65535) || (activenode[i].X == tempnode[k][j].X && activenode[i].Y == tempnode[k][j].Y && tempnode[k][j].number < 10))
 				{

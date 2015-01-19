@@ -31,6 +31,7 @@ public:
 protected:
     NodeType m_activeNodeType;
     T_MetricNode m_activeNode[4];
+	unsigned char rotatenum;
 };
 
 
