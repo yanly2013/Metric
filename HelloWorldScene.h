@@ -51,6 +51,10 @@ private:
 	T_MetricNode oldactivenode[4];
 	MetricLogic *metriclogic;
 
+	//cocos2d::CCLabelTTF* pLabellevel;
+	//cocos2d::CCLabelTTF* pLabelscore;
+	//cocos2d::CCLabelTTF* pLabelline;
+
 	NodeType m_nexttype;
 	NodeType m_activetype;
 };

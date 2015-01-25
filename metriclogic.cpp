@@ -76,8 +76,23 @@ void MetricLogic::init()
 	m_maxposition[7] = 1;
     m_maxposition[8] = 2;
     m_maxposition[9] = 1;
-}
 
+    m_level = 1;
+	m_score = 0;
+    m_line = 0;
+}
+	unsigned int MetricLogic::getLevel()
+	{
+		return m_level;
+	}
+	unsigned int MetricLogic::getScore()
+	{
+		return m_score;
+	}
+	unsigned int MetricLogic::getLine()
+	{
+	return m_line; 
+	}
 T_MetricNode* MetricLogic::getmetricnode()
 {
 	return &m_metricNode[0][0];
@@ -128,6 +143,8 @@ void MetricLogic::dismissLine()
 		{
 			dismisscount[dismissnum]=i;
 			dismissnum++;
+			m_line++;
+			countscoreandlevel(m_metricNode[i]);
 		}
 		else
 		{
@@ -158,4 +175,16 @@ void MetricLogic::dismissLine()
 		}
 	}
 		
+}
+
+void MetricLogic::countscoreandlevel(T_MetricNode lineNode[])
+{
+	m_score = m_score + 100;
+
+   for (int i = 0; i< 10; i++)
+   {
+	   if (m_score > ScoretoLevel[i])
+		   m_level = i;
+   }
+
 }

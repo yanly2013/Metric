@@ -59,18 +59,27 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
-    
+  /*  
+   CCLabelTTF* pLabellevel = CCLabelTTF::create("Hello World", "Arial", 24);
+   pLablelevel->setPosition(ccp(300, 350));
     // position the label on the center of the screen
-    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - pLabel->getContentSize().height));
-	
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
+    //pLabellevel->setPosition(ccp(origin.x + visibleSize.width/2,
+      //                      origin.y + visibleSize.height - pLabel->getContentSize().height));
 
- 
-    pLabel->setString("change string");//修改文字的方法
+	// add the label as a child to this layer
+    this->addChild(pLabellevel, 1);
+    pLablelevel->setString("Level");//修改文字的方法
+
+      CCLabelTTF * pLabelscore = CCLabelTTF::create("Hello World", "Arial", 24);
+    pLabelscore->setPosition(ccp(300, 300));
+	this->addChild(pLablescore, 1);
+	pLablescore->setString("Score");
+*/
+	  CCLabelTTF * pLabelline = CCLabelTTF::create("Hello World", "Arial", 24);
+    pLabelline->setPosition(ccp(300, 250));
+	this->addChild(pLabelline, 1);
+	pLabelline->setString("Line");
+
 
     // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("bg.png");
@@ -332,6 +341,8 @@ void HelloWorld::updateGame(float f)
 	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 	//i+=20;
 	//pMetric->runAction(pmove);
+
+
 }
 bool HelloWorld::checkConflid()
 {

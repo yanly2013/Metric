@@ -20,6 +20,10 @@ const unsigned short YLogictoPhysic[24]	=
 	335, 355, 375, 395, 415, 435, 455, 475, 495, 515,
 	535, 555, 575, 595
 };
+const unsigned int ScoretoLevel[10] = 
+{
+	1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000
+};
 
 /*
 const char* SpriteNodeName[5][2] = 
@@ -48,11 +52,19 @@ public:
 	unsigned char*  getmaxposition();
 	void addnewNode(T_MetricNode a[4]);
 	void dismissLine();
+	unsigned int getLevel();
+	unsigned int getScore();
+	unsigned int getLine();
 
 
 private:
+	void countscoreandlevel(T_MetricNode lineNode[]);
 	T_MetricNode m_metricNode[24][10];
 	unsigned char m_maxposition[10];
+
+	unsigned int m_level;
+	unsigned int m_score;
+    unsigned int m_line;
 
 
 
