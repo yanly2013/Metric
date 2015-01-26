@@ -33,7 +33,8 @@ const char* SpriteNodeName[5][2] =
 	"nodeyellow.png", "nodeyellow.png",
 	"nodepurple.png", "nodepurple.png",
 	"nodegreen.png", "nodegreen.png"
-};*/
+};
+*/
 
 typedef struct 
 {
@@ -55,10 +56,14 @@ public:
 	unsigned int getLevel();
 	unsigned int getScore();
 	unsigned int getLine();
+	bool isGameover();
+
+	unsigned int* getdismissline();
 
 
 private:
-	void countscoreandlevel(T_MetricNode lineNode[]);
+	void calcdismissScore(int dismisslinenum);
+	void calcNodeScore(T_MetricNode lineNode[]);
 	T_MetricNode m_metricNode[24][10];
 	unsigned char m_maxposition[10];
 
@@ -66,6 +71,7 @@ private:
 	unsigned int m_score;
     unsigned int m_line;
 
+	unsigned int dismisscount[10];
 
 
 

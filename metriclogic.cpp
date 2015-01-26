@@ -3,6 +3,11 @@
 
 void MetricLogic::init()
 {
+
+    m_level = 1;
+	m_score = 0;
+    m_line = 0;
+	
 	memset(&m_metricNode, 0xff, sizeof(m_metricNode));
 	m_metricNode[0][0].X = 0;
 	m_metricNode[0][0].Y = 0;
@@ -18,7 +23,7 @@ void MetricLogic::init()
 	m_metricNode[0][3].number = 3;
 	m_metricNode[0][4].X = 4;
 	m_metricNode[0][4].Y = 0;
-	m_metricNode[0][4].number = 4;
+	m_metricNode[0][4].number = 20;
 	m_metricNode[0][5].X = 5;
 	m_metricNode[0][5].Y = 0;
 	m_metricNode[0][5].number = 5;
@@ -77,22 +82,30 @@ void MetricLogic::init()
     m_maxposition[8] = 2;
     m_maxposition[9] = 1;
 
-    m_level = 1;
-	m_score = 0;
-    m_line = 0;
 }
-	unsigned int MetricLogic::getLevel()
-	{
-		return m_level;
-	}
-	unsigned int MetricLogic::getScore()
-	{
-		return m_score;
-	}
-	unsigned int MetricLogic::getLine()
-	{
+unsigned int MetricLogic::getLevel()
+{
+    return m_level;
+}
+unsigned int MetricLogic::getScore()
+{
+    return m_score;
+}
+unsigned int MetricLogic::getLine()
+{
 	return m_line; 
-	}
+}
+bool MetricLogic::isGameover()
+{
+    for (int i = 0; i < 10; i++)
+    {
+        if (m_maxposition[i] == 23)
+        {
+            return true;
+        }
+    }
+	return false;
+}
 T_MetricNode* MetricLogic::getmetricnode()
 {
 	return &m_metricNode[0][0];
@@ -115,13 +128,22 @@ void MetricLogic::addnewNode(T_MetricNode a[4])
         m_maxposition[a[i].X] = a[i].Y+1;
 	}
 	}
-}
 
+    calcNodeScore(a);
+	
+}
+void MetricLogic::calcNodeScore(T_MetricNode lineNode[])
+{
+	m_score += lineNode[0].number;
+    m_score += lineNode[1].number;
+    m_score += lineNode[2].number;
+    m_score += lineNode[3].number;
+}
 void MetricLogic::dismissLine()
 {
 	int linecount = 0;
 	int dismissnum = 0;
-	int dismisscount[10];
+
 	int templine = 0;
 	T_MetricNode tempnode[24][10];
 	for (int i = 0; i< 10; i++)
@@ -144,8 +166,7 @@ void MetricLogic::dismissLine()
 			dismisscount[dismissnum]=i;
 			dismissnum++;
 			m_line++;
-			countscoreandlevel(m_metricNode[i]);
-		}
+					}
 		else
 		{
 			memcpy(&tempnode[templine], &m_metricNode[i], sizeof(T_MetricNode)*10);
@@ -154,6 +175,8 @@ void MetricLogic::dismissLine()
 	}
 	if (dismissnum > 0)
 	{
+    calcdismissScore(dismissnum);  //必须在memset之前算出来
+	
 	memset(&m_metricNode, 0xff, sizeof(m_metricNode));
 	int dismissidx = 0;
 	for (int i=0;i<24-dismissnum;i++)
@@ -173,18 +196,75 @@ void MetricLogic::dismissLine()
 		{
 			m_maxposition[j]-=dismissnum;
 		}
+
+		calcdismissScore(dismissnum);
+		
 	}
 		
 }
 
-void MetricLogic::countscoreandlevel(T_MetricNode lineNode[])
+void MetricLogic::calcdismissScore(int dismisslinenum)
 {
-	m_score = m_score + 100;
+    int continuenum = 1;
+	int cotinuescore = 0;
+	int samenum = 1;
+	int samescore = 0;
 
+	for (int i = 0; i < dismisslinenum; i++)
+	{
+     int line = dismisscount[i];
+      for (int j = 0; j< 10; j++)
+      {
+          // 正常积分值
+		  m_score += m_metricNode[line][j].number;
+          // 数字连续积分，连续个数*number累计值
+		  if ((j > 0) && (m_metricNode[line][j-1].number+1 == m_metricNode[line][j].number))
+		  {
+		      continuenum++;
+			  cotinuescore += m_metricNode[line][j].number;
+		  }
+		  else
+		  {
+		      if (continuenum >= 4)
+		      {
+		          cotinuescore += m_metricNode[line][j-continuenum].number;
+		          m_score += continuenum* cotinuescore;
+		      }
+		      continuenum = 1;
+			  cotinuescore = 0;
+		  }
+          // 连续相同积分，相同个数*number累计值
+          if ((j > 0) && (m_metricNode[line][j-1].number == m_metricNode[line][j].number))
+		  {
+		      samenum++;
+			  samescore += m_metricNode[line][j].number;
+		  }
+		  else
+		  {
+		      if (samenum >= 4)
+		      {
+		          samescore += m_metricNode[line][j-samenum].number;
+		          m_score += samenum* samescore;
+		      }
+		      samenum = 1;
+			  samescore = 0;
+		  }
+      }
+      // 多行积分
+	  m_score *= dismisslinenum;
+	
+	}
+
+   // 积分转换为等级
    for (int i = 0; i< 10; i++)
    {
 	   if (m_score > ScoretoLevel[i])
 		   m_level = i;
    }
 
+}
+
+unsigned int* MetricLogic::getdismissline()
+{
+	return &dismisscount[0];
 }

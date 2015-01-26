@@ -1,56 +1,56 @@
 #include "ttypeNode.h"
 
-void TTypeNode::initnext()
+void TTypeNode::initnext(NodeColor color)
 {
 	m_activeNode[0].X = 305;
 	m_activeNode[0].Y = 560;
 	m_activeNode[0].number = 2;
-	m_activeNode[0].color = RED;
+	m_activeNode[0].color = color;
 	m_activeNode[0].tools = 0;
     
 	m_activeNode[1].X = 325;
 	m_activeNode[1].Y = 560;
 	m_activeNode[1].number = 2;
-	m_activeNode[1].color = RED;
+	m_activeNode[1].color = color;
 	m_activeNode[1].tools = 0;
    
 	m_activeNode[2].X = 345;
 	m_activeNode[2].Y = 560;
 	m_activeNode[2].number = 2;
-	m_activeNode[2].color = RED;
+	m_activeNode[2].color = color;
 	m_activeNode[2].tools = 0;
     
 	m_activeNode[3].X = 325;
 	m_activeNode[3].Y = 540;
 	m_activeNode[3].number = 2;
-	m_activeNode[3].color = RED;
+	m_activeNode[3].color = color;
 	m_activeNode[3].tools = 0;
 }
 
-void TTypeNode::init()
+void TTypeNode::init(NodeColor color)
 {
 	m_activeNode[0].X = 4;
 	m_activeNode[0].Y = 22;
-	m_activeNode[0].number = 2;
-	m_activeNode[0].color = RED;
+	m_activeNode[0].number = getAnumber();;
+	m_activeNode[0].color = color;
 	m_activeNode[0].tools = 0;
     
 	m_activeNode[1].X = 5;
 	m_activeNode[1].Y = 22;
-	m_activeNode[1].number = 2;
-	m_activeNode[1].color = RED;
+	m_activeNode[1].number = getAnumber();;
+	m_activeNode[1].color = color;
 	m_activeNode[1].tools = 0;
    
 	m_activeNode[2].X = 6;
 	m_activeNode[2].Y = 22;
-	m_activeNode[2].number = 2;
-	m_activeNode[2].color = RED;
+	m_activeNode[2].number = getAnumber();;
+	m_activeNode[2].color = color;
 	m_activeNode[2].tools = 0;
     
 	m_activeNode[3].X = 5;
 	m_activeNode[3].Y = 21;
-	m_activeNode[3].number = 2;
-	m_activeNode[3].color = RED;
+	m_activeNode[3].number = getAnumber();;
+	m_activeNode[3].color = color;
 	m_activeNode[3].tools = 0;
 	rotatenum=0;
 }
@@ -72,6 +72,13 @@ void TTypeNode::rotate()
 	rotatenum=1;
 	break;
 	case 1:
+    if (m_activeNode[0].X == 0)
+	{
+	    m_activeNode[0].X+=1;
+        m_activeNode[1].X+=1;	
+        m_activeNode[2].X+=1;	
+        m_activeNode[3].X+=1;	
+	}
 	m_activeNode[0].X+=1;
 	m_activeNode[0].Y+=1;
 	m_activeNode[1].X;
@@ -94,6 +101,13 @@ void TTypeNode::rotate()
 	rotatenum=3;	
 	break;
     case 3:
+    if (m_activeNode[0].X == 9)
+	{
+	    m_activeNode[0].X-=1;
+        m_activeNode[1].X-=1;	
+        m_activeNode[2].X-=1;	
+        m_activeNode[3].X-=1;	
+	}
 	m_activeNode[0].X-=1;
 	m_activeNode[0].Y-=1;
 	m_activeNode[1].X;

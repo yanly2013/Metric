@@ -5,8 +5,8 @@
 class LineNode:public ActiveNode
 {
 public:
-	void init();
-	void initnext();
+	void init(NodeColor color);
+	void initnext(NodeColor color);
     void rotate();
 };
 

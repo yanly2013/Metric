@@ -1,6 +1,7 @@
 #include "activeNode.h"
-
-
+#include <time.h>
+#include <stdlib.h> 
+/*
 void ActiveNode::init()
 {
 	rotatenum = 0;
@@ -28,6 +29,7 @@ void ActiveNode::init()
 	m_activeNode[3].color = RED;
 	m_activeNode[3].tools = 0;
 }
+*/
 void ActiveNode::moveLeft()
 {	
 	for (int i = 0; i < 4; i++)
@@ -69,5 +71,10 @@ T_MetricNode* ActiveNode::getActiveNode()
 	return &m_activeNode[0];
 }
 
+unsigned char ActiveNode::getAnumber()
+{
+     srand((int)time(0));
+     return rand()%10;
+}
 
 

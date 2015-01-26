@@ -18,13 +18,15 @@ class ActiveNode
 {
 public:
 
-	virtual void init();
-	virtual void initnext() = 0;
+	virtual void init(NodeColor color) = 0;
+	virtual void initnext(NodeColor color) = 0;
+	virtual void rotate() = 0;	
 	virtual void moveLeft();
     virtual void moveRight();
     virtual void moveDown();
-	virtual void rotate() = 0;
+
 	virtual T_MetricNode* getActiveNode();
+	virtual unsigned char getAnumber();
 
 
 

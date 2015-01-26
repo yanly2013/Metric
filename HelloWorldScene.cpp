@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "SettingScene.h"
 #include "activeNode.h"
 #include "squareNode.h"
 #include "MetricFactory.h"
@@ -56,41 +57,49 @@ bool HelloWorld::init()
 
     /////////////////////////////
     // 3. add your codes below...
-
+    cc_timeval psv;   
+    CCTime::gettimeofdayCocos2d( &psv, NULL );    // 计算时间种子   
+    unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000;    // 初始化随机数   
+    srand( tsrans ); 
     // add a label shows "Hello World"
     // create and initialize a label
-  /*  
-   CCLabelTTF* pLabellevel = CCLabelTTF::create("Hello World", "Arial", 24);
-   pLablelevel->setPosition(ccp(300, 350));
+  
+   pLabellevel = CCLabelTTF::create("Hello World", "Arial", 24);
+   pLabelscore = CCLabelTTF::create("Hello World", "Arial", 24);
+   pLabelline = CCLabelTTF::create("Hello World", "Arial", 24);
+	
+   
     // position the label on the center of the screen
     //pLabellevel->setPosition(ccp(origin.x + visibleSize.width/2,
       //                      origin.y + visibleSize.height - pLabel->getContentSize().height));
 
 	// add the label as a child to this layer
+    pLabellevel->setPosition(ccp(300, 350));
     this->addChild(pLabellevel, 1);
-    pLablelevel->setString("Level");//修改文字的方法
+    pLabellevel->setString("1");//修改文字的方法
 
-      CCLabelTTF * pLabelscore = CCLabelTTF::create("Hello World", "Arial", 24);
+
     pLabelscore->setPosition(ccp(300, 300));
-	this->addChild(pLablescore, 1);
-	pLablescore->setString("Score");
-*/
-	  CCLabelTTF * pLabelline = CCLabelTTF::create("Hello World", "Arial", 24);
+	this->addChild(pLabelscore, 1);
+	pLabelscore->setString("0");
+
+
     pLabelline->setPosition(ccp(300, 250));
 	this->addChild(pLabelline, 1);
-	pLabelline->setString("Line");
+	pLabelline->setString("0");
 
 
     // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("bg.png");
-
-    // position the sprite on the center of the screen
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-		deadSpriteNum = 0;
+	
+    deadSpriteNum = 0;
+	level = 0;
+	score = 0;
+	line = 0;
+
 	createNextNode();
     ActivenextNode();
     this->removeChild(pnextMetric0);
@@ -99,11 +108,12 @@ bool HelloWorld::init()
     this->removeChild(pnextMetric3);
 	createNextNode();
 	//createNextNode();	
-	this->schedule(schedule_selector(HelloWorld::updateGame), 0.5f);
-	//this->schedule(schedule_selector(HelloWorld::checkConflid), 0.5f);
+	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
+	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
 
 	metriclogic = new MetricLogic();
 	metriclogic->init();
+	metriclogic->dismissLine();
 	displayMetric();
 
 /*
@@ -120,20 +130,66 @@ bool HelloWorld::init()
 	CCSprite *sp21 = CCSprite::createWithSpriteFrame(frame2);
 	sp21->setPosition(ccp(300,400));
 	batchnode->addChild(sp21);
-	*/
+*/
     return true;
 }
+void HelloWorld::updateGame(float f)
+{
+    saveActiveNode(pactiveNode->getActiveNode());
+	pactiveNode->moveDown();
+	checkConflid();
+	dismissLineShow();
+	
+	
+	//CCMoveTo *pmove = CCMoveTo::create(10.0f, ccp(30,200));
+	//static int i=20;
+	T_MetricNode* activenode = pactiveNode->getActiveNode();
+	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+	
+	activenode++;
+	pMetric1->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 
+	activenode++;
+	pMetric2->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+
+	activenode++;
+	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+	//i+=20;
+	//pMetric->runAction(pmove);
+
+
+}
+
+void  HelloWorld::updateScore(float f)
+{
+   if (level != metriclogic->getLevel())
+   {
+      char a[10];  
+	  sprintf(a, "%d", metriclogic->getLevel());
+      pLabellevel->setString(a);
+      // this->schedule(schedule_selector(HelloWorld::updateGame), 0.1f);
+   }
+   if (score != metriclogic->getScore())
+   {
+	  char b[10];  
+	  sprintf(b, "%d", metriclogic->getScore());
+      pLabelscore->setString(b);
+   }
+   if (line != metriclogic->getLine())
+   {
+	  char c[10];  
+	  sprintf(c, "%d", metriclogic->getLine());
+      pLabelline->setString(c);
+   }
+}
 void HelloWorld::displayMetric()
 {
-	T_MetricNode *metricNode;
-	metriclogic->dismissLine();
+	T_MetricNode *metricNode = NULL;
+	//metriclogic->dismissLine();
 	metricNode = metriclogic->getmetricnode();
 	for (int i = 0; i < deadSpriteNum; i++)
 	{
 		this->removeChild(pNodeSprite[i]);
-
-
 	}
 	deadSpriteNum = 0;
 	for (int i = 0; i< 10; i++)
@@ -156,11 +212,13 @@ void HelloWorld::displayMetric()
 }
 void HelloWorld::createNextNode()
 {
+
 	factory = new MetricFactory();
 	NodeType nodetype = createNodeType();
     m_nexttype = nodetype;
     pnextactiveNode = factory->create(m_nexttype);
-	pnextactiveNode->initnext();
+    m_nodecolor = createNodeColor();
+	pnextactiveNode->initnext(m_nodecolor);
 	
 	T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
 	pnextMetric0 = CCSprite::create("nodegreen.png");
@@ -191,10 +249,7 @@ void HelloWorld::createNextNode()
 }
 NodeType HelloWorld::createNodeType()
 {
-		cc_timeval psv;   
-CCTime::gettimeofdayCocos2d( &psv, NULL );    // 计算时间种子   
-unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000;    // 初始化随机数   
-srand( tsrans ); 
+
  int i = CCRANDOM_0_1() * 100;
 
  if (i >= 0 && i < 5)
@@ -227,6 +282,31 @@ srand( tsrans );
  }
 
 }
+NodeColor HelloWorld::createNodeColor()
+{
+    int i = CCRANDOM_0_1() * 100;
+
+    if (i >= 0 && i < 20)
+    {
+	     return RED;
+    }
+ else if (i >= 20 && i< 40)
+ {
+	 return BLUE;
+ }
+  else if (i >= 40 && i< 60)
+ {
+	 return YELLOW;
+ }
+  else if (i >= 60 && i< 80)
+ {
+	 return PURPLE;
+ }
+   else if (i >= 80 && i<= 100)
+ {
+	 return GREEN;
+ }
+}
 void HelloWorld::ActivenextNode()
 {
 		//pactiveNode = new SquareNode();
@@ -236,8 +316,8 @@ void HelloWorld::ActivenextNode()
    m_activetype = m_nexttype;
 
 	pactiveNode = factory->create(m_activetype);
-	//pactiveNode = factory->create(SQUARE);
-	pactiveNode->init();
+	//pactiveNode = factory->create(TWOTWORIGHT);
+	pactiveNode->init(m_nodecolor);
 
 	pMetric0 = CCSprite::create("nodeblue.png"); //改为从next中判断创建正确的精灵
     // position the sprite on the center of the screen
@@ -304,6 +384,11 @@ void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEve
 	else if (point.x < 360.0 && point.y < 90.0)
 	{
 		pactiveNode->moveDown();
+		
+		CCScene *pScene = Setting::scene();
+		CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+		CCDirector::sharedDirector()->replaceScene(reScene); 
+
 	}
 	else if (point.x > 270.0 && point.x < 360.0 && point.y < 180.0 && point.y > 90.0)
 	{
@@ -321,29 +406,7 @@ void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEve
 	checkConflid();
 }
 
-void HelloWorld::updateGame(float f)
-{
-    saveActiveNode(pactiveNode->getActiveNode());
-	pactiveNode->moveDown();
-	checkConflid();
-	//CCMoveTo *pmove = CCMoveTo::create(10.0f, ccp(30,200));
-	//static int i=20;
-	T_MetricNode* activenode = pactiveNode->getActiveNode();
-	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-	
-	activenode++;
-	pMetric1->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 
-	activenode++;
-	pMetric2->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-
-	activenode++;
-	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-	//i+=20;
-	//pMetric->runAction(pmove);
-
-
-}
 bool HelloWorld::checkConflid()
 {
 	CCLog("123456");
@@ -382,6 +445,12 @@ bool HelloWorld::checkConflid()
 	if (flag ==1)
 	{
 		metriclogic->addnewNode(oldactivenode);
+		metriclogic->dismissLine();
+		if (metriclogic->isGameover())
+		{
+		    gameOverShow();
+		    return true;
+		}
         displayMetric();
 		destroyActiveNode();
 	    ActivenextNode();
@@ -392,6 +461,21 @@ bool HelloWorld::checkConflid()
 	{
 		return false;
 	}
+}
+
+void HelloWorld::dismissLineShow()
+{
+    unsigned int *line = metriclogic->getdismissline();
+	while (*line < 30)
+	{
+	    line++;
+	};
+}
+void HelloWorld::gameOverShow()
+{
+		CCScene *pScene = Setting::scene();
+		CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+		CCDirector::sharedDirector()->replaceScene(reScene); 
 }
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {

@@ -12,17 +12,11 @@ ActiveNode* MetricFactory::create(NodeType nodetype)
 	switch (nodetype)
 	{
 	case SQUARE:
-	{
 		return new SquareNode();
-	}
 	case LINE:
-	{
 		return new LineNode();
-	}
 	case ONETHREE:
-	{
 		return new OneThreeNode();
-	}
 	case THREEONE:
 		return new ThreeOneNode();
 	case TWOTWOLEFT:
@@ -32,14 +26,4 @@ ActiveNode* MetricFactory::create(NodeType nodetype)
 	case TTYPE:
 		return new TTypeNode();
 	}
-
-/*	{
-	SQUARE,
-	LINE,
-    THREEONE,
-	ONETHREE,
-	TWOTWOLEFT,
-	TWOTWORIGHT,
-	TTYPE
-}NodeType;*/
 }

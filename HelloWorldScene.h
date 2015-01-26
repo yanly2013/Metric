@@ -20,21 +20,29 @@ public:
     // a selector callback
     void menuCloseCallback(CCObject* pSender);
 
-	void updateGame(float f);
-    bool checkConflid();
-	NodeType createNodeType();
 
-	void createNextNode();
-	void ActivenextNode();
-	void destroyActiveNode();
-	void saveActiveNode(T_MetricNode activenode[]);
-	void displayMetric();
+
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
 	virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
+	void updateGame(float f);
+	void updateScore(float f);
+    bool checkConflid();
+	NodeType createNodeType();
+	NodeColor createNodeColor();
+
+	void createNextNode();
+	void ActivenextNode();
+	void destroyActiveNode();
+	void saveActiveNode(T_MetricNode activenode[]);
+	void displayMetric();
+
+	void dismissLineShow();
+	void gameOverShow();
+	
     MetricFactory *factory;
     cocos2d::CCSprite *pMetric0;
 	cocos2d::CCSprite *pMetric1;
@@ -51,12 +59,17 @@ private:
 	T_MetricNode oldactivenode[4];
 	MetricLogic *metriclogic;
 
-	//cocos2d::CCLabelTTF* pLabellevel;
-	//cocos2d::CCLabelTTF* pLabelscore;
-	//cocos2d::CCLabelTTF* pLabelline;
+	cocos2d::CCLabelTTF* pLabellevel;
+	cocos2d::CCLabelTTF* pLabelscore;
+	cocos2d::CCLabelTTF* pLabelline;
 
 	NodeType m_nexttype;
+	NodeColor m_nodecolor;
 	NodeType m_activetype;
+
+    unsigned int level;
+	unsigned int score;
+    unsigned int line;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
