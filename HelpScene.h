@@ -1,10 +1,10 @@
-#ifndef __SETTING_SCENE_H__
-#define __SETTING_SCENE_H__
+#ifndef __HELP_SCENE_H__
+#define __HELP_SCENE_H__
 
 #include "cocos2d.h"
 
 
-class Setting : public cocos2d::CCLayer
+class Help : public cocos2d::CCLayer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -19,14 +19,13 @@ public:
 
 
     // implement the "static node()" method manually
-    CREATE_FUNC(Setting);
+    CREATE_FUNC(Help);
 
 	//virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-    bool isMusic;
-	bool isSound;
-	bool isVibrate;
+	
+
 
 };
 

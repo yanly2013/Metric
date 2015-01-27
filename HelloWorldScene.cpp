@@ -4,6 +4,7 @@
 #include "squareNode.h"
 #include "MetricFactory.h"
 #include "metriclogic.h"
+#include "persistent.h"
 USING_NS_CC;
 
 CCScene* HelloWorld::scene()
@@ -402,6 +403,10 @@ void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEve
 			saveActiveNode(pactiveNode->getActiveNode());
 		};
 	}
+	else if (0)
+	{
+	    Pause();
+	}
 
 	checkConflid();
 }
@@ -409,7 +414,7 @@ void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEve
 
 bool HelloWorld::checkConflid()
 {
-	CCLog("123456");
+	//CCLog("123456");
 	static int i = 10;
 	i++;
     T_MetricNode* activenode = pactiveNode->getActiveNode();
@@ -462,7 +467,12 @@ bool HelloWorld::checkConflid()
 		return false;
 	}
 }
-
+void HelloWorld::Pause()
+{
+    // 弹出一个层?
+    // 调用Persistent 处理
+    //Persistent *PersistentInst = Persistent::getInstant();
+}
 void HelloWorld::dismissLineShow()
 {
     unsigned int *line = metriclogic->getdismissline();

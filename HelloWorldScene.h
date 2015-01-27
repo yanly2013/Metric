@@ -39,6 +39,7 @@ private:
 	void destroyActiveNode();
 	void saveActiveNode(T_MetricNode activenode[]);
 	void displayMetric();
+	void Pause();
 
 	void dismissLineShow();
 	void gameOverShow();
