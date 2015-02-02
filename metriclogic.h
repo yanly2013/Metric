@@ -1,6 +1,7 @@
 #ifndef __METRIC_LOGIC_H__
 #define __METRIC_LOGIC_H__
 
+#include <string>
 typedef enum color
 {
 	BLUE,
@@ -25,8 +26,8 @@ const unsigned int ScoretoLevel[10] =
 	1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000
 };
 
-/*
-const char* SpriteNodeName[5][2] = 
+
+std::string SpriteNodeName[5][2] = 
 {
 	"nodeblue.png", "nodeblue.png",
 	"nodered.png", "nodered.png",
@@ -34,7 +35,7 @@ const char* SpriteNodeName[5][2] =
 	"nodepurple.png", "nodepurple.png",
 	"nodegreen.png", "nodegreen.png"
 };
-*/
+
 
 typedef struct 
 {

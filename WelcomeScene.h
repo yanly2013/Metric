@@ -19,9 +19,9 @@ public:
 	//virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-	
-
-
+	void updateGame(float f);
+	cocos2d::CCSprite* pnode;
+	int rotatenum;
 };
 
 #endif

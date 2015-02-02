@@ -95,7 +95,37 @@ bool HelloWorld::init()
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
-	
+
+    // add "HelloWorld" splash screen"
+    CCSprite* pLeft = CCSprite::create("leftarrow.png");
+	pLeft->setScale(0.5f);               // 精灵的缩放
+    pLeft->setPosition(ccp(45,45));
+    this->addChild(pLeft, 0);
+    // add "HelloWorld" splash screen"
+    CCSprite* pRight = CCSprite::create("rightarrow.png");
+	pRight->setScale(0.5f);               // 精灵的缩放
+    pRight->setPosition(ccp(135,45));
+    this->addChild(pRight, 0);
+    // add "HelloWorld" splash screen"
+    CCSprite* pRotate = CCSprite::create("rotate.png");
+	pRotate->setScale(0.5f);               // 精灵的缩放
+    pRotate->setPosition(ccp(225,45));
+    this->addChild(pRotate, 0);
+    // add "HelloWorld" splash screen"
+    CCSprite* pDown = CCSprite::create("rotate.png");
+	pDown->setScale(0.5f);               // 精灵的缩放
+    pDown->setPosition(ccp(315,45));
+    this->addChild(pDown, 0);
+    // add "HelloWorld" splash screen"
+    CCSprite* pQuickdown = CCSprite::create("quickdown.png");
+	pQuickdown->setScale(0.5f);               // 精灵的缩放
+    pQuickdown->setPosition(ccp(315,135));
+    this->addChild(pQuickdown, 0);
+    // add "HelloWorld" splash screen"
+    CCSprite* pPause = CCSprite::create("pause.png");
+	pPause->setScale(0.3f);               // 精灵的缩放
+    pPause->setPosition(ccp(315,600));
+    this->addChild(pPause, 0);
     deadSpriteNum = 0;
 	level = 0;
 	score = 0;
@@ -200,7 +230,7 @@ void HelloWorld::displayMetric()
 
 			if (metricNode->number < 10)
 			{
-                CCSprite *spritenode = CCSprite::create("nodered.png");
+                CCSprite *spritenode = CCSprite::create("rednode.png");
 				pNodeSprite[deadSpriteNum] = spritenode;
 				deadSpriteNum++;
 			    spritenode->setScale(0.5f); 
@@ -222,25 +252,25 @@ void HelloWorld::createNextNode()
 	pnextactiveNode->initnext(m_nodecolor);
 	
 	T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
-	pnextMetric0 = CCSprite::create("nodegreen.png");
+	pnextMetric0 = CCSprite::create("greennode.png");
     // position the sprite on the center of the screen
     pnextMetric0->setScale(0.5f);               // 精灵的缩放
 	pnextMetric0->setPosition(ccp(nextactivenode[0].X, nextactivenode[0].Y));
     // add the sprite as a child to this layer
     this->addChild(pnextMetric0, 0);
-    pnextMetric1 = CCSprite::create("nodeyellow.png");
+    pnextMetric1 = CCSprite::create("yellownode.png");
     // position the sprite on the center of the screen
     pnextMetric1->setScale(0.5f);               // 精灵的缩放
 	pnextMetric1->setPosition(ccp(nextactivenode[1].X, nextactivenode[1].Y));
     // add the sprite as a child to this layer
     this->addChild(pnextMetric1, 0);
-    pnextMetric2 = CCSprite::create("nodeyellow.png");
+    pnextMetric2 = CCSprite::create("yellownode.png");
     // position the sprite on the center of the screen
     pnextMetric2->setScale(0.5f);               // 精灵的缩放
 	pnextMetric2->setPosition(ccp(nextactivenode[2].X, nextactivenode[2].Y));
     // add the sprite as a child to this layer
     this->addChild(pnextMetric2, 0);
-    pnextMetric3 = CCSprite::create("nodepurple.png");
+    pnextMetric3 = CCSprite::create("purplenode.png");
     // position the sprite on the center of the screen
     pnextMetric3->setScale(0.5f);               // 精灵的缩放
 	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
@@ -320,24 +350,24 @@ void HelloWorld::ActivenextNode()
 	//pactiveNode = factory->create(TWOTWORIGHT);
 	pactiveNode->init(m_nodecolor);
 
-	pMetric0 = CCSprite::create("nodeblue.png"); //改为从next中判断创建正确的精灵
+	pMetric0 = CCSprite::create("bluenode.png"); //改为从next中判断创建正确的精灵
     // position the sprite on the center of the screen
     pMetric0->setScale(0.5f);               // 精灵的缩放
     //pMetric->setPosition(ccp(30, 600));
     // add the sprite as a child to this layer
     this->addChild(pMetric0, 0);
-	pMetric1 = CCSprite::create("nodegreen.png");
+	pMetric1 = CCSprite::create("greennode.png");
     // position the sprite on the center of the screen
     pMetric1->setScale(0.5f);               // 精灵的缩放
     //pMetric1->setPosition(ccp(30, 610));
     this->addChild(pMetric1, 0);
-    pMetric2 = CCSprite::create("nodeyellow.png");
+    pMetric2 = CCSprite::create("yellownode.png");
     // position the sprite on the center of the screen
     pMetric2->setScale(0.5f);               // 精灵的缩放
     //pMetric->setPosition(ccp(30, 600));
     // add the sprite as a child to this layer
     this->addChild(pMetric2, 0);
-	pMetric3 = CCSprite::create("nodepurple.png");
+	pMetric3 = CCSprite::create("purplenode.png");
     // position the sprite on the center of the screen
     pMetric3->setScale(0.5f);               // 精灵的缩放
     //pMetric1->setPosition(ccp(30, 610));
