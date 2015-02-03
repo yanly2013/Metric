@@ -27,13 +27,13 @@ const unsigned int ScoretoLevel[10] =
 };
 
 
-std::string SpriteNodeName[5][2] = 
+const char* const SpriteNodeName[5][11] = 
 {
-	"nodeblue.png", "nodeblue.png",
-	"nodered.png", "nodered.png",
-	"nodeyellow.png", "nodeyellow.png",
-	"nodepurple.png", "nodepurple.png",
-	"nodegreen.png", "nodegreen.png"
+	"blue0node.png","blue1node.png", "blue2node.png","blue3node.png", "blue4node.png","blue5node.png", "blue6node.png","blue7node.png", "blue8node.png", "blue9node.png","bluenode.png", 
+	"red0node.png", "red1node.png","red2node.png", "red3node.png","red4node.png", "red5node.png","red6node.png", "red7node.png","red8node.png", "red9node.png","rednode.png",
+	"yellow0node.png", "yellow1node.png","yellow2node.png", "yellow3node.png","yellow4node.png", "yellow5node.png","yellow6node.png", "yellow7node.png","yellow8node.png", "yellow9node.png","yellownode.png", 
+	"purple0node.png", "purple1node.png","purple2node.png", "purple3node.png","purple4node.png", "purple5node.png","purple6node.png", "purple7node.png","purple8node.png", "purple9node.png","purplenode.png",
+	"green0node.png", "green1node.png","green2node.png", "green3node.png","green4node.png", "green5node.png","green6node.png", "green7node.png","green8node.png", "green9node.png","greennode.png"
 };
 
 
