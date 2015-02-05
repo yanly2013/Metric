@@ -68,6 +68,8 @@ private:
 	NodeColor m_nodecolor;
 	NodeType m_activetype;
 
+	bool pauseflg;
+
     unsigned int level;
 	unsigned int score;
     unsigned int line;

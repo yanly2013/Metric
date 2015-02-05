@@ -102,14 +102,37 @@ bool HelloWorld::init()
                                     this,  
                                     menu_selector(HelloWorld::menuButtonCallback));  
     pleftarrowItem->setPosition(ccp(0,0));
+	pleftarrowItem->setTag(1);
     CCMenuItemImage *prightarrowItem = CCMenuItemImage::create(  
                                   "rightarrow.png", //png.jpg等图片格式都是可以的  
                                   "rightarrowlight.png",  
                                     this,  
                                     menu_selector(HelloWorld::menuButtonCallback));  	
-    pleftarrowItem->setPosition(ccp(135,0));
-	CCMenu* pButtonMenu = CCMenu::create(pleftarrowItem, prightarrowItem, NULL);
-	pButtonMenu->setPosition(ccp(0,0));
+    prightarrowItem->setPosition(ccp(180,0));
+	prightarrowItem->setTag(2);
+    CCMenuItemImage *protateItem = CCMenuItemImage::create(  
+                                  "rotate.png", //png.jpg等图片格式都是可以的  
+                                  "rotatelight.png",  
+                                    this,  
+                                    menu_selector(HelloWorld::menuButtonCallback));  	
+    protateItem->setPosition(ccp(360,0));
+	protateItem->setTag(3);
+    CCMenuItemImage *pdownItem = CCMenuItemImage::create(  
+                                  "downarrow.png", //png.jpg等图片格式都是可以的  
+                                  "downarrowlight.png",  
+                                    this,  
+                                    menu_selector(HelloWorld::menuButtonCallback));  	
+    pdownItem->setPosition(ccp(540,0));
+	pdownItem->setTag(4);
+    CCMenuItemImage *pquickdownItem = CCMenuItemImage::create(  
+                                  "quickdown.png", //png.jpg等图片格式都是可以的  
+                                  "quickdownlight.png",  
+                                    this,  
+                                    menu_selector(HelloWorld::menuButtonCallback));  	
+    pquickdownItem->setPosition(ccp(540,180));
+	pquickdownItem->setTag(5);
+	CCMenu* pButtonMenu = CCMenu::create(pleftarrowItem, prightarrowItem, protateItem, pdownItem, pquickdownItem, NULL);
+	pButtonMenu->setPosition(ccp(-45,-90));
 	pButtonMenu->setScale(0.5f);
 	this->addChild(pButtonMenu, 1);
 
@@ -119,30 +142,30 @@ bool HelloWorld::init()
     //pLeft->setPosition(ccp(45,45));
     //this->addChild(pLeft, 0);
     // add "HelloWorld" splash screen"
-    CCSprite* pRight = CCSprite::create("rightarrow.png");
-	pRight->setScale(0.5f);               // 精灵的缩放
-    pRight->setPosition(ccp(135,45));
-    this->addChild(pRight, 0);
+    //CCSprite* pRight = CCSprite::create("rightarrow.png");
+	//pRight->setScale(0.5f);               // 精灵的缩放
+    //pRight->setPosition(ccp(135,45));
+    //this->addChild(pRight, 0);
     // add "HelloWorld" splash screen"
-    CCSprite* pRotate = CCSprite::create("rotate.png");
-	pRotate->setScale(0.5f);               // 精灵的缩放
-    pRotate->setPosition(ccp(225,45));
-    this->addChild(pRotate, 0);
+    //CCSprite* pRotate = CCSprite::create("rotate.png");
+	//pRotate->setScale(0.5f);               // 精灵的缩放
+   // pRotate->setPosition(ccp(225,45));
+    //this->addChild(pRotate, 0);
     // add "HelloWorld" splash screen"
-    CCSprite* pDown = CCSprite::create("rotate.png");
-	pDown->setScale(0.5f);               // 精灵的缩放
-    pDown->setPosition(ccp(315,45));
-    this->addChild(pDown, 0);
+    //CCSprite* pDown = CCSprite::create("rotate.png");
+	//pDown->setScale(0.5f);               // 精灵的缩放
+   // pDown->setPosition(ccp(315,45));
+    //this->addChild(pDown, 0);
     // add "HelloWorld" splash screen"
-    CCSprite* pQuickdown = CCSprite::create("quickdown.png");
-	pQuickdown->setScale(0.5f);               // 精灵的缩放
-    pQuickdown->setPosition(ccp(315,135));
-    this->addChild(pQuickdown, 0);
+    //CCSprite* pQuickdown = CCSprite::create("quickdown.png");
+	//pQuickdown->setScale(0.5f);               // 精灵的缩放
+    //pQuickdown->setPosition(ccp(315,135));
+    //this->addChild(pQuickdown, 0);
     // add "HelloWorld" splash screen"
-    CCSprite* pPause = CCSprite::create("pause.png");
-	pPause->setScale(0.3f);               // 精灵的缩放
-    pPause->setPosition(ccp(315,600));
-    this->addChild(pPause, 0);
+   // CCSprite* pPause = CCSprite::create("pause.png");
+	//pPause->setScale(0.3f);               // 精灵的缩放
+   /// pPause->setPosition(ccp(315,600));
+   // this->addChild(pPause, 0);
 
     CCMenuItemImage *ppauseItem = CCMenuItemImage::create(  
                                   "pause.png", //png.jpg等图片格式都是可以的  
@@ -150,10 +173,9 @@ bool HelloWorld::init()
     CCMenuItemImage *presumeItem = CCMenuItemImage::create(  
                                   "resume.png", //png.jpg等图片格式都是可以的  
                                   "resume.png"); 
-
     CCMenuItemToggle *toggle = CCMenuItemToggle::createWithTarget(this, menu_selector(HelloWorld::menuPauseCallback),ppauseItem, presumeItem, NULL);
     CCMenu* pPauseMenu = CCMenu::create(toggle, NULL);
-	pPauseMenu->setPosition(ccp(300,400));
+	pPauseMenu->setPosition(ccp(250,400));
 	pPauseMenu->setScale(0.5f);
 	this->addChild(pPauseMenu, 1);
 
@@ -161,6 +183,7 @@ bool HelloWorld::init()
 	level = 0;
 	score = 0;
 	line = 0;
+	pauseflg = false;
 
 	createNextNode();
     ActivenextNode();
@@ -197,9 +220,58 @@ bool HelloWorld::init()
 }
 void HelloWorld::menuButtonCallback(CCObject* pSender)
 {
+	saveActiveNode(pactiveNode->getActiveNode());
+
+	CCMenuItemImage* item = (CCMenuItemImage*)pSender;
+	switch (item->getTag())
+	{
+	case 1:
+		pactiveNode->moveLeft();
+		break;
+	case 2:
+		pactiveNode->moveRight();
+		break;
+	case 3:
+		pactiveNode->rotate();
+        break;
+	case 4:
+		pactiveNode->moveDown();
+        break;
+	case 5:
+		while (1)
+		{
+			pactiveNode->moveDown();
+			if (checkConflid())
+			{
+				return;
+			}
+			saveActiveNode(pactiveNode->getActiveNode());
+		};
+		break;
+	}
+	checkConflid();
 }
 void HelloWorld::menuPauseCallback(CCObject* pSender)
 {
+		CCMenuItemImage* item = (CCMenuItemImage*)pSender;
+		if (!pauseflg)
+		{
+		  CCDirector::sharedDirector()->pause();
+		  pauseflg = true;
+		}
+		else
+		{
+          CCDirector::sharedDirector()->resume();
+		  pauseflg = false;
+		}
+		//if (tag == 1)
+		//{
+		//	CCDirector::sharedDirector()->pause();
+		//}
+		//else
+		//{
+		//	CCDirector::sharedDirector()->resume();
+		//}
 }
 void HelloWorld::updateGame(float f)
 {
@@ -348,6 +420,8 @@ NodeType HelloWorld::createNodeType()
  {
 	 return TTYPE;
  }
+	else
+	{return LINE;}
 
 }
 NodeColor HelloWorld::createNodeColor()
@@ -374,6 +448,10 @@ NodeColor HelloWorld::createNodeColor()
  {
 	 return GREEN;
  }
+   else
+   {
+	   return RED;
+   }
 }
 void HelloWorld::ActivenextNode()
 {
