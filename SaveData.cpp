@@ -7,7 +7,7 @@ SaveData* SaveData::getInstant()
 {
     if (m_SaveDataInst == 0)
     {
-        //m_SaveDataInst = new SaveData();
+        m_SaveDataInst = new SaveData();
     }
 	return m_SaveDataInst;
 }

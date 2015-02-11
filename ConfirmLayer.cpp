@@ -1,5 +1,5 @@
 #include "ConfirmLayer.h"
-
+#include "StartScene.h"
 USING_NS_CC;
 
 // on "init" you need to initialize your instance
@@ -57,7 +57,10 @@ void ConfirmLayer::menuconfirmCallback(CCObject* pSender)
 		
 		break;
 	case 2:
-        
+            CCScene *pScene = Start::scene();
+
+    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
 	}
 }
@@ -71,4 +74,8 @@ bool ConfirmLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 {
     m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
     return true; 
+}
+void  ConfirmLayer::registerWithTouchDispatcher(void)
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -128, true);
 }

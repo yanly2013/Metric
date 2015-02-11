@@ -32,21 +32,25 @@ bool Rating::init()
 
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
+    CCSprite* pSprite = CCSprite::create("ratting.png");
+	pSprite->setScale(0.5f);               // ¾«ÁéµÄËõ·Å
+    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    this->addChild(pSprite, 0);
     for (int i = 0; i< 5; i++)
     {
         CCSprite *item = CCSprite::create("item.png");
-		item->setPosition(ccp(0, 100*i));
+		item->setPosition(ccp(100, 100*i));
+		item->setScale(0.5f);
 		this->addChild(item,1);
         char a[10];  
 	    sprintf(a, "%d", i+1);
         CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 14, 21, '0');
-		ratingnum->setPosition(ccp(0, 100 * i));
+		ratingnum->setPosition(ccp(100, 100 * i));
 		this->addChild(ratingnum,2);
 		sprintf(a, "name:%d", i);
         CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 24);
         name->setPosition(ccp(200, 100 * i));
-		this->addChild(ratingnum,2);
+		this->addChild(name,2);
 		
     }
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  

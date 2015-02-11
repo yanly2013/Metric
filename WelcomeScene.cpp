@@ -79,7 +79,7 @@ void  Welcome::updateGame(float f)
 		break;
 	}
     rotatecnt++;
-	if (rotatecnt == 12)
+	if (rotatecnt == 4)
 	{
         CCScene *pScene = Start::scene();
 	    CCDirector::sharedDirector()->replaceScene(pScene); 

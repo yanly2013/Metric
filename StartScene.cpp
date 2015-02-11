@@ -46,14 +46,14 @@ bool Start::init()
                                         "startgame.png",
                                         this,
                                         menu_selector(Start::menuStartCallback));
-	pstartItem->setPosition(ccp(0,0));
+	pstartItem->setPosition(ccp(0,200));
 	pstartItem->setTag(1);
     CCMenuItemImage *pexitItem = CCMenuItemImage::create(
                                         "exitgame.png",
                                         "exitgame.png",
                                         this,
                                         menu_selector(Start::menuStartCallback));
-	pexitItem->setPosition(ccp(0,100));	
+	pexitItem->setPosition(ccp(0,0));	
 	pexitItem->setTag(2);
 	/*
     // add a "close" icon to exit the progress. it's an autorelease object
@@ -77,7 +77,8 @@ bool Start::init()
     */
     // create menu, it's an autorelease object
     CCMenu* pStartMenu = CCMenu::create(pstartItem, pexitItem, NULL);
-    pStartMenu->setPosition(CCPointZero);
+    pStartMenu->setPosition(ccp(150,300));
+	pStartMenu->setScale(0.5f);
     this->addChild(pStartMenu, 1);
 
 	
@@ -96,7 +97,7 @@ bool Start::init()
                                         "ratingbtn.png",
                                         this,
                                         menu_selector(Start::menuSettingCallback));
-	pRatingItem->setPosition(ccp(100,0));
+	pRatingItem->setPosition(ccp(200,0));
     pRatingItem->setTag(2);
     CCMenuItemImage *pHelpItem = CCMenuItemImage::create(
                                         "helpbtn.png",
@@ -104,11 +105,12 @@ bool Start::init()
                                         this,
                                         menu_selector(Start::menuSettingCallback));
     
-	pHelpItem->setPosition(ccp(200,0));
+	pHelpItem->setPosition(ccp(400,0));
     pHelpItem->setTag(3);
     // create menu, it's an autorelease object
     CCMenu* pSettingMenu = CCMenu::create(pSettingItem, pRatingItem, pHelpItem, NULL);
     pSettingMenu->setPosition(ccp(0,0));
+	pSettingMenu->setScale(0.5f);
     this->addChild(pSettingMenu, 1);
  
     return true;
