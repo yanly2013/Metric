@@ -45,6 +45,7 @@ private:
 	void gameOverShow();
 	
     MetricFactory *factory;
+	cocos2d::CCSpriteBatchNode * batchnode;
     cocos2d::CCSprite *pMetric0;
 	cocos2d::CCSprite *pMetric1;
 	cocos2d::CCSprite *pMetric2;
@@ -60,9 +61,9 @@ private:
 	T_MetricNode oldactivenode[4];
 	MetricLogic *metriclogic;
 
-	cocos2d::CCLabelTTF* pLabellevel;
-	cocos2d::CCLabelTTF* pLabelscore;
-	cocos2d::CCLabelTTF* pLabelline;
+	cocos2d::CCLabelAtlas* pLabellevel;
+	cocos2d::CCLabelAtlas* pLabelscore;
+	cocos2d::CCLabelAtlas* pLabelline;
 
 	NodeType m_nexttype;
 	NodeColor m_nodecolor;

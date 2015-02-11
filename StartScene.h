@@ -14,8 +14,8 @@ public:
     static cocos2d::CCScene* scene();
     
     // a selector callback
-    void menuCloseCallback(CCObject* pSender);
-
+    void menuStartCallback(CCObject* pSender);
+    void menuSettingCallback(CCObject* pSender);
 
 
     // implement the "static node()" method manually

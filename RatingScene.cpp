@@ -1,4 +1,5 @@
 #include "RatingScene.h"
+#include "StartScene.h"
 
 USING_NS_CC;
 
@@ -32,39 +33,41 @@ bool Rating::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    for (int i = 0; i< 5; i++)
+    {
+        CCSprite *item = CCSprite::create("item.png");
+		item->setPosition(ccp(0, 100*i));
+		this->addChild(item,1);
+        char a[10];  
+	    sprintf(a, "%d", i+1);
+        CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 14, 21, '0');
+		ratingnum->setPosition(ccp(0, 100 * i));
+		this->addChild(ratingnum,2);
+		sprintf(a, "name:%d", i);
+        CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 24);
+        name->setPosition(ccp(200, 100 * i));
+		this->addChild(ratingnum,2);
+		
+    }
+    CCMenuItemImage *pokItem = CCMenuItemImage::create(  
+                                  "returnbutton.png", //png.jpg等图片格式都是可以的  
+                                  "returnbutton.png",  
+                                    this,  
+                                    menu_selector(Rating::menuOKCallback));  	
+    pokItem->setPosition(ccp(0,0));
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        this,
-                                        menu_selector(Rating::menuCloseCallback));
-    
-	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-                                origin.y + pCloseItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition(CCPointZero);
-    this->addChild(pMenu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
+	CCMenu* pOKMenu = CCMenu::create(pokItem, NULL);
+	pOKMenu->setPosition(ccp(100,-100));
+	pOKMenu->setScale(0.5f);
+	this->addChild(pOKMenu, 1);
  
     return true;
 }
 
-void Rating::menuCloseCallback(CCObject* pSender)
+void  Rating::menuOKCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+    CCScene *pScene = Start::scene();
+
+    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCDirector::sharedDirector()->replaceScene(reScene); 
 }

@@ -1,5 +1,6 @@
 #include "SettingScene.h"
-
+#include "StartScene.h"
+#include "SaveData.h"
 USING_NS_CC;
 
 CCScene* Setting::scene()
@@ -31,40 +32,83 @@ bool Setting::init()
 
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCSprite* pSprite = CCSprite::create("setting.png");
+	pSprite->setScale(0.5f);               // 精灵的缩放
+    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    this->addChild(pSprite, 0);
+    CCMenuItemImage *pmusiconItem = CCMenuItemImage::create(  
+                                  "musicon.png", //png.jpg等图片格式都是可以的  
+                                  "musicon.png");  
+    CCMenuItemImage *pmusicoffItem = CCMenuItemImage::create(  
+                                  "musicoff.png", //png.jpg等图片格式都是可以的  
+                                  "musicoff.png"); 
+    CCMenuItemToggle *pmusictoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pmusiconItem, pmusicoffItem, NULL);
+    pmusictoggle->setTag(1);
+	pmusictoggle->setPosition(ccp(0,400));
+    CCMenuItemImage *psoundonItem = CCMenuItemImage::create(  
+                                  "soundon.png", //png.jpg等图片格式都是可以的  
+                                  "soundon.png");  
+    CCMenuItemImage *psoundoffItem = CCMenuItemImage::create(  
+                                  "soundoff.png", //png.jpg等图片格式都是可以的  
+                                  "soundoff.png"); 
+    CCMenuItemToggle *psoundtoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),psoundonItem, psoundoffItem, NULL);
+    psoundtoggle->setTag(2);
+	psoundtoggle->setPosition(ccp(0,200));
+    CCMenuItemImage *pvibrateonItem = CCMenuItemImage::create(  
+                                  "vibrateon.png", //png.jpg等图片格式都是可以的  
+                                  "vibrateon.png");  
+    CCMenuItemImage *pvibrateoffItem = CCMenuItemImage::create(  
+                                  "vibrateoff.png", //png.jpg等图片格式都是可以的  
+                                  "vibrateoff.png"); 
+    CCMenuItemToggle *pvibratetoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pvibrateonItem, pvibrateoffItem, NULL);
+    pvibratetoggle->setTag(3);
+	pvibratetoggle->setPosition(ccp(0,0));
+	CCMenu* pSettingMenu = CCMenu::create(pmusictoggle, psoundtoggle, pvibratetoggle, NULL);
+	pSettingMenu->setPosition(ccp(100,100));
+	pSettingMenu->setScale(0.5f);
+	this->addChild(pSettingMenu, 1);
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	
+    CCMenuItemImage *pokItem = CCMenuItemImage::create(  
+                                  "returnbutton.png", //png.jpg等图片格式都是可以的  
+                                  "returnbutton.png",  
+                                    this,  
+                                    menu_selector(Setting::menuOKCallback));  	
+    pokItem->setPosition(ccp(0,0));
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        this,
-                                        menu_selector(Setting::menuCloseCallback));
-    
-	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-                                origin.y + pCloseItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition(CCPointZero);
-    this->addChild(pMenu, 1);
+	CCMenu* pOKMenu = CCMenu::create(pokItem, NULL);
+	pOKMenu->setPosition(ccp(100,-100));
+	pOKMenu->setScale(0.5f);
+	this->addChild(pOKMenu, 1);
 
     /////////////////////////////
     // 3. add your codes below...
  
     return true;
 }
-
-void Setting::menuCloseCallback(CCObject* pSender)
+void Setting::menuSettingCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+	CCMenuItemToggle* item = (CCMenuItemToggle*)pSender;
+	switch (item->getTag())
+	{
+	case 1:
+		isMusic ^= isMusic;
+		break;
+	case 2:
+        isSound ^= isSound;
+		break;
+	case 3:
+        isVibrate ^= isVibrate;
+		break;
+	}
+}
+
+void  Setting::menuOKCallback(CCObject* pSender)
+{
+    SaveData::getInstant()->saveSetting(isMusic, isSound, isVibrate);
+
+    CCScene *pScene = Start::scene();
+
+    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCDirector::sharedDirector()->replaceScene(reScene); 
 }

@@ -4,7 +4,9 @@
 #include "squareNode.h"
 #include "MetricFactory.h"
 #include "metriclogic.h"
-#include "persistent.h"
+#include "SaveData.h"
+#include "RatingScene.h"
+#include "ConfirmLayer.h"
 USING_NS_CC;
 
 CCScene* HelloWorld::scene()
@@ -64,31 +66,15 @@ bool HelloWorld::init()
     srand( tsrans ); 
     // add a label shows "Hello World"
     // create and initialize a label
-  
-   pLabellevel = CCLabelTTF::create("Hello World", "Arial", 24);
-   pLabelscore = CCLabelTTF::create("Hello World", "Arial", 24);
-   pLabelline = CCLabelTTF::create("Hello World", "Arial", 24);
-	
    
     // position the label on the center of the screen
     //pLabellevel->setPosition(ccp(origin.x + visibleSize.width/2,
       //                      origin.y + visibleSize.height - pLabel->getContentSize().height));
 
 	// add the label as a child to this layer
-    pLabellevel->setPosition(ccp(300, 350));
-    this->addChild(pLabellevel, 1);
-    pLabellevel->setString("1");//修改文字的方法
 
-
-    pLabelscore->setPosition(ccp(300, 300));
-	this->addChild(pLabelscore, 1);
-	pLabelscore->setString("0");
-
-
-    pLabelline->setPosition(ccp(300, 250));
-	this->addChild(pLabelline, 1);
-	pLabelline->setString("0");
-
+    SaveData::getInstant()->readNameandScore();
+	SaveData::getInstant()->readSetting();
 
     // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("bg.png");
@@ -136,36 +122,23 @@ bool HelloWorld::init()
 	pButtonMenu->setScale(0.5f);
 	this->addChild(pButtonMenu, 1);
 
-    // add "HelloWorld" splash screen"
-    //CCSprite* pLeft = CCSprite::create("leftarrow.png");
-	//pLeft->setScale(0.5f);               // 精灵的缩放
-    //pLeft->setPosition(ccp(45,45));
-    //this->addChild(pLeft, 0);
-    // add "HelloWorld" splash screen"
-    //CCSprite* pRight = CCSprite::create("rightarrow.png");
-	//pRight->setScale(0.5f);               // 精灵的缩放
-    //pRight->setPosition(ccp(135,45));
-    //this->addChild(pRight, 0);
-    // add "HelloWorld" splash screen"
-    //CCSprite* pRotate = CCSprite::create("rotate.png");
-	//pRotate->setScale(0.5f);               // 精灵的缩放
-   // pRotate->setPosition(ccp(225,45));
-    //this->addChild(pRotate, 0);
-    // add "HelloWorld" splash screen"
-    //CCSprite* pDown = CCSprite::create("rotate.png");
-	//pDown->setScale(0.5f);               // 精灵的缩放
-   // pDown->setPosition(ccp(315,45));
-    //this->addChild(pDown, 0);
-    // add "HelloWorld" splash screen"
-    //CCSprite* pQuickdown = CCSprite::create("quickdown.png");
-	//pQuickdown->setScale(0.5f);               // 精灵的缩放
-    //pQuickdown->setPosition(ccp(315,135));
-    //this->addChild(pQuickdown, 0);
-    // add "HelloWorld" splash screen"
-   // CCSprite* pPause = CCSprite::create("pause.png");
-	//pPause->setScale(0.3f);               // 精灵的缩放
-   /// pPause->setPosition(ccp(315,600));
-   // this->addChild(pPause, 0);
+	//CCLabelAtlas* diceCount = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+	   pLabellevel = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+   pLabelscore = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+   pLabelline = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+     pLabellevel->setPosition(ccp(300, 350));
+    this->addChild(pLabellevel, 1);
+    pLabellevel->setString("1");//修改文字的方法
+
+
+    pLabelscore->setPosition(ccp(300, 300));
+	this->addChild(pLabelscore, 1);
+	pLabelscore->setString("0");
+
+
+    pLabelline->setPosition(ccp(300, 250));
+	this->addChild(pLabelline, 1);
+	pLabelline->setString("0");
 
     CCMenuItemImage *ppauseItem = CCMenuItemImage::create(  
                                   "pause.png", //png.jpg等图片格式都是可以的  
@@ -201,11 +174,11 @@ bool HelloWorld::init()
 	metriclogic->dismissLine();
 	displayMetric();
 
-/*
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("test.plist");
-	CCSpriteBatchNode * batchnode = CCSpriteBatchNode::create("test.png");
-	this->addChild(batchnode);
 
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("colornode.plist");
+	batchnode = CCSpriteBatchNode::create("colornode.png");
+	this->addChild(batchnode);
+/*
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("back.png");
 	CCSprite *sp11 = CCSprite::createWithSpriteFrame(frame1);
 	sp11->setPosition(ccp(300,300));
@@ -257,6 +230,16 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
 		if (!pauseflg)
 		{
 		  CCDirector::sharedDirector()->pause();
+		
+			CCAction* popupLayer = CCSequence::create(CCScaleTo::create(0.0, 0.0),
+                                          CCScaleTo::create(0.06, 1.05),
+                                          CCScaleTo::create(0.08, 0.95),
+                                          CCScaleTo::create(0.08, 1.0), NULL);
+/*
+         ConfirmLayer* confirmLayer = ConfirmLayer::create();
+		 confirmLayer->runAction(popupLayer);
+         this->addChild(confirmLayer);
+	*/
 		  pauseflg = true;
 		}
 		else
@@ -264,14 +247,6 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
           CCDirector::sharedDirector()->resume();
 		  pauseflg = false;
 		}
-		//if (tag == 1)
-		//{
-		//	CCDirector::sharedDirector()->pause();
-		//}
-		//else
-		//{
-		//	CCDirector::sharedDirector()->resume();
-		//}
 }
 void HelloWorld::updateGame(float f)
 {
@@ -280,9 +255,6 @@ void HelloWorld::updateGame(float f)
 	checkConflid();
 	dismissLineShow();
 	
-	
-	//CCMoveTo *pmove = CCMoveTo::create(10.0f, ccp(30,200));
-	//static int i=20;
 	T_MetricNode* activenode = pactiveNode->getActiveNode();
 	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 	
@@ -294,9 +266,6 @@ void HelloWorld::updateGame(float f)
 
 	activenode++;
 	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-	//i+=20;
-	//pMetric->runAction(pmove);
-
 
 }
 
@@ -359,7 +328,37 @@ void HelloWorld::createNextNode()
     pnextactiveNode = factory->create(m_nexttype);
     m_nodecolor = createNodeColor();
 	pnextactiveNode->initnext(m_nodecolor);
-	
+
+
+
+    T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
+	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][10]);
+	pnextMetric0 = CCSprite::createWithSpriteFrame(frame1);
+    // position the sprite on the center of the screen
+    pnextMetric0->setScale(0.5f);               // 精灵的缩放
+	pnextMetric0->setPosition(ccp(nextactivenode[0].X, nextactivenode[0].Y));
+    // add the sprite as a child to this layer
+    batchnode->addChild(pnextMetric0, 0);
+    pnextMetric1 = CCSprite::createWithSpriteFrame(frame1);
+    // position the sprite on the center of the screen
+    pnextMetric1->setScale(0.5f);               // 精灵的缩放
+	pnextMetric1->setPosition(ccp(nextactivenode[1].X, nextactivenode[1].Y));
+    // add the sprite as a child to this layer
+    this->addChild(pnextMetric1, 0);
+    pnextMetric2 = CCSprite::createWithSpriteFrame(frame1);
+    // position the sprite on the center of the screen
+    pnextMetric2->setScale(0.5f);               // 精灵的缩放
+	pnextMetric2->setPosition(ccp(nextactivenode[2].X, nextactivenode[2].Y));
+    // add the sprite as a child to this layer
+    this->addChild(pnextMetric2, 0);
+    pnextMetric3 = CCSprite::createWithSpriteFrame(frame1);
+    // position the sprite on the center of the screen
+    pnextMetric3->setScale(0.5f);               // 精灵的缩放
+	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
+    // add the sprite as a child to this layer
+    this->addChild(pnextMetric3, 0);
+/*
+
 	T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
 	pnextMetric0 = CCSprite::create(SpriteNodeName[m_nodecolor][10]);
     // position the sprite on the center of the screen
@@ -385,7 +384,7 @@ void HelloWorld::createNextNode()
 	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
     // add the sprite as a child to this layer
     this->addChild(pnextMetric3, 0);
-
+*/
 }
 NodeType HelloWorld::createNodeType()
 {
@@ -455,10 +454,6 @@ NodeColor HelloWorld::createNodeColor()
 }
 void HelloWorld::ActivenextNode()
 {
-		//pactiveNode = new SquareNode();
-	//MetricFactory *factory = new MetricFactory();
-
-
    m_activetype = m_nexttype;
 
 	pactiveNode = factory->create(m_activetype);
