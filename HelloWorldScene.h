@@ -5,6 +5,7 @@
 #include "metriclogic.h"
 #include "activeNode.h"
 
+
 class ActiveNode;
 class MetricLogic;
 class MetricFactory;
@@ -18,14 +19,13 @@ public:
     static cocos2d::CCScene* scene();
     
     // a selector callback
-    void menuCloseCallback(CCObject* pSender);
 	void menuButtonCallback(CCObject* pSender);
 	void menuPauseCallback(CCObject* pSender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
-	virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+	//virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
 	void updateGame(float f);

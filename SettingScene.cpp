@@ -36,14 +36,28 @@ bool Setting::init()
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
+
+	SaveData::getInstant()->readSetting();
+	isMusic = SaveData::getInstant()->IsMusic();
+	isSound = SaveData::getInstant()->IsSound();
+	isVibrate = SaveData::getInstant()->IsVibrate();
+	
     CCMenuItemImage *pmusiconItem = CCMenuItemImage::create(  
                                   "musicon.png", //png.jpg等图片格式都是可以的  
                                   "musicon.png");  
     CCMenuItemImage *pmusicoffItem = CCMenuItemImage::create(  
                                   "musicoff.png", //png.jpg等图片格式都是可以的  
                                   "musicoff.png"); 
-    CCMenuItemToggle *pmusictoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pmusiconItem, pmusicoffItem, NULL);
-    pmusictoggle->setTag(1);
+    CCMenuItemToggle *pmusictoggle = NULL;
+	if (isMusic)
+	{
+        pmusictoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pmusiconItem, pmusicoffItem, NULL);
+    }
+	else
+	{
+        pmusictoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pmusicoffItem, pmusiconItem, NULL);
+	}
+	pmusictoggle->setTag(1);
 	pmusictoggle->setPosition(ccp(0,400));
     CCMenuItemImage *psoundonItem = CCMenuItemImage::create(  
                                   "soundon.png", //png.jpg等图片格式都是可以的  
@@ -51,8 +65,17 @@ bool Setting::init()
     CCMenuItemImage *psoundoffItem = CCMenuItemImage::create(  
                                   "soundoff.png", //png.jpg等图片格式都是可以的  
                                   "soundoff.png"); 
-    CCMenuItemToggle *psoundtoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),psoundonItem, psoundoffItem, NULL);
-    psoundtoggle->setTag(2);
+    CCMenuItemToggle *psoundtoggle = NULL;
+	if (isSound)
+	{
+        psoundtoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),psoundonItem, psoundoffItem, NULL);
+	}
+    else
+    {
+        psoundtoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),psoundoffItem, psoundonItem, NULL);
+    }
+
+	psoundtoggle->setTag(2);
 	psoundtoggle->setPosition(ccp(0,200));
     CCMenuItemImage *pvibrateonItem = CCMenuItemImage::create(  
                                   "vibrateon.png", //png.jpg等图片格式都是可以的  
@@ -60,7 +83,16 @@ bool Setting::init()
     CCMenuItemImage *pvibrateoffItem = CCMenuItemImage::create(  
                                   "vibrateoff.png", //png.jpg等图片格式都是可以的  
                                   "vibrateoff.png"); 
-    CCMenuItemToggle *pvibratetoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pvibrateonItem, pvibrateoffItem, NULL);
+    CCMenuItemToggle *pvibratetoggle = NULL;
+    if (isVibrate)
+    {
+    	pvibratetoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pvibrateonItem, pvibrateoffItem, NULL);
+    }
+	else
+	{
+	    pvibratetoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),pvibrateoffItem, pvibrateonItem,  NULL);
+	}
+
     pvibratetoggle->setTag(3);
 	pvibratetoggle->setPosition(ccp(0,0));
 	CCMenu* pSettingMenu = CCMenu::create(pmusictoggle, psoundtoggle, pvibratetoggle, NULL);
@@ -80,9 +112,6 @@ bool Setting::init()
 	pOKMenu->setPosition(ccp(100,-100));
 	pOKMenu->setScale(0.5f);
 	this->addChild(pOKMenu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
  
     return true;
 }

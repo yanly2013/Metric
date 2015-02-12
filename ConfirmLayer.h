@@ -16,7 +16,7 @@ public:
     void onEnter(); 
     void menuconfirmCallback(CCObject* pSender);
     // implement the "static node()" method manually
-    //CREATE_FUNC(ConfirmLayer);
+    CREATE_FUNC(ConfirmLayer);
 
 	//virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     // 模态对话框菜单   

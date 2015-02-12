@@ -276,7 +276,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
 	}
 
    // 积分转换为等级
-   for (int i = 0; i< 10; i++)
+   for (int i = 0; i< sizeof(ScoretoLevel)/sizeof(unsigned int); i++)
    {
 	   if (m_score > ScoretoLevel[i])
 		   m_level = i;

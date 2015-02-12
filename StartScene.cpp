@@ -77,7 +77,7 @@ bool Start::init()
     */
     // create menu, it's an autorelease object
     CCMenu* pStartMenu = CCMenu::create(pstartItem, pexitItem, NULL);
-    pStartMenu->setPosition(ccp(150,300));
+    pStartMenu->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 	pStartMenu->setScale(0.5f);
     this->addChild(pStartMenu, 1);
 
@@ -132,7 +132,6 @@ void Start::menuStartCallback(CCObject* pSender)
         CCDirector::sharedDirector()->end();
 		break;
 	}
-
 }
 
 void Start::menuSettingCallback(CCObject* pSender)

@@ -40,43 +40,15 @@ bool HelloWorld::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        this,
-                                        menu_selector(HelloWorld::menuCloseCallback));
-    
-	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-                                origin.y + pCloseItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition(CCPointZero);
-    this->addChild(pMenu, 1);
-
-    /////////////////////////////
     // 3. add your codes below...
     cc_timeval psv;   
     CCTime::gettimeofdayCocos2d( &psv, NULL );    // 计算时间种子   
     unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000;    // 初始化随机数   
     srand( tsrans ); 
-    // add a label shows "Hello World"
-    // create and initialize a label
-   
-    // position the label on the center of the screen
-    //pLabellevel->setPosition(ccp(origin.x + visibleSize.width/2,
-      //                      origin.y + visibleSize.height - pLabel->getContentSize().height));
-
-	// add the label as a child to this layer
 
     SaveData::getInstant()->readNameandScore();
 	SaveData::getInstant()->readSetting();
 	
-    // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("bg.png");
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
@@ -127,10 +99,10 @@ bool HelloWorld::init()
 	this->addChild(pButtonMenu, 1);
 
 	//CCLabelAtlas* diceCount = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-	   pLabellevel = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-   pLabelscore = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-   pLabelline = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-     pLabellevel->setPosition(ccp(300, 350));
+    pLabellevel = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+    pLabelscore = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+    pLabelline = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
+    pLabellevel->setPosition(ccp(300, 350));
     this->addChild(pLabellevel, 1);
     pLabellevel->setString("1");//修改文字的方法
 
@@ -152,7 +124,7 @@ bool HelloWorld::init()
                                   "resume.png"); 
     CCMenuItemToggle *toggle = CCMenuItemToggle::createWithTarget(this, menu_selector(HelloWorld::menuPauseCallback),ppauseItem, presumeItem, NULL);
     CCMenu* pPauseMenu = CCMenu::create(toggle, NULL);
-	pPauseMenu->setPosition(ccp(250,400));
+	pPauseMenu->setPosition(ccp(220,450));
 	pPauseMenu->setScale(0.5f);
 	this->addChild(pPauseMenu, 1);
 
@@ -164,12 +136,12 @@ bool HelloWorld::init()
 
 	createNextNode();
     ActivenextNode();
-    this->removeChild(pnextMetric0);
-	this->removeChild(pnextMetric1);
-    this->removeChild(pnextMetric2);
-    this->removeChild(pnextMetric3);
+    batchnode->removeChild(pnextMetric0, true);
+	batchnode->removeChild(pnextMetric1, true);
+    batchnode->removeChild(pnextMetric2, true);
+    batchnode->removeChild(pnextMetric3, true);
 	createNextNode();
-	//createNextNode();	
+
 	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
 	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
 
@@ -177,7 +149,6 @@ bool HelloWorld::init()
 	metriclogic->init();
 	metriclogic->dismissLine();
 	displayMetric();
-
 
 /*
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("back.png");
@@ -246,7 +217,7 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
 		}
 		else
 		{
-          CCDirector::sharedDirector()->resume();
+          //CCDirector::sharedDirector()->resume();
 		  pauseflg = false;
 		}
 }
@@ -275,21 +246,24 @@ void  HelloWorld::updateScore(float f)
 {
    if (level != metriclogic->getLevel())
    {
+      level = metriclogic->getLevel();
       char a[10];  
-	  sprintf(a, "%d", metriclogic->getLevel());
+	  sprintf(a, "%d", level);
       pLabellevel->setString(a);
-      // this->schedule(schedule_selector(HelloWorld::updateGame), 0.1f);
+      this->schedule(schedule_selector(HelloWorld::updateGame), leveltotime[level]);
    }
    if (score != metriclogic->getScore())
    {
+      score = metriclogic->getScore();
 	  char b[10];  
-	  sprintf(b, "%d", metriclogic->getScore());
+	  sprintf(b, "%d", score);
       pLabelscore->setString(b);
    }
    if (line != metriclogic->getLine())
    {
+      line = metriclogic->getLine();
 	  char c[10];  
-	  sprintf(c, "%d", metriclogic->getLine());
+	  sprintf(c, "%d", line);
       pLabelline->setString(c);
    }
 }
@@ -339,57 +313,25 @@ void HelloWorld::createNextNode()
     T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][10]);
 	pnextMetric0 = CCSprite::createWithSpriteFrame(frame1);
-    // position the sprite on the center of the screen
-    pnextMetric0->setScale(0.5f);               // 精灵的缩放
+    pnextMetric0->setScale(0.5f);
 	pnextMetric0->setPosition(ccp(nextactivenode[0].X, nextactivenode[0].Y));
-    // add the sprite as a child to this layer
     batchnode->addChild(pnextMetric0, 0);
-    pnextMetric1 = CCSprite::createWithSpriteFrame(frame1);
-    // position the sprite on the center of the screen
-    pnextMetric1->setScale(0.5f);               // 精灵的缩放
-	pnextMetric1->setPosition(ccp(nextactivenode[1].X, nextactivenode[1].Y));
-    // add the sprite as a child to this layer
-    batchnode->addChild(pnextMetric1, 0);
-    pnextMetric2 = CCSprite::createWithSpriteFrame(frame1);
-    // position the sprite on the center of the screen
-    pnextMetric2->setScale(0.5f);               // 精灵的缩放
-	pnextMetric2->setPosition(ccp(nextactivenode[2].X, nextactivenode[2].Y));
-    // add the sprite as a child to this layer
-    batchnode->addChild(pnextMetric2, 0);
-    pnextMetric3 = CCSprite::createWithSpriteFrame(frame1);
-    // position the sprite on the center of the screen
-    pnextMetric3->setScale(0.5f);               // 精灵的缩放
-	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
-    // add the sprite as a child to this layer
-    batchnode->addChild(pnextMetric3, 0);
-/*
 
-	T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
-	pnextMetric0 = CCSprite::create(SpriteNodeName[m_nodecolor][10]);
-    // position the sprite on the center of the screen
-    pnextMetric0->setScale(0.5f);               // 精灵的缩放
-	pnextMetric0->setPosition(ccp(nextactivenode[0].X, nextactivenode[0].Y));
-    // add the sprite as a child to this layer
-    this->addChild(pnextMetric0, 0);
-    pnextMetric1 = CCSprite::create(SpriteNodeName[m_nodecolor][10]);
-    // position the sprite on the center of the screen
-    pnextMetric1->setScale(0.5f);               // 精灵的缩放
+	pnextMetric1 = CCSprite::createWithSpriteFrame(frame1);
+    pnextMetric1->setScale(0.5f);
 	pnextMetric1->setPosition(ccp(nextactivenode[1].X, nextactivenode[1].Y));
-    // add the sprite as a child to this layer
-    this->addChild(pnextMetric1, 0);
-    pnextMetric2 = CCSprite::create(SpriteNodeName[m_nodecolor][10]);
-    // position the sprite on the center of the screen
-    pnextMetric2->setScale(0.5f);               // 精灵的缩放
+    batchnode->addChild(pnextMetric1, 0);
+
+	pnextMetric2 = CCSprite::createWithSpriteFrame(frame1);
+    pnextMetric2->setScale(0.5f);
 	pnextMetric2->setPosition(ccp(nextactivenode[2].X, nextactivenode[2].Y));
-    // add the sprite as a child to this layer
-    this->addChild(pnextMetric2, 0);
-    pnextMetric3 = CCSprite::create(SpriteNodeName[m_nodecolor][10]);
-    // position the sprite on the center of the screen
-    pnextMetric3->setScale(0.5f);               // 精灵的缩放
+    batchnode->addChild(pnextMetric2, 0);
+
+	pnextMetric3 = CCSprite::createWithSpriteFrame(frame1);
+    pnextMetric3->setScale(0.5f); 
 	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
-    // add the sprite as a child to this layer
-    this->addChild(pnextMetric3, 0);
-*/
+    batchnode->addChild(pnextMetric3, 0);
+
 }
 NodeType HelloWorld::createNodeType()
 {
@@ -424,8 +366,10 @@ NodeType HelloWorld::createNodeType()
  {
 	 return TTYPE;
  }
-	else
-	{return LINE;}
+ else
+ {
+     return LINE;
+  }
 
 }
 NodeColor HelloWorld::createNodeColor()
@@ -467,37 +411,27 @@ void HelloWorld::ActivenextNode()
 	T_MetricNode *pNode = pactiveNode->getActiveNode();
 
 	CCSpriteFrame *frame0 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
-	//pnextMetric0 = CCSprite::createWithSpriteFrame(frame1);
-
 	pMetric0 = CCSprite::createWithSpriteFrame(frame0); //改为从next中判断创建正确的精灵
-    // position the sprite on the center of the screen
-    pMetric0->setScale(0.5f);               // 精灵的缩放
-    //pMetric->setPosition(ccp(30, 600));
-    // add the sprite as a child to this layer
+    pMetric0->setScale(0.5f);
     batchnode->addChild(pMetric0, 0);
+
 	pNode++;
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
 	pMetric1 = CCSprite::createWithSpriteFrame(frame1); 
-    // position the sprite on the center of the screen
-    pMetric1->setScale(0.5f);               // 精灵的缩放
-    //pMetric1->setPosition(ccp(30, 610));
+    pMetric1->setScale(0.5f);
     batchnode->addChild(pMetric1, 0);
+
 	pNode++;
 	CCSpriteFrame *frame2 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
     pMetric2 = CCSprite::createWithSpriteFrame(frame2); 
-    // position the sprite on the center of the screen
-    pMetric2->setScale(0.5f);               // 精灵的缩放
-    //pMetric->setPosition(ccp(30, 600));
-    // add the sprite as a child to this layer
+    pMetric2->setScale(0.5f);
     batchnode->addChild(pMetric2, 0);
 	pNode++;
+	
     CCSpriteFrame *frame3 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
 	pMetric3 = CCSprite::createWithSpriteFrame(frame3); 
-    // position the sprite on the center of the screen
-    pMetric3->setScale(0.5f);               // 精灵的缩放
-    //pMetric1->setPosition(ccp(30, 610));
+    pMetric3->setScale(0.5f);
     batchnode->addChild(pMetric3, 0);	
-
 
 }
 void HelloWorld::destroyActiveNode()
@@ -519,6 +453,7 @@ void HelloWorld::saveActiveNode(T_MetricNode activenode[])
     oldactivenode[2] = activenode[2];
 	oldactivenode[3] = activenode[3];
 }
+#if 0
 void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
 	CCTouch *touch = (CCTouch *)pTouches->anyObject();
@@ -565,7 +500,7 @@ void HelloWorld::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEve
 
 	checkConflid();
 }
-
+#endif
 
 bool HelloWorld::checkConflid()
 {
@@ -642,14 +577,4 @@ void HelloWorld::gameOverShow()
 		CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
 		CCDirector::sharedDirector()->replaceScene(reScene); 
 }
-void HelloWorld::menuCloseCallback(CCObject* pSender)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
-}
+
