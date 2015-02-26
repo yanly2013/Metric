@@ -217,7 +217,7 @@ void MetricLogic::dismissLine()
 			m_maxposition[j]-=dismissnum;
 		}
 
-		calcdismissScore(dismissnum);
+		//calcdismissScore(dismissnum);
 		
 	}
 		

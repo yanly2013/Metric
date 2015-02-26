@@ -39,17 +39,19 @@ bool Rating::init()
     for (int i = 0; i< 5; i++)
     {
         CCSprite *item = CCSprite::create("item.png");
-		item->setPosition(ccp(100, 100*i));
+		item->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 *(6-i)));
 		item->setScale(0.5f);
 		this->addChild(item,1);
         char a[10];  
-	    sprintf(a, "%d", i+1);
-        CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 14, 21, '0');
-		ratingnum->setPosition(ccp(100, 100 * i));
+	    sprintf(a, "%d", i);
+        CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 216, 224, '0');
+		ratingnum->setPosition(ccp(visibleSize.width/2-item->getContentSize().height+25, (item->getContentSize().height/2 *(6- i)) - 25));
+		ratingnum->setScale(0.2f);
 		this->addChild(ratingnum,2);
 		sprintf(a, "name:%d", i);
-        CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 24);
-        name->setPosition(ccp(200, 100 * i));
+        CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 30);
+		name->setColor(ccc3(126, 126, 126));
+        name->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 * (6-i)));
 		this->addChild(name,2);
 		
     }

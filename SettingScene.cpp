@@ -121,13 +121,13 @@ void Setting::menuSettingCallback(CCObject* pSender)
 	switch (item->getTag())
 	{
 	case 1:
-		isMusic ^= isMusic;
+		isMusic = !isMusic;
 		break;
 	case 2:
-        isSound ^= isSound;
+        isSound = !isSound;
 		break;
 	case 3:
-        isVibrate ^= isVibrate;
+        isVibrate = !isVibrate;
 		break;
 	}
 }
