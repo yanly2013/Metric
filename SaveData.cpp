@@ -11,7 +11,14 @@ SaveData* SaveData::getInstant()
     }
 	return m_SaveDataInst;
 }
-
+SaveData::SaveData()
+{
+    for (int index = 0; index< 10; index++)
+    {
+         name[index] = "----";
+		 score[index] = 0;
+    }
+}
 void SaveData::readNameandScore()
 {
     name[0] = CCUserDefault::sharedUserDefault()->getStringForKey("firstname");
@@ -84,6 +91,15 @@ void SaveData::saveNameandScore()
     CCUserDefault::sharedUserDefault()->setIntegerForKey("eighthscore", score[7]);
     CCUserDefault::sharedUserDefault()->setIntegerForKey("ninthscore", score[8]);
     CCUserDefault::sharedUserDefault()->setIntegerForKey("tenthscore", score[9]);
+}
+
+std::string SaveData::getName(int index)
+{
+    return name[index];
+}
+int SaveData::getScore(int index)
+{
+    return score[index];
 }
 void SaveData::readSetting()
 {

@@ -1,8 +1,10 @@
 #include "SettingScene.h"
 #include "StartScene.h"
 #include "SaveData.h"
-USING_NS_CC;
+#include "SimpleAudioEngine.h"
 
+USING_NS_CC;
+using namespace CocosDenshion;
 CCScene* Setting::scene()
 {
     // 'scene' is an autorelease object
@@ -122,9 +124,38 @@ void Setting::menuSettingCallback(CCObject* pSender)
 	{
 	case 1:
 		isMusic = !isMusic;
+		if (isMusic)
+		{
+		    if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+		    {
+		        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+		    }
+			else
+			{
+		        //SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename(MUSIC_FILE)).c_str(), true);
+			}
+		}
+		else
+		{
+            if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+            {
+			    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+            }
+		}
 		break;
 	case 2:
         isSound = !isSound;
+		if (isSound)
+		{
+		    //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str(), true);
+		}
+		else
+		{
+		    //if (m_nSoundId)
+		    //{
+		    //    SimpleAudioEngine::sharedEngine()->stopEffect(m_nSoundId);
+		    //}
+		}
 		break;
 	case 3:
         isVibrate = !isVibrate;

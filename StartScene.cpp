@@ -3,8 +3,12 @@
 #include "RatingScene.h"
 #include "HelpScene.h"
 #include "SettingScene.h"
-
+#include "ExitLayer.h"
+#include "SimpleAudioEngine.h"
+#include "CCFileUtilsWin32.h"
+#include "SaveData.h"
 USING_NS_CC;
+using namespace CocosDenshion;
 
 CCScene* Start::scene()
 {
@@ -33,6 +37,15 @@ bool Start::init()
     /////////////////
 	setTouchEnabled(true);
 
+// 预加载背景音乐和音效：相对路径 .mid和.wav等格式文件
+    //SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathForFilename(MUSIC_FILE) );
+    //SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::sharedFileUtils()->fullPathForFilename(EFFECT_FILE) );
+
+	SaveData::getInstant()->readSetting();
+	bool isMusic = SaveData::getInstant()->IsMusic();
+	bool isSound = SaveData::getInstant()->IsSound();
+	bool isVibrate = SaveData::getInstant()->IsVibrate();
+	
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
@@ -113,6 +126,11 @@ bool Start::init()
 	pSettingMenu->setPosition(ccp(-pSettingItem->getContentSize().width/4+50, -pHelpItem->getContentSize().height/2-50));
 	pSettingMenu->setScale(0.2f);
     this->addChild(pSettingMenu, 1);
+
+    if (isMusic)
+    {
+		//SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename(MUSIC_FILE)).c_str(), true);
+    }
  
     return true;
 }
@@ -130,7 +148,16 @@ void Start::menuStartCallback(CCObject* pSender)
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
 	case 2:
-        CCDirector::sharedDirector()->end();
+        CCAction* popupLayer = CCSequence::create(CCScaleTo::create(0.0, 0.0),
+                                          CCScaleTo::create(0.06, 1.05),
+                                          CCScaleTo::create(0.08, 0.95),
+                                          CCScaleTo::create(0.08, 1.0), NULL);
+
+         ExitLayer* exitLayer = new ExitLayer();
+		 exitLayer->init();
+		 exitLayer->runAction(popupLayer);
+         this->addChild(exitLayer);
+        
 		break;
 	}
 }
@@ -151,6 +178,6 @@ void Start::menuSettingCallback(CCObject* pSender)
         pScene = Help::scene();
 		break;
 	}
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCTransitionFade *reScene = CCTransitionFade::create(2.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }

@@ -1,5 +1,6 @@
 #include "ConfirmLayer.h"
 #include "StartScene.h"
+#include "SettingScene.h"
 USING_NS_CC;
 
 // on "init" you need to initialize your instance
@@ -16,32 +17,37 @@ bool ConfirmLayer::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
         // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::create("bg.png");
+    CCSprite* pSprite = CCSprite::create("pausemenu.png");
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
-      CCLabelTTF *name = CCLabelTTF::create("返回游戏", "Arial", 34);
-        name->setPosition(ccp(200, 100));
-		this->addChild(name,2);
-    CCMenuItemImage *pconfirmItem = CCMenuItemImage::create(
-                                        "confirmbtn.png",
-                                        "confirmbtn.png",
+
+    CCMenuItemImage *pcontinueItem = CCMenuItemImage::create(
+                                        "continuebtn.png",
+                                        "continuebtn.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
-    
-	pconfirmItem->setPosition(ccp(0,0));
+    pcontinueItem->setPosition(ccp(50,400));
+    pcontinueItem->setTag(1);
 
-    pconfirmItem->setTag(1);
-    CCMenuItemImage *pCancleItem = CCMenuItemImage::create(
-                                        "canclebtn.png",
-                                        "canclebtn.png",
+	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
+                                        "mainmenubtn.png",
+                                        "mainmenubtn.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
-	pCancleItem->setPosition(ccp(100,0));
-    pCancleItem->setTag(2);
+	pmainmenuItem->setPosition(ccp(50,200));
+    pmainmenuItem->setTag(2);
 
+    CCMenuItemImage *psettingmenuItem = CCMenuItemImage::create(
+                                        "settingmenubtn.png",
+                                        "settingmenubtn.png",
+                                        this,
+                                        menu_selector(ConfirmLayer::menuconfirmCallback));
+	psettingmenuItem->setPosition(ccp(50,0));
+    psettingmenuItem->setTag(3);
+	
     // create menu, it's an autorelease object
-    CCMenu* pConfirmMenu = CCMenu::create(pconfirmItem, pCancleItem, NULL);
+    CCMenu* pConfirmMenu = CCMenu::create(pcontinueItem, pmainmenuItem, psettingmenuItem, NULL);
     pConfirmMenu->setPosition(ccp(0,0));
     this->addChild(pConfirmMenu, 1);
  
@@ -51,18 +57,21 @@ bool ConfirmLayer::init()
 void ConfirmLayer::menuconfirmCallback(CCObject* pSender)
 {
 	CCMenuItemToggle* item = (CCMenuItemToggle*)pSender;
+	CCScene *pScene = NULL;
 	switch (item->getTag())
 	{
 	case 1:
 		
 		break;
 	case 2:
-            CCScene *pScene = Start::scene();
-
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
-    CCDirector::sharedDirector()->replaceScene(reScene); 
+        pScene = Start::scene();
+		break;
+    case 3:
+        pScene = Setting::scene();
 		break;
 	}
+    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCDirector::sharedDirector()->replaceScene(reScene); 
 }
 void ConfirmLayer::onEnter()
 {

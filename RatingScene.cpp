@@ -1,5 +1,6 @@
 #include "RatingScene.h"
 #include "StartScene.h"
+#include "SaveData.h"
 
 USING_NS_CC;
 
@@ -35,7 +36,12 @@ bool Rating::init()
     CCSprite* pSprite = CCSprite::create("ratting.png");
 	pSprite->setScale(0.5f);               // ¾«ÁéµÄËõ·Å
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(pSprite, 0);
+	this->addChild(pSprite, 0);
+
+    SaveData::getInstant()->readNameandScore();
+
+
+	
     for (int i = 0; i< 5; i++)
     {
         CCSprite *item = CCSprite::create("item.png");
@@ -48,11 +54,18 @@ bool Rating::init()
 		ratingnum->setPosition(ccp(visibleSize.width/2-item->getContentSize().height+25, (item->getContentSize().height/2 *(6- i)) - 25));
 		ratingnum->setScale(0.2f);
 		this->addChild(ratingnum,2);
-		sprintf(a, "name:%d", i);
+		std::string aname = SaveData::getInstant()->getName(i);
+		sprintf(a, "name:%s", aname);
         CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 30);
 		name->setColor(ccc3(126, 126, 126));
         name->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 * (6-i)));
 		this->addChild(name,2);
+        int score = SaveData::getInstant()->getScore(i);
+		sprintf(a, ":%d", score);
+        CCLabelTTF *scores = CCLabelTTF::create(a, "Arial", 30);
+		scores->setColor(ccc3(126, 126, 126));
+        scores->setPosition(ccp(visibleSize.width/2+100, item->getContentSize().height/2 * (6-i)));
+		this->addChild(scores,2);
 		
     }
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  

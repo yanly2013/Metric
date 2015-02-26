@@ -7,7 +7,11 @@
 #include "SaveData.h"
 #include "RatingScene.h"
 #include "ConfirmLayer.h"
+#include "SimpleAudioEngine.h"
+#include "CCFileUtilsWin32.h"
+
 USING_NS_CC;
+using namespace CocosDenshion;
 
 CCScene* HelloWorld::scene()
 {
@@ -566,10 +570,42 @@ void HelloWorld::Pause()
 void HelloWorld::dismissLineShow()
 {
     unsigned int *line = metriclogic->getdismissline();
+	int count = 0;
 	while (*line < 30)
 	{
+        CCSprite *pdismissline = CCSprite::create("dismissline.png");
+		pdismissline->setPosition(ccp(0, YLogictoPhysic[*line]));
+	    CCActionInterval * blink = CCBlink::create(5,2);
+        pdismissline->runAction(blink);
+        count++;
 	    line++;
 	};
+    CCActionInterval * blink = CCMoveTo::create(1,ccp(300, 100));
+    CCActionInterval * fade = CCFadeOut::create(1);
+    CCSpawn *spawn = CCSpawn::create(blink, fade);
+	CCSprite *pgood = NULL;
+	switch (count)
+	{
+	case 1:
+        pgood = CCSprite::create("good.png");
+		break;
+	case 2:
+		pgood = CCSprite::create("excllent.png");
+		break;
+	case 3:
+		pgood = CCSprite::create("wonderful.png");
+		break;
+	}
+    pgood->setPosition(ccp(0, 0));
+    pgood->runAction(spawn);
+	if (count>0)
+	{
+	    if (SaveData::getInstant()->IsSound())
+	    {
+            //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(EFFECT_FILE)).c_str(), true);
+	    }
+	}
+	
 }
 void HelloWorld::gameOverShow()
 {

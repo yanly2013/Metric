@@ -225,8 +225,10 @@ void MetricLogic::dismissLine()
 
 void MetricLogic::calcdismissScore(int dismisslinenum)
 {
-    int continuenum = 1;
-	int cotinuescore = 0;
+    int continueincnum = 1;
+	int cotinueincscore = 0;
+	int continuedecnum = 1;
+	int cotinuedecscore = 0;
 	int samenum = 1;
 	int samescore = 0;
 
@@ -237,21 +239,37 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
       {
           // 正常积分值
 		  m_score += m_metricNode[line][j].number;
-          // 数字连续积分，连续个数*number累计值
+          // 数字连续递增积分，连续个数*number累计值
 		  if ((j > 0) && (m_metricNode[line][j-1].number+1 == m_metricNode[line][j].number))
 		  {
-		      continuenum++;
-			  cotinuescore += m_metricNode[line][j].number;
+		      continueincnum++;
+			  cotinueincscore += m_metricNode[line][j].number;
 		  }
 		  else
 		  {
-		      if (continuenum >= 4)
+		      if (continueincnum >= 4)
 		      {
-		          cotinuescore += m_metricNode[line][j-continuenum].number;
-		          m_score += continuenum* cotinuescore;
+		          cotinueincscore += m_metricNode[line][j-continueincnum].number;
+		          m_score += continueincnum* cotinueincscore;
 		      }
-		      continuenum = 1;
-			  cotinuescore = 0;
+		      continueincnum = 1;
+			  cotinueincscore = 0;
+		  }
+		  // 数字连续减少积分，连续个数*number累计值
+		  if ((j > 0) && (m_metricNode[line][j-1].number-1 == m_metricNode[line][j].number))
+		  {
+		      continuedecnum++;
+			  cotinuedecscore += m_metricNode[line][j].number;
+		  }
+		  else
+		  {
+		      if (continuedecnum >= 4)
+		      {
+		          cotinuedecscore += m_metricNode[line][j-continuedecnum].number;
+		          m_score += continuedecnum* cotinuedecscore;
+		      }
+		      continuedecnum = 1;
+			  cotinuedecscore = 0;
 		  }
           // 连续相同积分，相同个数*number累计值
           if ((j > 0) && (m_metricNode[line][j-1].number == m_metricNode[line][j].number))
