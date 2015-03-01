@@ -87,6 +87,6 @@ void  Rating::menuOKCallback(CCObject* pSender)
 {
     CCScene *pScene = Start::scene();
 
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }

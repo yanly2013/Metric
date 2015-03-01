@@ -70,7 +70,7 @@ void ConfirmLayer::menuconfirmCallback(CCObject* pSender)
         pScene = Setting::scene();
 		break;
 	}
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }
 void ConfirmLayer::onEnter()

@@ -129,7 +129,7 @@ bool Start::init()
 
     if (isMusic)
     {
-		//SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename(MUSIC_FILE)).c_str(), true);
+		SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("zzhtnyt.mp3")).c_str(), true);
     }
  
     return true;
@@ -139,12 +139,12 @@ void Start::menuStartCallback(CCObject* pSender)
 {
 	CCMenuItemImage* item = (CCMenuItemImage*)pSender;
 	CCScene *pScene = NULL;
-    CCTransitionPageTurn *reScene = NULL;
+    CCTransitionFade *reScene = NULL;
 	switch (item->getTag())
 	{
 	case 1:
 		pScene = HelloWorld::scene();
-		reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+		reScene = CCTransitionFade::create(1.0f, pScene);
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
 	case 2:
@@ -156,7 +156,7 @@ void Start::menuStartCallback(CCObject* pSender)
          ExitLayer* exitLayer = new ExitLayer();
 		 exitLayer->init();
 		 exitLayer->runAction(popupLayer);
-         this->addChild(exitLayer);
+         this->addChild(exitLayer, 3);
         
 		break;
 	}
@@ -178,6 +178,6 @@ void Start::menuSettingCallback(CCObject* pSender)
         pScene = Help::scene();
 		break;
 	}
-    CCTransitionFade *reScene = CCTransitionFade::create(2.0f, pScene);
+    CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }

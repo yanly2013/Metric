@@ -132,7 +132,7 @@ void Setting::menuSettingCallback(CCObject* pSender)
 		    }
 			else
 			{
-		        //SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename(MUSIC_FILE)).c_str(), true);
+		        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("zzhtnyt.mp3")).c_str(), true);
 			}
 		}
 		else
@@ -145,17 +145,7 @@ void Setting::menuSettingCallback(CCObject* pSender)
 		break;
 	case 2:
         isSound = !isSound;
-		if (isSound)
-		{
-		    //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str(), true);
-		}
-		else
-		{
-		    //if (m_nSoundId)
-		    //{
-		    //    SimpleAudioEngine::sharedEngine()->stopEffect(m_nSoundId);
-		    //}
-		}
+		SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("Speech.wav")).c_str(), true);
 		break;
 	case 3:
         isVibrate = !isVibrate;
@@ -169,6 +159,6 @@ void  Setting::menuOKCallback(CCObject* pSender)
 
     CCScene *pScene = Start::scene();
 
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }

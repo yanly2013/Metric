@@ -34,9 +34,10 @@ bool Help::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 
-    CCSprite *item = CCSprite::create("bg.png");
+    CCSprite *item = CCSprite::create("helping.png");
     item->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(item,1);
+	item->setScale(0.5f);
+	this->addChild(item,1);
 	
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  
                                   "returnbutton.png", //png.jpg等图片格式都是可以的  
@@ -56,6 +57,6 @@ void  Help::menuOKCallback(CCObject* pSender)
 {
     CCScene *pScene = Start::scene();
 
-    CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+    CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
     CCDirector::sharedDirector()->replaceScene(reScene); 
 }

@@ -21,8 +21,8 @@ bool ExitLayer::init()
     CCSprite* pSprite = CCSprite::create("exitmenu.png");
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(pSprite, 0);
-    CCLabelTTF *name = CCLabelTTF::create("确实要退出游戏吗?", "Arial", 30);
+    this->addChild(pSprite);
+    CCLabelTTF *name = CCLabelTTF::create("Exit Game?", "Arial", 30);
 		name->setColor(ccc3(126, 126, 126));
         name->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
 		this->addChild(name,2);
@@ -31,7 +31,8 @@ bool ExitLayer::init()
                                         "confirmbtn.png",
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
-    pcontinueItem->setPosition(ccp(0,0));
+    pcontinueItem->setPosition(ccp(-50,-60));
+	pcontinueItem->setScale(0.35f); 
     pcontinueItem->setTag(1);
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
@@ -39,12 +40,13 @@ bool ExitLayer::init()
                                         "canclebtn.png",
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
-	pmainmenuItem->setPosition(ccp(200,0));
+	pmainmenuItem->setPosition(ccp(50,-60));
+	pmainmenuItem->setScale(0.35f); 
     pmainmenuItem->setTag(2);
 
     // create menu, it's an autorelease object
     CCMenu* pConfirmMenu = CCMenu::create(pcontinueItem, pmainmenuItem,NULL);
-    pConfirmMenu->setPosition(ccp(0,0));
+    pConfirmMenu->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pConfirmMenu, 1);
  
 
@@ -62,7 +64,7 @@ void ExitLayer::menuconfirmCallback(CCObject* pSender)
 	case 2:
         CCScene *pScene = Start::scene();
 
-        CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+        CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
         CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
 

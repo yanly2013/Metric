@@ -159,6 +159,13 @@ void MetricLogic::calcNodeScore(T_MetricNode lineNode[])
     m_score += lineNode[2].number;
     m_score += lineNode[3].number;
 }
+void MetricLogic::memsetdismisscount()
+{
+	for (int i = 0; i< 10; i++)
+	{
+		dismisscount[i]=100;
+	}
+}
 void MetricLogic::dismissLine()
 {
 	int linecount = 0;

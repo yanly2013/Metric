@@ -274,7 +274,7 @@ void  HelloWorld::updateScore(float f)
 void HelloWorld::displayMetric()
 {
 	T_MetricNode *metricNode = NULL;
-	//metriclogic->dismissLine();
+
 
 	metricNode = metriclogic->getmetricnode();
 	for (int i = 0; i < deadSpriteNum; i++)
@@ -572,18 +572,23 @@ void HelloWorld::dismissLineShow()
     unsigned int *line = metriclogic->getdismissline();
 	int count = 0;
 	while (*line < 30)
-	{
-        CCSprite *pdismissline = CCSprite::create("dismissline.png");
-		pdismissline->setPosition(ccp(0, YLogictoPhysic[*line]));
-	    CCActionInterval * blink = CCBlink::create(5,2);
-        pdismissline->runAction(blink);
-        count++;
+	{   
+		this->removeChild(pdismissline);
+        pdismissline = CCSprite::create("dismissline.png");
+		pdismissline->setScale(0.5f);
+		pdismissline->setPosition(ccp(135,YLogictoPhysic[*line]));
+		this->addChild(pdismissline);
+	    CCActionInterval * blinkline = CCBlink::create(0.5f,4);
+		CCActionInterval * fadeline = CCFadeOut::create(0.5f);
+		CCSpawn *spawnline = CCSpawn::create(blinkline, fadeline, NULL);
+        pdismissline->runAction(spawnline);
+		count++;
 	    line++;
 	};
-    CCActionInterval * blink = CCMoveTo::create(1,ccp(300, 100));
-    CCActionInterval * fade = CCFadeOut::create(1);
-    CCSpawn *spawn = CCSpawn::create(blink, fade);
-	CCSprite *pgood = NULL;
+    CCActionInterval * blink = CCMoveTo::create(1.0f,ccp(200, 400));
+    CCActionInterval * fade = CCFadeOut::create(1.0f);
+    CCSpawn *spawn = CCSpawn::create(blink, fade, NULL);
+	this->removeChild(pgood);//清除上次的
 	switch (count)
 	{
 	case 1:
@@ -595,22 +600,28 @@ void HelloWorld::dismissLineShow()
 	case 3:
 		pgood = CCSprite::create("wonderful.png");
 		break;
+	default:
+		pgood = CCSprite::create("wonderful.png");
+		break;
 	}
-    pgood->setPosition(ccp(0, 0));
-    pgood->runAction(spawn);
 	if (count>0)
 	{
+		this->addChild(pgood);
+        pgood->setPosition(ccp(200, 300));
+        pgood->runAction(spawn);
+
 	    if (SaveData::getInstant()->IsSound())
 	    {
-            //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(EFFECT_FILE)).c_str(), true);
+            //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile("Speech.wav")).c_str(), true);
 	    }
+		metriclogic->memsetdismisscount();
 	}
 	
 }
 void HelloWorld::gameOverShow()
 {
 		CCScene *pScene = Setting::scene();
-		CCTransitionPageTurn *reScene = CCTransitionPageTurn::create(2.0f, pScene, false);
+		CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
 		CCDirector::sharedDirector()->replaceScene(reScene); 
 }
 

@@ -63,11 +63,12 @@ public:
 	unsigned int getScore();
 	unsigned int getLine();
 	bool isGameover();
-
+	void memsetdismisscount();
 	unsigned int* getdismissline();
 
 
 private:
+
 	void calcdismissScore(int dismisslinenum);
 	void calcNodeScore(T_MetricNode lineNode[]);
 	T_MetricNode m_metricNode[24][10];
