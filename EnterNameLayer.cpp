@@ -22,14 +22,14 @@ bool EnterNameLayer::init()
 	pSprite->setScale(0.5f);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
-    CCLabelTTF *name = CCLabelTTF::create("请输入你的名字", "Arial", 30);
+    CCLabelTTF *name = CCLabelTTF::create("Enter your name", "Arial", 26);
 		name->setColor(ccc3(126, 126, 126));
-        name->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
+        name->setPosition(ccp(visibleSize.width/2, visibleSize.height/2+50));
 		this->addChild(name,2);
 
     CCSize size=CCDirector::sharedDirector()->getWinSize();
-    textField = CCTextFieldTTF::textFieldWithPlaceHolder("点出输入...", "Helvetica", 24);
-    textField->setPosition(ccp(size.width*0.5, size.height*0.7));
+    textField = CCTextFieldTTF::textFieldWithPlaceHolder("Input...", "Arial", 24);
+    textField->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
     this->addChild(textField); 
     //绑定接口
     textField->setDelegate(this);
@@ -44,7 +44,8 @@ bool EnterNameLayer::init()
                                         "confirmbtn.png",
                                         this,
                                         menu_selector(EnterNameLayer::menuconfirmCallback));
-    pcontinueItem->setPosition(ccp(0,0));
+    pcontinueItem->setPosition(ccp(visibleSize.width/2,280));
+	pcontinueItem->setScale(0.5f);
     pcontinueItem->setTag(1);
 
 

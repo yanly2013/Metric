@@ -1,4 +1,4 @@
-#include "SettingScene.h"
+ï»¿#include "SettingScene.h"
 #include "StartScene.h"
 #include "SaveData.h"
 #include "SimpleAudioEngine.h"
@@ -35,7 +35,7 @@ bool Setting::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSprite* pSprite = CCSprite::create("setting.png");
-	pSprite->setScale(0.5f);               // ¾«ÁéµÄËõ·Å
+	pSprite->setScale(0.5f);               // ç²¾çµçš„ç¼©æ”¾
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
@@ -45,10 +45,10 @@ bool Setting::init()
 	isVibrate = SaveData::getInstant()->IsVibrate();
 	
     CCMenuItemImage *pmusiconItem = CCMenuItemImage::create(  
-                                  "musicon.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "musicon.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "musicon.png");  
     CCMenuItemImage *pmusicoffItem = CCMenuItemImage::create(  
-                                  "musicoff.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "musicoff.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "musicoff.png"); 
     CCMenuItemToggle *pmusictoggle = NULL;
 	if (isMusic)
@@ -62,10 +62,10 @@ bool Setting::init()
 	pmusictoggle->setTag(1);
 	pmusictoggle->setPosition(ccp(0,400));
     CCMenuItemImage *psoundonItem = CCMenuItemImage::create(  
-                                  "soundon.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "soundon.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "soundon.png");  
     CCMenuItemImage *psoundoffItem = CCMenuItemImage::create(  
-                                  "soundoff.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "soundoff.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "soundoff.png"); 
     CCMenuItemToggle *psoundtoggle = NULL;
 	if (isSound)
@@ -80,10 +80,10 @@ bool Setting::init()
 	psoundtoggle->setTag(2);
 	psoundtoggle->setPosition(ccp(0,200));
     CCMenuItemImage *pvibrateonItem = CCMenuItemImage::create(  
-                                  "vibrateon.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "vibrateon.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "vibrateon.png");  
     CCMenuItemImage *pvibrateoffItem = CCMenuItemImage::create(  
-                                  "vibrateoff.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "vibrateoff.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "vibrateoff.png"); 
     CCMenuItemToggle *pvibratetoggle = NULL;
     if (isVibrate)
@@ -104,7 +104,7 @@ bool Setting::init()
 
 	
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  
-                                  "returnbutton.png", //png.jpgµÈÍ¼Æ¬¸ñÊ½¶¼ÊÇ¿ÉÒÔµÄ  
+                                  "returnbutton.png", //png.jpgç­‰å›¾ç‰‡æ ¼å¼éƒ½æ˜¯å¯ä»¥çš„  
                                   "returnbutton.png",  
                                     this,  
                                     menu_selector(Setting::menuOKCallback));  	

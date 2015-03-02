@@ -13,7 +13,9 @@ public:
     virtual void registerWithTouchDispatcher(void);
     // 重写触摸函数，永远返回 true ，屏蔽其它层，达到 “模态” 效果
     bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+
     void onEnter(); 
+	void onExit();
     void menuconfirmCallback(CCObject* pSender);
     // implement the "static node()" method manually
     CREATE_FUNC(ExitLayer);

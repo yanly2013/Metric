@@ -27,7 +27,8 @@ bool ConfirmLayer::init()
                                         "continuebtn.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
-    pcontinueItem->setPosition(ccp(50,400));
+    pcontinueItem->setPosition(ccp(visibleSize.width/2,400));
+	pcontinueItem->setScale(0.5f);
     pcontinueItem->setTag(1);
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
@@ -35,7 +36,8 @@ bool ConfirmLayer::init()
                                         "mainmenubtn.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
-	pmainmenuItem->setPosition(ccp(50,200));
+	pmainmenuItem->setPosition(ccp(visibleSize.width/2,320));
+	pmainmenuItem->setScale(0.5f);
     pmainmenuItem->setTag(2);
 
     CCMenuItemImage *psettingmenuItem = CCMenuItemImage::create(
@@ -43,7 +45,8 @@ bool ConfirmLayer::init()
                                         "settingmenubtn.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
-	psettingmenuItem->setPosition(ccp(50,0));
+	psettingmenuItem->setPosition(ccp(visibleSize.width/2,240));
+	psettingmenuItem->setScale(0.5f);
     psettingmenuItem->setTag(3);
 	
     // create menu, it's an autorelease object

@@ -9,6 +9,7 @@
 #include "ConfirmLayer.h"
 #include "SimpleAudioEngine.h"
 #include "CCFileUtilsWin32.h"
+#include "EnterNameLayer.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -212,7 +213,7 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
                                           CCScaleTo::create(0.08, 0.95),
                                           CCScaleTo::create(0.08, 1.0), NULL);
 
-         ConfirmLayer* confirmLayer = new ConfirmLayer();
+         EnterNameLayer* confirmLayer = new EnterNameLayer();
 		 confirmLayer->init();
 		 confirmLayer->runAction(popupLayer);
          this->addChild(confirmLayer);

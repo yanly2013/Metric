@@ -73,12 +73,15 @@ void ExitLayer::menuconfirmCallback(CCObject* pSender)
 void ExitLayer::onEnter()
 {
        CCLayer::onEnter();  
-       //CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority - 1, true);  
+}
 
+void ExitLayer::onExit()
+{
+       CCLayer::onExit();  
 }
 bool ExitLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
+   // m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
     return true; 
 }
 void  ExitLayer::registerWithTouchDispatcher(void)
