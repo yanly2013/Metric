@@ -12,7 +12,7 @@ bool ConfirmLayer::init()
     {
         return false;
     }
-
+	setTouchEnabled(true);
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
@@ -84,7 +84,7 @@ void ConfirmLayer::onEnter()
 }
 bool ConfirmLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
+    //m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
     return true; 
 }
 void  ConfirmLayer::registerWithTouchDispatcher(void)

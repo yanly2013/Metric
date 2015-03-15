@@ -7,6 +7,7 @@
 #include "SimpleAudioEngine.h"
 #include "CCFileUtilsWin32.h"
 #include "SaveData.h"
+#include "EnterNameLayer.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -154,6 +155,7 @@ void Start::menuStartCallback(CCObject* pSender)
                                           CCScaleTo::create(0.08, 1.0), NULL);
 
          ExitLayer* exitLayer = new ExitLayer();
+		 //EnterNameLayer* exitLayer = new EnterNameLayer();
 		 exitLayer->init();
 		 exitLayer->runAction(popupLayer);
          this->addChild(exitLayer, 3);

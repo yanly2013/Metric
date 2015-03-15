@@ -12,7 +12,7 @@ bool GameOverLayer::init()
     {
         return false;
     }
-
+	setTouchEnabled(true);
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
