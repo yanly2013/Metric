@@ -13,13 +13,22 @@ typedef enum color
 
 const unsigned short XLogictoPhysic[10] = 
 {
-	45, 65, 85, 105, 125, 145, 165, 185, 205, 225
+	40, 60, 80, 100, 120, 140, 160, 180, 200, 220
 };
 const unsigned short YLogictoPhysic[24]	=
 {
 	135, 155, 175, 195, 215, 235, 255, 275, 295, 315, 
 	335, 355, 375, 395, 415, 435, 455, 475, 495, 515,
 	535, 555, 575, 595
+};
+
+const unsigned short XNextNodePos[4] = 
+{
+    265, 285, 305, 325
+};
+const unsigned short YNextNodePos[3] = 
+{
+    540, 520, 500
 };
 const unsigned int ScoretoLevel[] = 
 {

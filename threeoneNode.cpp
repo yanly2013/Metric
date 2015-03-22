@@ -2,26 +2,26 @@
 
 void ThreeOneNode::initnext(NodeColor color)
 {
-	m_activeNode[0].X = 305;
-	m_activeNode[0].Y = 560;
+	m_activeNode[0].X = XNextNodePos[1];
+	m_activeNode[0].Y = YNextNodePos[0];
 	m_activeNode[0].number = 2;
 	m_activeNode[0].color = color;
 	m_activeNode[0].tools = 0;
     
-	m_activeNode[1].X = 305;
-	m_activeNode[1].Y = 540;
+	m_activeNode[1].X = XNextNodePos[1];
+	m_activeNode[1].Y = YNextNodePos[1];
 	m_activeNode[1].number = 2;
 	m_activeNode[1].color = color;
 	m_activeNode[1].tools = 0;
    
-	m_activeNode[2].X = 305;
-	m_activeNode[2].Y = 520;
+	m_activeNode[2].X = XNextNodePos[1];
+	m_activeNode[2].Y = YNextNodePos[2];
 	m_activeNode[2].number = 2;
 	m_activeNode[2].color = color;
 	m_activeNode[2].tools = 0;
     
-	m_activeNode[3].X = 325;
-	m_activeNode[3].Y = 560;
+	m_activeNode[3].X = XNextNodePos[2];
+	m_activeNode[3].Y = YNextNodePos[0];
 	m_activeNode[3].number = 2;
 	m_activeNode[3].color = color;
 	m_activeNode[3].tools = 0;

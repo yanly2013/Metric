@@ -50,9 +50,9 @@ bool Rating::init()
 		this->addChild(item,1);
         char a[10];  
 	    sprintf(a, "%d", i);
-        CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 216, 224, '0');
+        CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 86, 90, '0');
 		ratingnum->setPosition(ccp(visibleSize.width/2-item->getContentSize().height+25, (item->getContentSize().height/2 *(6- i)) - 25));
-		ratingnum->setScale(0.2f);
+		ratingnum->setScale(0.5f);//(0.2f);
 		this->addChild(ratingnum,2);
 		std::string aname = SaveData::getInstant()->getName(i);
 		sprintf(a, "name:%s", aname);

@@ -2,6 +2,7 @@
 #define __ACTIVE_NODE_H__
 
 #include "metriclogic.h"
+#include "DefScreenAdp.h"
 typedef enum nodeType
 {
 	SQUARE,

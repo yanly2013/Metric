@@ -43,10 +43,11 @@ T_MetricNode* ActiveNode::getActiveNode()
 	return &m_activeNode[0];
 }
 
-unsigned char ActiveNode::getAnumber()
+ unsigned char ActiveNode::getAnumber()
 {
      srand((int)time(0));
-     return rand()%10;
+	 volatile int number = rand()%10;
+     return number;
 }
 
 

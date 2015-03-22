@@ -32,7 +32,7 @@ bool ExitLayer::init()
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(-50,-60));
-	pcontinueItem->setScale(0.35f); 
+	pcontinueItem->setScale(0.5f);//(0.35f); 
     pcontinueItem->setTag(1);
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
@@ -41,7 +41,7 @@ bool ExitLayer::init()
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
 	pmainmenuItem->setPosition(ccp(50,-60));
-	pmainmenuItem->setScale(0.35f); 
+	pmainmenuItem->setScale(0.5f);//(0.35f);  
     pmainmenuItem->setTag(2);
 
     // create menu, it's an autorelease object

@@ -1,6 +1,7 @@
 #include "ConfirmLayer.h"
 #include "StartScene.h"
 #include "SettingScene.h"
+#include "DefScreenAdp.h"
 USING_NS_CC;
 
 // on "init" you need to initialize your instance
@@ -28,7 +29,7 @@ bool ConfirmLayer::init()
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(visibleSize.width/2,400));
-	pcontinueItem->setScale(0.5f);
+	pcontinueItem->setScale(ScaleFactor);
     pcontinueItem->setTag(1);
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(

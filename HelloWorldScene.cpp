@@ -10,6 +10,7 @@
 #include "SimpleAudioEngine.h"
 #include "CCFileUtilsWin32.h"
 #include "EnterNameLayer.h"
+#include "DefScreenAdp.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -107,17 +108,17 @@ bool HelloWorld::init()
     pLabellevel = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
     pLabelscore = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
     pLabelline = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-    pLabellevel->setPosition(ccp(300, 350));
+    pLabellevel->setPosition(ccp(295, 410));
     this->addChild(pLabellevel, 1);
     pLabellevel->setString("1");//修改文字的方法
 
 
-    pLabelscore->setPosition(ccp(300, 300));
+    pLabelscore->setPosition(ccp(295, 330));
 	this->addChild(pLabelscore, 1);
 	pLabelscore->setString("0");
 
 
-    pLabelline->setPosition(ccp(300, 250));
+    pLabelline->setPosition(ccp(295, 250));
 	this->addChild(pLabelline, 1);
 	pLabelline->setString("0");
 
@@ -213,7 +214,7 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
                                           CCScaleTo::create(0.08, 0.95),
                                           CCScaleTo::create(0.08, 1.0), NULL);
 
-         EnterNameLayer* confirmLayer = new EnterNameLayer();
+         ConfirmLayer* confirmLayer = new ConfirmLayer();
 		 confirmLayer->init();
 		 confirmLayer->runAction(popupLayer);
          this->addChild(confirmLayer);

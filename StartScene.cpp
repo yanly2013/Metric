@@ -125,7 +125,7 @@ bool Start::init()
     // create menu, it's an autorelease object
     CCMenu* pSettingMenu = CCMenu::create(pSettingItem, pRatingItem, pHelpItem, NULL);
 	pSettingMenu->setPosition(ccp(-pSettingItem->getContentSize().width/4+50, -pHelpItem->getContentSize().height/2-50));
-	pSettingMenu->setScale(0.2f);
+	pSettingMenu->setScale(0.5f);//(0.2f);
     this->addChild(pSettingMenu, 1);
 
     if (isMusic)
