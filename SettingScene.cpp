@@ -2,7 +2,7 @@
 #include "StartScene.h"
 #include "SaveData.h"
 #include "SimpleAudioEngine.h"
-
+#include "DefScreenAdp.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 CCScene* Setting::scene()
@@ -35,7 +35,7 @@ bool Setting::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSprite* pSprite = CCSprite::create("setting.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
@@ -99,7 +99,7 @@ bool Setting::init()
 	pvibratetoggle->setPosition(ccp(0,0));
 	CCMenu* pSettingMenu = CCMenu::create(pmusictoggle, psoundtoggle, pvibratetoggle, NULL);
 	pSettingMenu->setPosition(ccp(100,100));
-	pSettingMenu->setScale(0.5f);
+	pSettingMenu->setScale(ScaleFactor);
 	this->addChild(pSettingMenu, 1);
 
 	
@@ -112,7 +112,7 @@ bool Setting::init()
 
 	CCMenu* pOKMenu = CCMenu::create(pokItem, NULL);
 	pOKMenu->setPosition(ccp(100,-100));
-	pOKMenu->setScale(0.5f);
+	pOKMenu->setScale(ScaleFactor);
 	this->addChild(pOKMenu, 1);
  
     return true;

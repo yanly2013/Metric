@@ -51,7 +51,7 @@ bool Start::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     CCSprite* pSprite = CCSprite::create("bgofstart.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
@@ -68,7 +68,7 @@ bool Start::init()
                                         this,
                                         menu_selector(Start::menuStartCallback));
 	pexitItem->setPosition(ccp(0,0));
-	pexitItem->setScale(0.5f);
+	pexitItem->setScale(ScaleFactor);
 	pexitItem->setTag(2);
 	/*
     // add a "close" icon to exit the progress. it's an autorelease object
@@ -93,7 +93,7 @@ bool Start::init()
     // create menu, it's an autorelease object
     CCMenu* pStartMenu = CCMenu::create(pstartItem, pexitItem, NULL);
 	pStartMenu->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 - pexitItem->getContentSize().height/2));
-	//pStartMenu->setScale(0.5f);
+	//pStartMenu->setScale(ScaleFactor);
     this->addChild(pStartMenu, 1);
 
 	
@@ -125,7 +125,7 @@ bool Start::init()
     // create menu, it's an autorelease object
     CCMenu* pSettingMenu = CCMenu::create(pSettingItem, pRatingItem, pHelpItem, NULL);
 	pSettingMenu->setPosition(ccp(-pSettingItem->getContentSize().width/4+50, -pHelpItem->getContentSize().height/2-50));
-	pSettingMenu->setScale(0.5f);//(0.2f);
+	pSettingMenu->setScale(ScaleFactor);//(0.2f);
     this->addChild(pSettingMenu, 1);
 
     if (isMusic)

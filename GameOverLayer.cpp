@@ -1,6 +1,6 @@
 #include "GameOverLayer.h"
 #include "StartScene.h"
-
+#include "DefScreenAdp.h"
 USING_NS_CC;
 
 // on "init" you need to initialize your instance
@@ -18,7 +18,7 @@ bool GameOverLayer::init()
 
         // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("exitmenu.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
     CCLabelTTF *name = CCLabelTTF::create("Game Over", "Arial", 30);

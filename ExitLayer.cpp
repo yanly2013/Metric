@@ -1,7 +1,7 @@
 #include "ExitLayer.h"
 #include "StartScene.h"
 #include "SimpleAudioEngine.h"
-
+#include "DefScreenAdp.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 // on "init" you need to initialize your instance
@@ -19,7 +19,7 @@ bool ExitLayer::init()
 
         // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("exitmenu.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite);
     CCLabelTTF *name = CCLabelTTF::create("Exit Game?", "Arial", 30);
@@ -32,7 +32,7 @@ bool ExitLayer::init()
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(-50,-60));
-	pcontinueItem->setScale(0.5f);//(0.35f); 
+	pcontinueItem->setScale(ScaleFactor);//(0.35f); 
     pcontinueItem->setTag(1);
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
@@ -41,7 +41,7 @@ bool ExitLayer::init()
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
 	pmainmenuItem->setPosition(ccp(50,-60));
-	pmainmenuItem->setScale(0.5f);//(0.35f);  
+	pmainmenuItem->setScale(ScaleFactor);//(0.35f);  
     pmainmenuItem->setTag(2);
 
     // create menu, it's an autorelease object

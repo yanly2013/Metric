@@ -56,7 +56,7 @@ bool HelloWorld::init()
 	SaveData::getInstant()->readSetting();
 	
     CCSprite* pSprite = CCSprite::create("bg.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
@@ -101,7 +101,7 @@ bool HelloWorld::init()
 	pquickdownItem->setTag(5);
 	CCMenu* pButtonMenu = CCMenu::create(pleftarrowItem, prightarrowItem, protateItem, pdownItem, pquickdownItem, NULL);
 	pButtonMenu->setPosition(ccp(-45,-90));
-	pButtonMenu->setScale(0.5f);
+	pButtonMenu->setScale(ScaleFactor);
 	this->addChild(pButtonMenu, 1);
 
 	//CCLabelAtlas* diceCount = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
@@ -131,7 +131,7 @@ bool HelloWorld::init()
     CCMenuItemToggle *toggle = CCMenuItemToggle::createWithTarget(this, menu_selector(HelloWorld::menuPauseCallback),ppauseItem, presumeItem, NULL);
     CCMenu* pPauseMenu = CCMenu::create(toggle, NULL);
 	pPauseMenu->setPosition(ccp(220,450));
-	pPauseMenu->setScale(0.5f);
+	pPauseMenu->setScale(ScaleFactor);
 	this->addChild(pPauseMenu, 1);
 
     deadSpriteNum = 0;
@@ -296,7 +296,7 @@ void HelloWorld::displayMetric()
                 //CCSprite *spritenode = CCSprite::create(SpriteNodeName[metricNode->color][metricNode->number]);
 				pNodeSprite[deadSpriteNum] = spritenode;
 				deadSpriteNum++;
-			    spritenode->setScale(0.5f); 
+			    spritenode->setScale(ScaleFactor); 
 			    spritenode->setPosition(ccp(XLogictoPhysic[metricNode->X], YLogictoPhysic[metricNode->Y]));
 			    batchnode->addChild(spritenode);
 			}
@@ -319,22 +319,22 @@ void HelloWorld::createNextNode()
     T_MetricNode* nextactivenode = pnextactiveNode->getActiveNode();
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][10]);
 	pnextMetric0 = CCSprite::createWithSpriteFrame(frame1);
-    pnextMetric0->setScale(0.5f);
+    pnextMetric0->setScale(ScaleFactor);
 	pnextMetric0->setPosition(ccp(nextactivenode[0].X, nextactivenode[0].Y));
     batchnode->addChild(pnextMetric0, 0);
 
 	pnextMetric1 = CCSprite::createWithSpriteFrame(frame1);
-    pnextMetric1->setScale(0.5f);
+    pnextMetric1->setScale(ScaleFactor);
 	pnextMetric1->setPosition(ccp(nextactivenode[1].X, nextactivenode[1].Y));
     batchnode->addChild(pnextMetric1, 0);
 
 	pnextMetric2 = CCSprite::createWithSpriteFrame(frame1);
-    pnextMetric2->setScale(0.5f);
+    pnextMetric2->setScale(ScaleFactor);
 	pnextMetric2->setPosition(ccp(nextactivenode[2].X, nextactivenode[2].Y));
     batchnode->addChild(pnextMetric2, 0);
 
 	pnextMetric3 = CCSprite::createWithSpriteFrame(frame1);
-    pnextMetric3->setScale(0.5f); 
+    pnextMetric3->setScale(ScaleFactor); 
 	pnextMetric3->setPosition(ccp(nextactivenode[3].X, nextactivenode[3].Y));
     batchnode->addChild(pnextMetric3, 0);
 
@@ -418,25 +418,25 @@ void HelloWorld::ActivenextNode()
 
 	CCSpriteFrame *frame0 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
 	pMetric0 = CCSprite::createWithSpriteFrame(frame0); //改为从next中判断创建正确的精灵
-    pMetric0->setScale(0.5f);
+    pMetric0->setScale(ScaleFactor);
     batchnode->addChild(pMetric0, 0);
 
 	pNode++;
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
 	pMetric1 = CCSprite::createWithSpriteFrame(frame1); 
-    pMetric1->setScale(0.5f);
+    pMetric1->setScale(ScaleFactor);
     batchnode->addChild(pMetric1, 0);
 
 	pNode++;
 	CCSpriteFrame *frame2 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
     pMetric2 = CCSprite::createWithSpriteFrame(frame2); 
-    pMetric2->setScale(0.5f);
+    pMetric2->setScale(ScaleFactor);
     batchnode->addChild(pMetric2, 0);
 	pNode++;
 	
     CCSpriteFrame *frame3 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[m_nodecolor][pNode->number]);
 	pMetric3 = CCSprite::createWithSpriteFrame(frame3); 
-    pMetric3->setScale(0.5f);
+    pMetric3->setScale(ScaleFactor);
     batchnode->addChild(pMetric3, 0);	
 
 }
@@ -577,7 +577,7 @@ void HelloWorld::dismissLineShow()
 	{   
 		this->removeChild(pdismissline);
         pdismissline = CCSprite::create("dismissline.png");
-		pdismissline->setScale(0.5f);
+		pdismissline->setScale(ScaleFactor);
 		pdismissline->setPosition(ccp(135,YLogictoPhysic[*line]));
 		this->addChild(pdismissline);
 	    CCActionInterval * blinkline = CCBlink::create(0.5f,4);

@@ -1,6 +1,6 @@
 #include "WelcomeScene.h"
 #include "StartScene.h"
-
+#include "DefScreenAdp.h"
 USING_NS_CC;
 
 CCScene* Welcome::scene()
@@ -32,17 +32,17 @@ bool Welcome::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     CCSprite* pSprite = CCSprite::create("welcome.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
     CCSprite* pTitle = CCSprite::create("title.png");
-	pTitle->setScale(0.5f);               // 精灵的缩放
+	pTitle->setScale(ScaleFactor);               // 精灵的缩放
     pTitle->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + 200));
     this->addChild(pTitle, 0);
 
     pnode = CCSprite::create("welcomenode.png");
-	pnode->setScale(0.5f);               // 精灵的缩放
+	pnode->setScale(ScaleFactor);               // 精灵的缩放
     pnode->setPosition(ccp(visibleSize.width/2 + origin.x, 300));
     this->addChild(pnode, 0);
 

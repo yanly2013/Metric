@@ -19,7 +19,7 @@ bool ConfirmLayer::init()
 
         // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("pausemenu.png");
-	pSprite->setScale(0.5f);               // 精灵的缩放
+	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
@@ -38,7 +38,7 @@ bool ConfirmLayer::init()
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
 	pmainmenuItem->setPosition(ccp(visibleSize.width/2,320));
-	pmainmenuItem->setScale(0.5f);
+	pmainmenuItem->setScale(ScaleFactor);
     pmainmenuItem->setTag(2);
 
     CCMenuItemImage *psettingmenuItem = CCMenuItemImage::create(
@@ -47,7 +47,7 @@ bool ConfirmLayer::init()
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
 	psettingmenuItem->setPosition(ccp(visibleSize.width/2,240));
-	psettingmenuItem->setScale(0.5f);
+	psettingmenuItem->setScale(ScaleFactor);
     psettingmenuItem->setTag(3);
 	
     // create menu, it's an autorelease object

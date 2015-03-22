@@ -1,6 +1,6 @@
 #include "HelpScene.h"
 #include "StartScene.h"
-
+#include "DefScreenAdp.h"
 USING_NS_CC;
 
 CCScene* Help::scene()
@@ -36,7 +36,7 @@ bool Help::init()
 
     CCSprite *item = CCSprite::create("helping.png");
     item->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-	item->setScale(0.5f);
+	item->setScale(ScaleFactor);
 	this->addChild(item,1);
 	
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  
@@ -48,7 +48,7 @@ bool Help::init()
 
 	CCMenu* pOKMenu = CCMenu::create(pokItem, NULL);
 	pOKMenu->setPosition(ccp(100,-100));
-	pOKMenu->setScale(0.5f);
+	pOKMenu->setScale(ScaleFactor);
 	this->addChild(pOKMenu, 1);
     return true;
 }

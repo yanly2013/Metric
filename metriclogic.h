@@ -28,7 +28,7 @@ const unsigned short XNextNodePos[4] =
 };
 const unsigned short YNextNodePos[3] = 
 {
-    540, 520, 500
+    530, 510, 490
 };
 const unsigned int ScoretoLevel[] = 
 {
