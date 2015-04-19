@@ -3,7 +3,25 @@
 #include "SaveData.h"
 #include "DefScreenAdp.h"
 USING_NS_CC;
+unsigned int EnterNameLayer::m_score = 0;
+CCScene* EnterNameLayer::scene(CCRenderTexture* sqr, unsigned int score)  
+{  
+ 	m_score = score;  
+    CCScene *scene = CCScene::create();  
+    EnterNameLayer *layer = EnterNameLayer::create();  
+     scene->addChild(layer,1);  
+      //增加部分：使用Game界面中截图的sqr纹理图片创建Sprite  
+    //并将Sprite添加到GamePause场景层中  
+    //得到窗口的大小  
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();  
+    CCSprite *back_spr = CCSprite::createWithTexture(sqr->getSprite()->getTexture());    
+    back_spr->setPosition(ccp(visibleSize.width/2,visibleSize.height/2)); //放置位置,这个相对于中心位置。  
+    back_spr->setFlipY(true);            //翻转，因为UI坐标和OpenGL坐标不同  
+    back_spr->setColor(cocos2d::ccGRAY); //图片颜色变灰色  
+    scene->addChild(back_spr);  
 
+    return scene;  
+} 
 // on "init" you need to initialize your instance
 bool EnterNameLayer::init()
 {
@@ -61,11 +79,11 @@ bool EnterNameLayer::init()
 void EnterNameLayer::menuconfirmCallback(CCObject* pSender)
 {
 	CCMenuItemToggle* item = (CCMenuItemToggle*)pSender;
+
 	switch (item->getTag())
 	{
 	case 1:
-        //textField->getText();
-        SaveData::getInstant()->addaNameandScore("yanly", 1000);
+        SaveData::getInstant()->addaNameandScore((char *)textField->getString(), m_score);
 		SaveData::getInstant()->saveNameandScore();
 		
         CCScene *pScene = Rating::scene();

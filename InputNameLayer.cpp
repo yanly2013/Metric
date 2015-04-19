@@ -47,3 +47,7 @@ bool InputNameLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
     m_bTouchedMenu = m_pMenu->ccTouchBegan(pTouch, pEvent);  
     return true; 
 }
+void InputNameLayer::registerWithTouchDispatcher(void)
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -128, true);
+}

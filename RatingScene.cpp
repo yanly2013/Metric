@@ -48,23 +48,24 @@ bool Rating::init()
 		item->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 *(6-i)));
 		item->setScale(ScaleFactor);
 		this->addChild(item,1);
-        char a[10];  
+        char a[20];  
 	    sprintf(a, "%d", i);
         CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 86, 90, '0');
 		ratingnum->setPosition(ccp(visibleSize.width/2-item->getContentSize().height+25, (item->getContentSize().height/2 *(6- i)) - 25));
 		ratingnum->setScale(ScaleFactor);//(0.2f);
 		this->addChild(ratingnum,2);
 		std::string aname = SaveData::getInstant()->getName(i);
-		sprintf(a, "name:%s", aname);
-        CCLabelTTF *name = CCLabelTTF::create(a, "Arial", 30);
-		name->setColor(ccc3(126, 126, 126));
-        name->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 * (6-i)));
+		
+		//sprintf(a, "name:%s", aname);
+        CCLabelTTF *name = CCLabelTTF::create(aname.c_str(), "Arial-BoldMT", 30);
+		name->setColor(ccc3(255,140,0));
+        name->setPosition(ccp(visibleSize.width/2-30, item->getContentSize().height/2 * (6-i)));
 		this->addChild(name,2);
         int score = SaveData::getInstant()->getScore(i);
 		sprintf(a, ":%d", score);
-        CCLabelTTF *scores = CCLabelTTF::create(a, "Arial", 30);
-		scores->setColor(ccc3(126, 126, 126));
-        scores->setPosition(ccp(visibleSize.width/2+100, item->getContentSize().height/2 * (6-i)));
+        CCLabelTTF *scores = CCLabelTTF::create(a, "Arial-BoldMT", 30);
+		scores->setColor(ccc3(255,140,0));
+        scores->setPosition(ccp(visibleSize.width/2+80, item->getContentSize().height/2 * (6-i)));
 		this->addChild(scores,2);
 		
     }

@@ -8,9 +8,10 @@
 #include "RatingScene.h"
 #include "ConfirmLayer.h"
 #include "SimpleAudioEngine.h"
-#include "CCFileUtilsWin32.h"
+//#include "CCFileUtilsWin32.h"
 #include "EnterNameLayer.h"
 #include "DefScreenAdp.h"
+#include "GameOverLayer.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -204,28 +205,20 @@ void HelloWorld::menuButtonCallback(CCObject* pSender)
 }
 void HelloWorld::menuPauseCallback(CCObject* pSender)
 {
-		CCMenuItemImage* item = (CCMenuItemImage*)pSender;
-		if (!pauseflg)
-		{
-		  //CCDirector::sharedDirector()->pause();
-		
-			CCAction* popupLayer = CCSequence::create(CCScaleTo::create(0.0, 0.0),
-                                          CCScaleTo::create(0.06, 1.05),
-                                          CCScaleTo::create(0.08, 0.95),
-                                          CCScaleTo::create(0.08, 1.0), NULL);
+	// 保存当前场景图
+//得到窗口的大小  
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();  
+    CCRenderTexture *renderTexture = CCRenderTexture::create(visibleSize.width,visibleSize.height);  
+   
+    //遍历当前类的所有子节点信息，画入renderTexture中。  
+    //这里类似截图。  
+    renderTexture->begin();   
+    this->getParent()->visit();  
+    renderTexture->end();  
+   
+    //将游戏界面暂停，压入场景堆栈。并切换到GamePause界面  
+    CCDirector::sharedDirector()->pushScene(ConfirmLayer::scene(renderTexture));  
 
-         ConfirmLayer* confirmLayer = new ConfirmLayer();
-		 confirmLayer->init();
-		 confirmLayer->runAction(popupLayer);
-         this->addChild(confirmLayer);
-	
-		  pauseflg = true;
-		}
-		else
-		{
-          //CCDirector::sharedDirector()->resume();
-		  pauseflg = false;
-		}
 }
 void HelloWorld::updateGame(float f)
 {
@@ -563,12 +556,7 @@ bool HelloWorld::checkConflid()
 		return false;
 	}
 }
-void HelloWorld::Pause()
-{
-    // 弹出一个层?
-    // 调用Persistent 处理
-    //Persistent *PersistentInst = Persistent::getInstant();
-}
+
 void HelloWorld::dismissLineShow()
 {
     unsigned int *line = metriclogic->getdismissline();
@@ -622,8 +610,18 @@ void HelloWorld::dismissLineShow()
 }
 void HelloWorld::gameOverShow()
 {
-		CCScene *pScene = Setting::scene();
-		CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
-		CCDirector::sharedDirector()->replaceScene(reScene); 
+	// 保存当前场景图
+//得到窗口的大小  
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();  
+    CCRenderTexture *renderTexture = CCRenderTexture::create(visibleSize.width,visibleSize.height);  
+   
+    //遍历当前类的所有子节点信息，画入renderTexture中。  
+    //这里类似截图。  
+    renderTexture->begin();   
+    this->getParent()->visit();  
+    renderTexture->end();  
+   
+    //将游戏界面暂停，压入场景堆栈。并切换到GamePause界面  
+	CCDirector::sharedDirector()->pushScene(EnterNameLayer::scene(renderTexture, metriclogic->getScore()));  
 }
 

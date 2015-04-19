@@ -160,5 +160,5 @@ void  Setting::menuOKCallback(CCObject* pSender)
     CCScene *pScene = Start::scene();
 
     CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
-    CCDirector::sharedDirector()->replaceScene(reScene); 
+	CCDirector::sharedDirector()->popScene(); 
 }

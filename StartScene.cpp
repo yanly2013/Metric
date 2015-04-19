@@ -5,7 +5,7 @@
 #include "SettingScene.h"
 #include "ExitLayer.h"
 #include "SimpleAudioEngine.h"
-#include "CCFileUtilsWin32.h"
+//#include "CCFileUtilsWin32.h"
 #include "SaveData.h"
 #include "EnterNameLayer.h"
 USING_NS_CC;
@@ -181,5 +181,5 @@ void Start::menuSettingCallback(CCObject* pSender)
 		break;
 	}
     CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
-    CCDirector::sharedDirector()->replaceScene(reScene); 
+	CCDirector::sharedDirector()->pushScene(reScene); 
 }

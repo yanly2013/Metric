@@ -9,6 +9,7 @@ class ConfirmLayer : public cocos2d::CCLayer
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
+	static cocos2d::CCScene* scene(cocos2d::CCRenderTexture* sqr); 
    // 需要重写触摸注册函数，重新给定触摸级别
     virtual void registerWithTouchDispatcher(void);
     // 重写触摸函数，永远返回 true ，屏蔽其它层，达到 “模态” 效果
