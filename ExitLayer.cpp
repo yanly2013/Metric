@@ -22,13 +22,14 @@ bool ExitLayer::init()
 	pSprite->setScale(ScaleFactor);               // ¾«ÁéµÄËõ·Å
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite);
-    CCLabelTTF *name = CCLabelTTF::create("Exit Game?", "Arial", 30);
+   /* CCLabelTTF *name = CCLabelTTF::create("Exit Game?", "Arial", 30);
 		name->setColor(ccc3(126, 126, 126));
         name->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
 		this->addChild(name,2);
+		*/
     CCMenuItemImage *pcontinueItem = CCMenuItemImage::create(
                                         "confirmbtn.png",
-                                        "confirmbtn.png",
+                                        "confirmbtnclick.png",
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(-50,-60));
@@ -37,7 +38,7 @@ bool ExitLayer::init()
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
                                         "canclebtn.png",
-                                        "canclebtn.png",
+                                        "canclebtnclick.png",
                                         this,
                                         menu_selector(ExitLayer::menuconfirmCallback));
 	pmainmenuItem->setPosition(ccp(50,-60));

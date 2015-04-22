@@ -36,17 +36,17 @@ bool EnterNameLayer::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
         // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::create("exitmenu.png");
+    CCSprite* pSprite = CCSprite::create("enternamemenu.png");
 	pSprite->setScale(ScaleFactor);               // 精灵的缩放
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
-    CCLabelTTF *name = CCLabelTTF::create("Enter your name", "Arial", 26);
+    /*CCLabelTTF *name = CCLabelTTF::create("Enter your name", "Arial", 26);
 		name->setColor(ccc3(126, 126, 126));
         name->setPosition(ccp(visibleSize.width/2, visibleSize.height/2+50));
 		this->addChild(name,2);
-
+*/
     CCSize size=CCDirector::sharedDirector()->getWinSize();
-    textField = CCTextFieldTTF::textFieldWithPlaceHolder("Input...", "Arial", 24);
+    textField = CCTextFieldTTF::textFieldWithPlaceHolder("Input your ID", "Arial", 24);
     textField->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
     this->addChild(textField); 
     //绑定接口
@@ -59,7 +59,7 @@ bool EnterNameLayer::init()
 
     CCMenuItemImage *pcontinueItem = CCMenuItemImage::create(
                                         "confirmbtn.png",
-                                        "confirmbtn.png",
+                                        "confirmbtnclick.png",
                                         this,
                                         menu_selector(EnterNameLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(visibleSize.width/2,280));

@@ -57,14 +57,14 @@ bool Start::init()
 
     CCMenuItemImage *pstartItem = CCMenuItemImage::create(
                                         "startgame.png",
-                                        "startgame.png",
+                                        "startgameclick.png",
                                         this,
                                         menu_selector(Start::menuStartCallback));
 	pstartItem->setPosition(ccp(0,200));
 	pstartItem->setTag(1);
     CCMenuItemImage *pexitItem = CCMenuItemImage::create(
                                         "exitgame.png",
-                                        "exitgame.png",
+                                        "exitgameclick.png",
                                         this,
                                         menu_selector(Start::menuStartCallback));
 	pexitItem->setPosition(ccp(0,0));
@@ -100,7 +100,7 @@ bool Start::init()
 
     CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
                                         "settingbtn.png",
-                                        "settingbtn.png",
+                                        "settingbtnclick.png",
                                         this,
                                         menu_selector(Start::menuSettingCallback));
     
@@ -109,14 +109,14 @@ bool Start::init()
     pSettingItem->setTag(1);
     CCMenuItemImage *pRatingItem = CCMenuItemImage::create(
                                         "ratingbtn.png",
-                                        "ratingbtn.png",
+                                        "ratingbtnclick.png",
                                         this,
                                         menu_selector(Start::menuSettingCallback));
 	pRatingItem->setPosition(ccp(pSettingItem->getContentSize().width,0));
     pRatingItem->setTag(2);
     CCMenuItemImage *pHelpItem = CCMenuItemImage::create(
                                         "helpbtn.png",
-                                        "helpbtn.png",
+                                        "helpbtnclick.png",
                                         this,
                                         menu_selector(Start::menuSettingCallback));
     

@@ -41,7 +41,7 @@ bool ConfirmLayer::init()
 
     CCMenuItemImage *pcontinueItem = CCMenuItemImage::create(
                                         "continuebtn.png",
-                                        "continuebtn.png",
+                                        "continuebtnclick.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(visibleSize.width/2,400));
@@ -50,7 +50,7 @@ bool ConfirmLayer::init()
 
 	CCMenuItemImage *pmainmenuItem = CCMenuItemImage::create(
                                         "mainmenubtn.png",
-                                        "mainmenubtn.png",
+                                        "mainmenubtnclick.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
 	pmainmenuItem->setPosition(ccp(visibleSize.width/2,320));
@@ -59,7 +59,7 @@ bool ConfirmLayer::init()
 
     CCMenuItemImage *psettingmenuItem = CCMenuItemImage::create(
                                         "settingmenubtn.png",
-                                        "settingmenubtn.png",
+                                        "settingmenubtnclick.png",
                                         this,
                                         menu_selector(ConfirmLayer::menuconfirmCallback));
 	psettingmenuItem->setPosition(ccp(visibleSize.width/2,240));

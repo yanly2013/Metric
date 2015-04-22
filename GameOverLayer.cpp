@@ -27,7 +27,7 @@ bool GameOverLayer::init()
 		this->addChild(name,2);
     CCMenuItemImage *pcontinueItem = CCMenuItemImage::create(
                                         "confirmbtn.png",
-                                        "confirmbtn.png",
+                                        "confirmbtnclick.png",
                                         this,
                                         menu_selector(GameOverLayer::menuconfirmCallback));
     pcontinueItem->setPosition(ccp(0,0));

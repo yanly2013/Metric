@@ -125,10 +125,10 @@ bool HelloWorld::init()
 
     CCMenuItemImage *ppauseItem = CCMenuItemImage::create(  
                                   "pause.png", //png.jpg等图片格式都是可以的  
-                                  "pause.png");  
+                                  "pauselight.png");  
     CCMenuItemImage *presumeItem = CCMenuItemImage::create(  
-                                  "resume.png", //png.jpg等图片格式都是可以的  
-                                  "resume.png"); 
+                                  "pause.png", //png.jpg等图片格式都是可以的  
+                                  "pauselight.png"); 
     CCMenuItemToggle *toggle = CCMenuItemToggle::createWithTarget(this, menu_selector(HelloWorld::menuPauseCallback),ppauseItem, presumeItem, NULL);
     CCMenu* pPauseMenu = CCMenu::create(toggle, NULL);
 	pPauseMenu->setPosition(ccp(220,450));

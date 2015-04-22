@@ -105,7 +105,7 @@ bool Setting::init()
 	
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  
                                   "returnbutton.png", //png.jpg等图片格式都是可以的  
-                                  "returnbutton.png",  
+                                  "returnbuttonclick.png",  
                                     this,  
                                     menu_selector(Setting::menuOKCallback));  	
     pokItem->setPosition(ccp(0,0));
