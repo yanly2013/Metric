@@ -145,7 +145,7 @@ void Setting::menuSettingCallback(CCObject* pSender)
 		break;
 	case 2:
         isSound = !isSound;
-		SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("Speech.wav")).c_str(), true);
+		SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("Speech.wav")).c_str(), false);
 		break;
 	case 3:
         isVibrate = !isVibrate;

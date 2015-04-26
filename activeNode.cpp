@@ -45,8 +45,10 @@ T_MetricNode* ActiveNode::getActiveNode()
 
  unsigned char ActiveNode::getAnumber()
 {
-     srand((int)time(0));
+	 static int randinrand = 0;
+     srand((int)time(0)+randinrand);
 	 volatile int number = rand()%10;
+	 randinrand = (randinrand+1)%4;
      return number;
 }
 

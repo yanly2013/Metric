@@ -48,6 +48,7 @@ bool EnterNameLayer::init()
     CCSize size=CCDirector::sharedDirector()->getWinSize();
     textField = CCTextFieldTTF::textFieldWithPlaceHolder("Input your ID", "Arial", 24);
     textField->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
+	textField->setColor(ccc3(255,140,0));
     this->addChild(textField); 
     //°ó¶¨½Ó¿Ú
     textField->setDelegate(this);
@@ -83,7 +84,18 @@ void EnterNameLayer::menuconfirmCallback(CCObject* pSender)
 	switch (item->getTag())
 	{
 	case 1:
-        SaveData::getInstant()->addaNameandScore((char *)textField->getString(), m_score);
+		char name[50];
+		char *p =(char *) textField->getString();
+		strcpy(&name[0], p);
+		if (strlen(name) == 0)
+		{
+			SaveData::getInstant()->addaNameandScore("MyID", m_score);
+		}
+		else
+		{
+            SaveData::getInstant()->addaNameandScore((char *)textField->getString(), m_score);
+		}
+
 		SaveData::getInstant()->saveNameandScore();
 		
         CCScene *pScene = Rating::scene();

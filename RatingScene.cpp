@@ -48,7 +48,7 @@ bool Rating::init()
 		item->setPosition(ccp(visibleSize.width/2, item->getContentSize().height/2 *(6-i)));
 		item->setScale(ScaleFactor);
 		this->addChild(item,1);
-        char a[20];  
+        char a[50];  
 	    sprintf(a, "%d", i);
         CCLabelAtlas *ratingnum = CCLabelAtlas::create(a, "ratingnumber.png", 86, 90, '0');
 		ratingnum->setPosition(ccp(visibleSize.width/2-item->getContentSize().height+25, (item->getContentSize().height/2 *(6- i)) - 25));

@@ -11,7 +11,7 @@
 //#include "CCFileUtilsWin32.h"
 #include "EnterNameLayer.h"
 #include "DefScreenAdp.h"
-#include "GameOverLayer.h"
+
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -114,7 +114,7 @@ bool HelloWorld::init()
     pLabellevel->setString("1");//修改文字的方法
 
 
-    pLabelscore->setPosition(ccp(295, 330));
+    pLabelscore->setPosition(ccp(290, 330));
 	this->addChild(pLabelscore, 1);
 	pLabelscore->setString("0");
 
@@ -140,6 +140,7 @@ bool HelloWorld::init()
 	score = 0;
 	line = 0;
 	pauseflg = false;
+	readygocnt = 0;
 
 	createNextNode();
     ActivenextNode();
@@ -222,6 +223,12 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
 }
 void HelloWorld::updateGame(float f)
 {
+	if (readygocnt <=1)
+	{
+        readygo();
+		return;
+	}
+
     saveActiveNode(pactiveNode->getActiveNode());
 	pactiveNode->moveDown();
 	checkConflid();
@@ -240,7 +247,29 @@ void HelloWorld::updateGame(float f)
 	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 
 }
+void  HelloWorld::readygo()
+{
+	CCSprite *ready = NULL;
+    CCSprite *go = NULL;
+	CCActionInterval *fadeout = CCFadeOut::create(1.0);
+	switch (readygocnt)
+	{
+	case 0:
+		ready = CCSprite::create("ready.png");
+		ready->setPosition(ccp(200,400));
+		this->addChild(ready);
+	    ready->runAction(fadeout);
+		break;
+	case 1:
+		go = CCSprite::create("go.png");
+		go->setPosition(ccp(200,400));
+		this->addChild(go);
+	    go->runAction(fadeout);
+		break;
+	}
+	readygocnt++;
 
+}
 void  HelloWorld::updateScore(float f)
 {
    if (level != metriclogic->getLevel())
@@ -602,7 +631,8 @@ void HelloWorld::dismissLineShow()
 
 	    if (SaveData::getInstant()->IsSound())
 	    {
-            //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile("Speech.wav")).c_str(), true);
+            //SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile("Speech.wav")).c_str(), false);
+			SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathForFilename("Speech.wav")).c_str(), false);
 	    }
 		metriclogic->memsetdismisscount();
 	}

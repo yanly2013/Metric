@@ -15,7 +15,7 @@ SaveData::SaveData()
 {
     for (int index = 0; index< 10; index++)
     {
-         name[index] = "----";
+         name[index] = "";
 		 score[index] = 0;
     }
 }
@@ -57,19 +57,20 @@ void SaveData::addaNameandScore(char *pname, int scores)
     }
 	if (index != 10)
 	{
-	    name[index] = newname;
-		score[index] = newscore;
-		for (int i = 8; i <= index; i--)
+		for (int i = 8; i >= index; i--)
 		{
-		    memmove(&name[i], &name[i+1], sizeof(name));
-			memmove(&score[i], &score[i+1], sizeof(score));
+		    strcpy((char*)&name[i+1], (char*)&name[i]);
+			memmove(&score[i+1], &score[i], sizeof(int));
 		}
+        name[index] = newname;
+		score[index] = newscore;
 	}
 
 	
 }
 void SaveData::saveNameandScore()
 {
+
     CCUserDefault::sharedUserDefault()->setStringForKey("firstname", name[0]);
     CCUserDefault::sharedUserDefault()->setStringForKey("secondname", name[1]);
     CCUserDefault::sharedUserDefault()->setStringForKey("thirdname", name[2]);

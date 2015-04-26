@@ -40,6 +40,7 @@ private:
 	void saveActiveNode(T_MetricNode activenode[]);
 	void displayMetric();
 	void Pause();
+	void readygo();
 
 	void dismissLineShow();
 	void gameOverShow();
@@ -73,6 +74,7 @@ private:
 	NodeType m_activetype;
 
 	bool pauseflg;
+	int readygocnt;
 
     unsigned int level;
 	unsigned int score;
