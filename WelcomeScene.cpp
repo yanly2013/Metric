@@ -77,9 +77,14 @@ void  Welcome::updateGame(float f)
 	    pnode->runAction(forwardTo);
 		rotatenum = 0;
 		break;
+    case 4:
+	    forwardTo = CCRotateTo::create(0.2, 90.0f);
+	    pnode->runAction(forwardTo);
+		rotatenum = 0;
+		break;
 	}
     rotatecnt++;
-	if (rotatecnt == 4)
+	if (rotatecnt == 5)
 	{
         CCScene *pScene = Start::scene();
 	    CCDirector::sharedDirector()->replaceScene(pScene); 

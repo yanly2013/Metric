@@ -15,9 +15,18 @@ SaveData::SaveData()
 {
     for (int index = 0; index< 10; index++)
     {
-         name[index] = "";
+         name[index] = "unkownnameunkownnameunkownnameunkownnameunkownnam";
 		 score[index] = 0;
     }
+	
+	if (!CCUserDefault::sharedUserDefault()->getBoolForKey("FirstWrite"))
+	{
+		saveNameandScore();
+			
+	    CCUserDefault::sharedUserDefault()->setBoolForKey("FirstWrite",true);
+	    CCUserDefault::sharedUserDefault()->flush();//
+	}
+
 }
 void SaveData::readNameandScore()
 {
@@ -59,8 +68,9 @@ void SaveData::addaNameandScore(char *pname, int scores)
 	{
 		for (int i = 8; i >= index; i--)
 		{
-		    strcpy((char*)&name[i+1], (char*)&name[i]);
 			memmove(&score[i+1], &score[i], sizeof(int));
+		    name[i+1]=name[i];
+
 		}
         name[index] = newname;
 		score[index] = newscore;
@@ -70,7 +80,6 @@ void SaveData::addaNameandScore(char *pname, int scores)
 }
 void SaveData::saveNameandScore()
 {
-
     CCUserDefault::sharedUserDefault()->setStringForKey("firstname", name[0]);
     CCUserDefault::sharedUserDefault()->setStringForKey("secondname", name[1]);
     CCUserDefault::sharedUserDefault()->setStringForKey("thirdname", name[2]);
@@ -92,6 +101,8 @@ void SaveData::saveNameandScore()
     CCUserDefault::sharedUserDefault()->setIntegerForKey("eighthscore", score[7]);
     CCUserDefault::sharedUserDefault()->setIntegerForKey("ninthscore", score[8]);
     CCUserDefault::sharedUserDefault()->setIntegerForKey("tenthscore", score[9]);
+
+	CCUserDefault::sharedUserDefault()->flush();//
 }
 
 std::string SaveData::getName(int index)
@@ -116,6 +127,7 @@ void SaveData::saveSetting(bool music, bool sound, bool vibrate)
     CCUserDefault::sharedUserDefault()->setBoolForKey("music", music);
     CCUserDefault::sharedUserDefault()->setBoolForKey("sound", sound);
     CCUserDefault::sharedUserDefault()->setBoolForKey("vibrate", vibrate);
+	CCUserDefault::sharedUserDefault()->flush();//
 }
 bool SaveData::IsMusic()
 {

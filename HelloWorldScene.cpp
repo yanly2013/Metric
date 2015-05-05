@@ -169,6 +169,15 @@ bool HelloWorld::init()
 	sp21->setPosition(ccp(300,400));
 	batchnode->addChild(sp21);
 */
+	labelmaxpos = CCLabelTTF::create("maxpos", "Arial", 20);
+    labelmaxpos->setPosition(ccp(200, 630));
+    this->addChild(labelmaxpos,255);
+
+	labelconflidpos = CCLabelTTF::create("conflidpos", "Arial", 20);
+	labelconflidpos->setPosition(ccp(200, 590));
+    this->addChild(labelconflidpos,255);
+
+
     return true;
 }
 void HelloWorld::menuButtonCallback(CCObject* pSender)
@@ -245,6 +254,18 @@ void HelloWorld::updateGame(float f)
 
 	activenode++;
 	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+//////////////////////////////////////////////////////////////////
+	unsigned char* p= NULL;
+	unsigned char maxposition[10];
+    p = metriclogic->getmaxposition();
+	for (int i = 0; i< 10; i++)
+	{
+     	maxposition[i] = *p;
+		p++;
+	}
+	char str[100];
+	sprintf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", maxposition[0], maxposition[1],maxposition[2],maxposition[3],maxposition[4],maxposition[5],maxposition[6],maxposition[7],maxposition[8],maxposition[9]);
+	labelmaxpos->setString(str);
 
 }
 void  HelloWorld::readygo()
@@ -550,6 +571,10 @@ bool HelloWorld::checkConflid()
 				if ((activenode[i].Y==65535) || (activenode[i].X == tempnode[k][j].X && activenode[i].Y == tempnode[k][j].Y && tempnode[k][j].number < 10))
 				{
 					flag = 1;
+					char str[100];
+					sprintf(str, "i:%d,j:%d,k%d,x:%d,y:%d,tx:%d,y:%d,n:%d",i,j,k,activenode[i].X,activenode[i].Y,tempnode[k][j].X,tempnode[k][j].Y,tempnode[k][j].number);
+					labelconflidpos->setString(str);
+
 					break;
 				}
 			}

@@ -2,6 +2,7 @@
 #include "RatingScene.h"
 #include "SaveData.h"
 #include "DefScreenAdp.h"
+#include "StartScene.h"
 USING_NS_CC;
 unsigned int EnterNameLayer::m_score = 0;
 CCScene* EnterNameLayer::scene(CCRenderTexture* sqr, unsigned int score)  
@@ -63,14 +64,21 @@ bool EnterNameLayer::init()
                                         "confirmbtnclick.png",
                                         this,
                                         menu_selector(EnterNameLayer::menuconfirmCallback));
-    pcontinueItem->setPosition(ccp(visibleSize.width/2,280));
+    pcontinueItem->setPosition(ccp(visibleSize.width/2-50,280));
 	pcontinueItem->setScale(ScaleFactor);
     pcontinueItem->setTag(1);
 
-
+    CCMenuItemImage *pcancleItem = CCMenuItemImage::create(
+                                        "canclebtn.png",
+                                        "canclebtnclick.png",
+                                        this,
+                                        menu_selector(EnterNameLayer::menuconfirmCallback));
+    pcancleItem->setPosition(ccp(visibleSize.width/2+50,280));
+	pcancleItem->setScale(ScaleFactor);
+    pcancleItem->setTag(2);
 
     // create menu, it's an autorelease object
-    CCMenu* pConfirmMenu = CCMenu::create(pcontinueItem, NULL);
+    CCMenu* pConfirmMenu = CCMenu::create(pcontinueItem, pcancleItem, NULL);
     pConfirmMenu->setPosition(ccp(0,0));
     this->addChild(pConfirmMenu, 1);
  
@@ -80,16 +88,18 @@ bool EnterNameLayer::init()
 void EnterNameLayer::menuconfirmCallback(CCObject* pSender)
 {
 	CCMenuItemToggle* item = (CCMenuItemToggle*)pSender;
-
+	CCTransitionFade *reScene = NULL;
+	CCScene *pScene = NULL;
+	char *p = NULL;
 	switch (item->getTag())
 	{
 	case 1:
 		char name[50];
-		char *p =(char *) textField->getString();
+		p =(char *) textField->getString();
 		strcpy(&name[0], p);
 		if (strlen(name) == 0)
 		{
-			SaveData::getInstant()->addaNameandScore("MyID", m_score);
+			SaveData::getInstant()->addaNameandScore((char*)"MyID", m_score);
 		}
 		else
 		{
@@ -98,10 +108,16 @@ void EnterNameLayer::menuconfirmCallback(CCObject* pSender)
 
 		SaveData::getInstant()->saveNameandScore();
 		
-        CCScene *pScene = Rating::scene();
+        pScene = Rating::scene();
 
-        CCTransitionFade *reScene = CCTransitionFade::create(1.0f, pScene);
+        reScene = CCTransitionFade::create(1.0f, pScene);
         CCDirector::sharedDirector()->replaceScene(reScene); 
+		break;
+	case 2:
+		pScene = Start::scene();
+		reScene = CCTransitionFade::create(1.0f, pScene);
+        CCDirector::sharedDirector()->replaceScene(reScene); 
+		break;
 		break;
 
 	}

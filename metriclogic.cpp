@@ -218,10 +218,23 @@ void MetricLogic::dismissLine()
 
 	}
 
-
-		for (int j = 0; j<10; j++)
+	int maxposflag = 0;
+		for (int m = 0; m<10; m++)
 		{
-			m_maxposition[j]-=dismissnum;
+			maxposflag = 0;
+			for (int n = 22; n >= 0; n--)
+			{
+				if (m_metricNode[n][m].number < 10)
+				{
+					m_maxposition[m] = n+1;
+					maxposflag = n+1;
+					break;
+				}
+			}
+			if (maxposflag == 0)
+			{
+				m_maxposition[m] = 0;
+			}
 		}
 
 		//calcdismissScore(dismissnum);

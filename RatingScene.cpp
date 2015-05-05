@@ -55,7 +55,10 @@ bool Rating::init()
 		ratingnum->setScale(ScaleFactor);//(0.2f);
 		this->addChild(ratingnum,2);
 		std::string aname = SaveData::getInstant()->getName(i);
-		
+		if (0 == aname.compare("unkownnameunkownnameunkownnameunkownnameunkownnam"))
+		{
+			aname = "";
+		}
 		//sprintf(a, "name:%s", aname);
         CCLabelTTF *name = CCLabelTTF::create(aname.c_str(), "Arial-BoldMT", 30);
 		name->setColor(ccc3(255,140,0));
