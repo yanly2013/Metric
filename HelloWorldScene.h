@@ -80,8 +80,8 @@ private:
 	unsigned int score;
     unsigned int line;
 
-	cocos2d::CCLabelTTF *labelmaxpos;
-    cocos2d::CCLabelTTF *labelconflidpos;
+	//cocos2d::CCLabelTTF *labelmaxpos;
+    //cocos2d::CCLabelTTF *labelconflidpos;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

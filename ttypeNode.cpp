@@ -30,26 +30,26 @@ void TTypeNode::initnext(NodeColor color)
 void TTypeNode::init(NodeColor color)
 {
 	m_activeNode[0].X = 4;
-	m_activeNode[0].Y = 22;
-	m_activeNode[0].number = getAnumber();;
+	m_activeNode[0].Y = 23;
+	m_activeNode[0].number = getAnumber();
 	m_activeNode[0].color = color;
 	m_activeNode[0].tools = 0;
     
 	m_activeNode[1].X = 5;
-	m_activeNode[1].Y = 22;
-	m_activeNode[1].number = getAnumber();;
+	m_activeNode[1].Y = 23;
+	m_activeNode[1].number = getAnumber();
 	m_activeNode[1].color = color;
 	m_activeNode[1].tools = 0;
    
 	m_activeNode[2].X = 6;
-	m_activeNode[2].Y = 22;
-	m_activeNode[2].number = getAnumber();;
+	m_activeNode[2].Y = 23;
+	m_activeNode[2].number = getAnumber();
 	m_activeNode[2].color = color;
 	m_activeNode[2].tools = 0;
     
 	m_activeNode[3].X = 5;
-	m_activeNode[3].Y = 21;
-	m_activeNode[3].number = getAnumber();;
+	m_activeNode[3].Y = 22;
+	m_activeNode[3].number = getAnumber();
 	m_activeNode[3].color = color;
 	m_activeNode[3].tools = 0;
 	rotatenum=0;

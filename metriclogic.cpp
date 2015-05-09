@@ -12,19 +12,19 @@ void MetricLogic::init()
 	m_metricNode[0][0].X = 0;
 	m_metricNode[0][0].Y = 0;
 	m_metricNode[0][0].number = 0;
-	m_metricNode[0][0].color = GREEN;
+	m_metricNode[0][0].color = YELLOW;
 	m_metricNode[0][1].X = 1;
 	m_metricNode[0][1].Y = 0;
 	m_metricNode[0][1].number = 1;
-	m_metricNode[0][1].color = GREEN;
+	m_metricNode[0][1].color = YELLOW;
 	m_metricNode[0][2].X = 2;
 	m_metricNode[0][2].Y = 0;
 	m_metricNode[0][2].number = 2;
-	m_metricNode[0][2].color = GREEN;
+	m_metricNode[0][2].color = YELLOW;
 	m_metricNode[0][3].X = 3;
 	m_metricNode[0][3].Y = 0;
 	m_metricNode[0][3].number = 3;
-	m_metricNode[0][3].color = GREEN;
+	m_metricNode[0][3].color = YELLOW;
 	m_metricNode[0][4].X = 4;
 	m_metricNode[0][4].Y = 0;
 	m_metricNode[0][4].number = 20;
@@ -36,60 +36,60 @@ void MetricLogic::init()
 	m_metricNode[0][6].X = 6;
 	m_metricNode[0][6].Y = 0;
 	m_metricNode[0][6].number = 6;
-	m_metricNode[0][6].color = GREEN;
+	m_metricNode[0][6].color = RED;
 	m_metricNode[0][7].X = 7;
 	m_metricNode[0][7].Y = 0;
 	m_metricNode[0][7].number = 7;
-	m_metricNode[0][7].color = GREEN;
+	m_metricNode[0][7].color = RED;
 	m_metricNode[0][8].X = 8;
 	m_metricNode[0][8].Y = 0;
 	m_metricNode[0][8].number = 8;
-	m_metricNode[0][8].color = GREEN;
+	m_metricNode[0][8].color = RED;
 	m_metricNode[0][9].X = 9;
 	m_metricNode[0][9].Y = 0;
 	m_metricNode[0][9].number = 9;
-	m_metricNode[0][9].color = GREEN;
+	m_metricNode[0][9].color = RED;
 
 	m_metricNode[1][0].X = 0;
 	m_metricNode[1][0].Y = 1;
 	m_metricNode[1][0].number = 20;
-	m_metricNode[1][0].color = GREEN;
+	m_metricNode[1][0].color = RED;
 	m_metricNode[1][1].X = 1;
 	m_metricNode[1][1].Y = 1;
 	m_metricNode[1][1].number = 20;
-	m_metricNode[1][1].color = GREEN;
+	m_metricNode[1][1].color = PURPLE;
 	m_metricNode[1][2].X = 2;
 	m_metricNode[1][2].Y = 1;
 	m_metricNode[1][2].number = 20;
-	m_metricNode[1][2].color = GREEN;
+	m_metricNode[1][2].color = PURPLE;
 	m_metricNode[1][3].X = 3;
 	m_metricNode[1][3].Y = 1;
 	m_metricNode[1][3].number = 2;
-	m_metricNode[1][3].color = GREEN;
+	m_metricNode[1][3].color = PURPLE;
 	m_metricNode[1][4].X = 4;
 	m_metricNode[1][4].Y = 1;
 	m_metricNode[1][4].number = 3;
-	m_metricNode[1][4].color = GREEN;
+	m_metricNode[1][4].color = PURPLE;
 	m_metricNode[1][5].X = 5;
 	m_metricNode[1][5].Y = 1;
 	m_metricNode[1][5].number = 20;
-	m_metricNode[1][5].color = GREEN;
+	m_metricNode[1][5].color = PURPLE;
 	m_metricNode[1][6].X = 6;
 	m_metricNode[1][6].Y = 1;
 	m_metricNode[1][6].number = 4;
-	m_metricNode[1][6].color = GREEN;
+	m_metricNode[1][6].color = BLUE;
 	m_metricNode[1][7].X = 7;
 	m_metricNode[1][7].Y = 1;
 	m_metricNode[1][7].number = 20;
-	m_metricNode[1][7].color = GREEN;
+	m_metricNode[1][7].color = BLUE;
 	m_metricNode[1][8].X = 8;
 	m_metricNode[1][8].Y = 1;
 	m_metricNode[1][8].number = 5;
-	m_metricNode[1][8].color = GREEN;
+	m_metricNode[1][8].color = BLUE;
 	m_metricNode[1][9].X = 9;
 	m_metricNode[1][9].Y = 1;
 	m_metricNode[1][9].number = 20;
-	m_metricNode[1][9].color = GREEN;
+	m_metricNode[1][9].color = BLUE;
 
 	m_maxposition[0] = 1;
 	m_maxposition[1] = 1;
@@ -119,7 +119,7 @@ bool MetricLogic::isGameover()
 {
     for (int i = 0; i < 10; i++)
     {
-        if (m_maxposition[i] == 23)
+        if (m_maxposition[i] >= 23)
         {
             return true;
         }
@@ -309,7 +309,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
 		  }
       }
       // 多行积分
-	  m_score *= dismisslinenum;
+	  //m_score *= dismisslinenum;
 	
 	}
 
