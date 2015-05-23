@@ -15,9 +15,10 @@
 
 USING_NS_CC;
 using namespace CocosDenshion;
-
-CCScene* HelloWorld::scene()
+int HelloWorld::m_gamemode = 0;
+CCScene* HelloWorld::scene(int gamemode)
 {
+    m_gamemode = gamemode;
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
@@ -86,21 +87,30 @@ bool HelloWorld::init()
                                     menu_selector(HelloWorld::menuButtonCallback));  	
     protateItem->setPosition(ccp(360,0));
 	protateItem->setTag(3);
+
+	CCMenuItemImage *pnumberloopItem = CCMenuItemImage::create(  
+                                  "numberloop.png", //png.jpg等图片格式都是可以的  
+                                  "numberlooplight.png",  
+                                    this,  
+                                    menu_selector(HelloWorld::menuButtonCallback));  	
+    pnumberloopItem->setPosition(ccp(520,0));
+	pnumberloopItem->setTag(4);
+
     CCMenuItemImage *pdownItem = CCMenuItemImage::create(  
                                   "downarrow.png", //png.jpg等图片格式都是可以的  
                                   "downarrowlight.png",  
                                     this,  
                                     menu_selector(HelloWorld::menuButtonCallback));  	
-    pdownItem->setPosition(ccp(540,0));
-	pdownItem->setTag(4);
+    pdownItem->setPosition(ccp(520,320));
+	pdownItem->setTag(5);
     CCMenuItemImage *pquickdownItem = CCMenuItemImage::create(  
                                   "quickdown.png", //png.jpg等图片格式都是可以的  
                                   "quickdownlight.png",  
                                     this,  
                                     menu_selector(HelloWorld::menuButtonCallback));  	
-    pquickdownItem->setPosition(ccp(540,180));
-	pquickdownItem->setTag(5);
-	CCMenu* pButtonMenu = CCMenu::create(pleftarrowItem, prightarrowItem, protateItem, pdownItem, pquickdownItem, NULL);
+    pquickdownItem->setPosition(ccp(520,160));
+	pquickdownItem->setTag(6);
+	CCMenu* pButtonMenu = CCMenu::create(pleftarrowItem, prightarrowItem, protateItem, pnumberloopItem, pdownItem, pquickdownItem, NULL);
 	pButtonMenu->setPosition(ccp(-45,-90));
 	pButtonMenu->setScale(ScaleFactor);
 	this->addChild(pButtonMenu, 1);
@@ -109,17 +119,17 @@ bool HelloWorld::init()
     pLabellevel = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
     pLabelscore = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
     pLabelline = CCLabelAtlas::create("1", "number.png", 14, 21, '0');
-    pLabellevel->setPosition(ccp(295, 410));
+    pLabellevel->setPosition(ccp(295, 425));
     this->addChild(pLabellevel, 1);
     pLabellevel->setString("1");//修改文字的方法
 
 
-    pLabelscore->setPosition(ccp(290, 330));
+    pLabelscore->setPosition(ccp(290, 365));
 	this->addChild(pLabelscore, 1);
 	pLabelscore->setString("0");
 
 
-    pLabelline->setPosition(ccp(295, 250));
+    pLabelline->setPosition(ccp(295, 300));
 	this->addChild(pLabelline, 1);
 	pLabelline->setString("0");
 
@@ -131,8 +141,8 @@ bool HelloWorld::init()
                                   "pauselight.png"); 
     CCMenuItemToggle *toggle = CCMenuItemToggle::createWithTarget(this, menu_selector(HelloWorld::menuPauseCallback),ppauseItem, presumeItem, NULL);
     CCMenu* pPauseMenu = CCMenu::create(toggle, NULL);
-	pPauseMenu->setPosition(ccp(220,450));
-	pPauseMenu->setScale(ScaleFactor);
+	pPauseMenu->setPosition(ccp(200,400));
+	pPauseMenu->setScale(0.3f);
 	this->addChild(pPauseMenu, 1);
 
     deadSpriteNum = 0;
@@ -152,6 +162,7 @@ bool HelloWorld::init()
 
 	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
 	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
+	this->schedule(schedule_selector(HelloWorld::updateTime), 1.0f);
 
 	metriclogic = new MetricLogic();
 	metriclogic->init();
@@ -178,7 +189,23 @@ bool HelloWorld::init()
 	labelconflidpos->setPosition(ccp(200, 590));
     this->addChild(labelconflidpos,255);
 */
-
+	if (m_gamemode == 3)
+	{
+        negtime = CCLabelTTF::create("10 : 00", "Arial", 20);
+        negtime->setPosition(ccp(300, 585));
+        this->addChild(negtime,255);
+        m_minute = 10;
+	    m_second = 0;
+	}
+	else
+	{
+        postime = CCLabelTTF::create("00 : 00", "Arial", 20);
+        postime->setPosition(ccp(300, 585));
+        this->addChild(postime,255);
+        m_minute = 0;
+	    m_second = 0;
+	}
+	m_timetoover = false;
     return true;
 }
 void HelloWorld::menuButtonCallback(CCObject* pSender)
@@ -198,9 +225,12 @@ void HelloWorld::menuButtonCallback(CCObject* pSender)
 		pactiveNode->rotate();
         break;
 	case 4:
-		pactiveNode->moveDown();
+		pactiveNode->loopNumber();
         break;
 	case 5:
+		pactiveNode->moveDown();
+        break;
+	case 6:
 		while (1)
 		{
 			pactiveNode->moveDown();
@@ -241,6 +271,45 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
    
     //将游戏界面暂停，压入场景堆栈。并切换到GamePause界面  
     CCDirector::sharedDirector()->pushScene(ConfirmLayer::scene(renderTexture));  
+
+}
+void HelloWorld::updateTime(float f)
+{
+    char a[10]; 
+    if (m_gamemode == 3)
+	{
+		if (m_second >0)
+		{
+            m_second--;
+		}
+		else if (m_second == 0)
+		{
+			m_second = 59;
+			m_minute--;
+		}
+       sprintf(a, "%02d : %02d", m_minute, m_second);
+       negtime->setString(a);
+	   if (m_second == 0 && m_minute == 0)
+	   {
+		   	m_timetoover = true;
+			checkConflid();
+	   }
+	}
+	else
+	{
+		if (m_second == 59)
+		{
+			m_second = 0;
+			m_minute++;
+		}
+		else
+		{
+			m_second++;
+		}
+		 
+	sprintf(a, "%02d : %02d", m_minute, m_second);
+    postime->setString(a);
+	}
 
 }
 void HelloWorld::updateGame(float f)
@@ -620,6 +689,11 @@ bool HelloWorld::checkConflid()
 	    ActivenextNode();
 		createNextNode();
 		return true;
+	}
+	else if (m_timetoover)
+	{
+        gameOverShow();
+        return true;
 	}
 	else
 	{

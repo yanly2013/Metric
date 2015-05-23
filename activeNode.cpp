@@ -37,6 +37,15 @@ void ActiveNode::moveDown()
     m_activeNode[2].Y-=1;
 	m_activeNode[3].Y-=1;
 }
+void ActiveNode::loopNumber()
+{
+	T_MetricNode temp;
+	temp = m_activeNode[3];
+	m_activeNode[3] = m_activeNode[2];
+	m_activeNode[2] = m_activeNode[1];
+	m_activeNode[1] = m_activeNode[0];
+	m_activeNode[0] = temp;
+}
 
 T_MetricNode* ActiveNode::getActiveNode()
 {

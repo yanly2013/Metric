@@ -55,13 +55,34 @@ bool Start::init()
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(pSprite, 0);
 
-    CCMenuItemImage *pstartItem = CCMenuItemImage::create(
-                                        "startgame.png",
-                                        "startgameclick.png",
+    CCMenuItemImage *pleisuremodeItem = CCMenuItemImage::create(
+                                        "leisuremode.png",
+                                        "leisuremodeclick.png",
                                         this,
                                         menu_selector(Start::menuStartCallback));
-	pstartItem->setPosition(ccp(0,200));
-	pstartItem->setTag(1);
+	pleisuremodeItem->setPosition(ccp(50,350));
+	pleisuremodeItem->setScale(0.7f);
+	pleisuremodeItem->setTag(1);
+	
+    CCMenuItemImage *ptimemodeItem = CCMenuItemImage::create(
+                                        "timemode.png",
+                                        "timemodeclick.png",
+                                        this,
+                                        menu_selector(Start::menuStartCallback));
+	ptimemodeItem->setPosition(ccp(-100,200));
+	ptimemodeItem->setScale(0.7f);
+	ptimemodeItem->setTag(3);
+	
+    CCMenuItemImage *pcrazymodeItem = CCMenuItemImage::create(
+                                        "crazymode.png",
+                                        "crazymodeclick.png",
+                                        this,
+                                        menu_selector(Start::menuStartCallback));
+	pcrazymodeItem->setPosition(ccp(90,130));
+	pcrazymodeItem->setScale(0.7f);
+	pcrazymodeItem->setTag(4);
+	
+
     CCMenuItemImage *pexitItem = CCMenuItemImage::create(
                                         "exitgame.png",
                                         "exitgameclick.png",
@@ -91,7 +112,7 @@ bool Start::init()
     pChallegeModeItem->setTag(2);
     */
     // create menu, it's an autorelease object
-    CCMenu* pStartMenu = CCMenu::create(pstartItem, pexitItem, NULL);
+    CCMenu* pStartMenu = CCMenu::create(pleisuremodeItem, ptimemodeItem, pcrazymodeItem, pexitItem, NULL);
 	pStartMenu->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 - pexitItem->getContentSize().height/2));
 	//pStartMenu->setScale(ScaleFactor);
     this->addChild(pStartMenu, 1);
@@ -144,15 +165,25 @@ void Start::menuStartCallback(CCObject* pSender)
 	switch (item->getTag())
 	{
 	case 1:
-		pScene = HelloWorld::scene();
+		pScene = HelloWorld::scene(1);
+		reScene = CCTransitionFade::create(1.0f, pScene);
+	    CCDirector::sharedDirector()->replaceScene(reScene); 
+		break;
+    case 3:
+		pScene = HelloWorld::scene(3);
+		reScene = CCTransitionFade::create(1.0f, pScene);
+	    CCDirector::sharedDirector()->replaceScene(reScene); 
+		break;
+    case 4:
+		pScene = HelloWorld::scene(4);
 		reScene = CCTransitionFade::create(1.0f, pScene);
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
 	case 2:
-        CCAction* popupLayer = CCSequence::create(CCScaleTo::create(0.0, 0.0),
-                                          CCScaleTo::create(0.06, 1.05),
-                                          CCScaleTo::create(0.08, 0.95),
-                                          CCScaleTo::create(0.08, 1.0), NULL);
+        CCAction* popupLayer = CCSequence::create(CCScaleTo::create(0.0f, 0.0f),
+                                          CCScaleTo::create(0.06f, 1.05f),
+                                          CCScaleTo::create(0.08f, 0.95f),
+                                          CCScaleTo::create(0.08f, 1.0f), NULL);
 
          ExitLayer* exitLayer = new ExitLayer();
 		 //EnterNameLayer* exitLayer = new EnterNameLayer();

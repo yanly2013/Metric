@@ -25,6 +25,7 @@ public:
 	virtual void moveLeft();
     virtual void moveRight();
     virtual void moveDown();
+	virtual void loopNumber();
 
 	virtual T_MetricNode* getActiveNode();
 	virtual unsigned char getAnumber();

@@ -16,7 +16,7 @@ public:
     virtual bool init();  
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::CCScene* scene();
+    static cocos2d::CCScene* scene(int gamemode);
     
     // a selector callback
 	void menuButtonCallback(CCObject* pSender);
@@ -30,6 +30,7 @@ public:
 private:
 	void updateGame(float f);
 	void updateScore(float f);
+	void updateTime(float f);
     bool checkConflid();
 	NodeType createNodeType();
 	NodeColor createNodeColor();
@@ -80,6 +81,12 @@ private:
 	unsigned int score;
     unsigned int line;
 
+	static int m_gamemode;
+	cocos2d::CCLabelTTF *postime;
+	cocos2d::CCLabelTTF *negtime;
+	int m_minute;
+	int m_second;
+	bool m_timetoover;
 	//cocos2d::CCLabelTTF *labelmaxpos;
     //cocos2d::CCLabelTTF *labelconflidpos;
 };
