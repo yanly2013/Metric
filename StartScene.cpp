@@ -165,17 +165,17 @@ void Start::menuStartCallback(CCObject* pSender)
 	switch (item->getTag())
 	{
 	case 1:
-		pScene = HelloWorld::scene(1);
+		pScene = HelloWorld::scene(0);
 		reScene = CCTransitionFade::create(1.0f, pScene);
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
     case 3:
-		pScene = HelloWorld::scene(3);
+		pScene = HelloWorld::scene(1);
 		reScene = CCTransitionFade::create(1.0f, pScene);
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;
     case 4:
-		pScene = HelloWorld::scene(4);
+		pScene = HelloWorld::scene(2);
 		reScene = CCTransitionFade::create(1.0f, pScene);
 	    CCDirector::sharedDirector()->replaceScene(reScene); 
 		break;

@@ -769,6 +769,8 @@ void HelloWorld::gameOverShow()
 	activenode++;
 	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 	
+	SaveData::getInstant()->saveGamemode(m_gamemode);
+
 //得到窗口的大小  
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();  
     CCRenderTexture *renderTexture = CCRenderTexture::create(visibleSize.width,visibleSize.height);  

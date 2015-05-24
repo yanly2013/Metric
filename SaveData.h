@@ -15,16 +15,27 @@ public:
 	bool IsMusic();
 	bool IsSound();
 	bool IsVibrate();
+	void saveGamemode(int gamemode);
+	int getGamemode();
 
 
 private:
 	SaveData();
+	void addnameandscoreLeisuremode(char *pname, int scores);
+	void addnameandscoreTimemode(char *pname, int scores);
+	void addnameandscoreCrazymode(char *pname, int scores);
 	void SortwithScore();
 	std::string name[10];
 	int  score[10];
+    std::string nametimemode[10];
+	int  scoretimemode[10];
+	std::string namecrazymode[10];
+	int  scorecrazymode[10];
     bool isMusic;
 	bool isSound;
 	bool isVibrate;
+	
+	int m_gamemode;
 	
     static SaveData* m_SaveDataInst;
 };

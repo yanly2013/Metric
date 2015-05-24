@@ -15,6 +15,7 @@ public:
     
     // a selector callback
     void menuOKCallback(CCObject* pSender);
+	void menumodeswitchCallback(CCObject* pSender);
 
 
 
@@ -24,8 +25,10 @@ public:
 	//virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-	
-
+	void showRatingband();
+	int m_gamemode;
+	cocos2d::CCSprite *pprevname;
+	cocos2d::CCSprite *pprevnameandscore[10];
 
 };
 
