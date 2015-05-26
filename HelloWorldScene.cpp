@@ -151,6 +151,7 @@ bool HelloWorld::init()
 	line = 0;
 	pauseflg = false;
 	readygocnt = 0;
+	nodeone = 0;
 
 	createNextNode();
     ActivenextNode();
@@ -163,6 +164,7 @@ bool HelloWorld::init()
 	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
 	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
 	this->schedule(schedule_selector(HelloWorld::updateTime), 1.0f);
+    this->schedule(schedule_selector(HelloWorld::updateCrazymode), 2.0f);
 
 	metriclogic = new MetricLogic();
 	metriclogic->init();
@@ -272,6 +274,55 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
     //将游戏界面暂停，压入场景堆栈。并切换到GamePause界面  
     CCDirector::sharedDirector()->pushScene(ConfirmLayer::scene(renderTexture));  
 
+}
+
+void HelloWorld::updateCrazymode(float f)
+{
+    static int timecount = 0;
+	timecount = (timecount == 1) ? 0 : 1;
+
+    if (timecount == 0)
+    {
+        //addNewNodefrombottom();
+    }
+	else
+	{
+	    addNewNodefromup();
+	}
+	
+}
+
+void HelloWorld::addNewNodefrombottom()
+{
+    metriclogic->addNewNodefrombottom();
+	displayMetric();
+}
+void HelloWorld::addNewNodefromup()
+{
+    unsigned char *maxpos = NULL;
+	maxpos = metriclogic->getmaxposition();
+    int x = 0;
+	int y = 0;
+	int col = 0;
+	if (nodeone != 0)
+	{
+			batchnode->removeChild(nodeone, true);
+	}
+
+	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[x][y]);
+	nodeone = CCSprite::createWithSpriteFrame(frame1); 
+	
+	nodeone->setPosition(ccp(XLogictoPhysic[col],YLogictoPhysic[23]));
+    nodeone->setScale(ScaleFactor);
+	batchnode->addChild(nodeone);
+    CCActionInterval * moveaction = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col], YLogictoPhysic[*(maxpos+col)]));
+    nodeone->runAction(moveaction);
+	
+    
+    metriclogic->addNewNodefromup(col,2,3);
+	displayMetric();
+
+	
 }
 void HelloWorld::updateTime(float f)
 {

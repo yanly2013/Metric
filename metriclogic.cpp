@@ -326,3 +326,39 @@ unsigned int* MetricLogic::getdismissline()
 {
 	return &dismisscount[0];
 }
+ 
+void MetricLogic::addNewNodefrombottom()
+{
+   for (int i = 22; i>= 0; i--)
+   {
+        memcpy(&m_metricNode[i+1], &m_metricNode[i], sizeof(T_MetricNode)*10);
+
+   }
+   for (int i = 22; i > 0; i--)
+   {
+   		for (int j = 0; j < 10; j++)
+		{
+			if (m_metricNode[i][j].Y != 65535)
+			{
+			    m_metricNode[i][j].Y +=1;
+			}
+		}
+   }
+   for (int x = 0; x< 10; x++)
+   {
+	   m_metricNode[0][x].number = x;
+	   m_metricNode[0][x].color = RED;
+	   m_metricNode[0][x].tools = 20;
+	   m_maxposition[x]+=1;
+   }
+   m_metricNode[0][3].number = 20;
+}
+void MetricLogic::addNewNodefromup(int nodeonex, int nondtwox, int nodethreex)
+{
+    m_metricNode[m_maxposition[nodeonex]][nodeonex].X = nodeonex;
+	m_metricNode[m_maxposition[nodeonex]][nodeonex].Y = m_maxposition[nodeonex];
+	m_metricNode[m_maxposition[nodeonex]][nodeonex].number = 2;
+    m_metricNode[m_maxposition[nodeonex]][nodeonex].color = RED;	   
+	m_metricNode[m_maxposition[nodeonex]][nodeonex].tools = 20;
+	m_maxposition[nodeonex] +=1;
+}

@@ -31,6 +31,7 @@ private:
 	void updateGame(float f);
 	void updateScore(float f);
 	void updateTime(float f);
+    void updateCrazymode(float f);
     bool checkConflid();
 	NodeType createNodeType();
 	NodeColor createNodeColor();
@@ -45,6 +46,9 @@ private:
 
 	void dismissLineShow();
 	void gameOverShow();
+
+	void addNewNodefrombottom();
+    void addNewNodefromup();
 	
     MetricFactory *factory;
 	cocos2d::CCSpriteBatchNode * batchnode;
@@ -57,6 +61,8 @@ private:
 	cocos2d::CCSprite *pnextMetric2;
 	cocos2d::CCSprite *pnextMetric3;
 	cocos2d::CCSprite *pNodeSprite[24*10];
+
+	cocos2d::CCSprite *nodeone;
 
 	cocos2d::CCSprite *pgood;
 	cocos2d::CCSprite *pdismissline;
