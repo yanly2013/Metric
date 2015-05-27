@@ -327,8 +327,13 @@ unsigned int* MetricLogic::getdismissline()
 	return &dismisscount[0];
 }
  
-void MetricLogic::addNewNodefrombottom()
+void MetricLogic::addNewNodefrombottom(int randnum)
 {
+   if (randnum > 8)
+   {
+	   return;
+   }
+
    for (int i = 22; i>= 0; i--)
    {
         memcpy(&m_metricNode[i+1], &m_metricNode[i], sizeof(T_MetricNode)*10);
@@ -344,21 +349,45 @@ void MetricLogic::addNewNodefrombottom()
 			}
 		}
    }
-   for (int x = 0; x< 10; x++)
+   for (int x = 0; x < 10; x++)
    {
-	   m_metricNode[0][x].number = x;
-	   m_metricNode[0][x].color = RED;
-	   m_metricNode[0][x].tools = 20;
-	   m_maxposition[x]+=1;
+       m_metricNode[0][x].number = 20;
    }
-   m_metricNode[0][3].number = 20;
+
+   int randgap[] = {0, 3, 5, 8, 9, 1, 2, 6, 4, 7};
+   int posx;
+   int number;
+   int color;
+
+   for (int x = 0; x< randnum; x++)
+   {
+	   posx = randgap[(randnum+x)%10];
+	   number = (randnum+posx)%10;
+	   color = (randnum+posx)%5;
+	   m_metricNode[0][posx].number = number;
+	   m_metricNode[0][posx].color = color;
+	   m_metricNode[0][posx].tools = 20;
+	   m_maxposition[posx]+=1;
+   }
 }
-void MetricLogic::addNewNodefromup(int nodeonex, int nondtwox, int nodethreex)
+void MetricLogic::addNewNodefromup(int nodeonex, int nondtwox, int nodethreex,  int color, int number)
 {
     m_metricNode[m_maxposition[nodeonex]][nodeonex].X = nodeonex;
 	m_metricNode[m_maxposition[nodeonex]][nodeonex].Y = m_maxposition[nodeonex];
-	m_metricNode[m_maxposition[nodeonex]][nodeonex].number = 2;
-    m_metricNode[m_maxposition[nodeonex]][nodeonex].color = RED;	   
+	m_metricNode[m_maxposition[nodeonex]][nodeonex].number = number;
+    m_metricNode[m_maxposition[nodeonex]][nodeonex].color = color;	   
 	m_metricNode[m_maxposition[nodeonex]][nodeonex].tools = 20;
 	m_maxposition[nodeonex] +=1;
+	m_metricNode[m_maxposition[nondtwox]][nondtwox].X = nondtwox;
+	m_metricNode[m_maxposition[nondtwox]][nondtwox].Y = m_maxposition[nondtwox];
+	m_metricNode[m_maxposition[nondtwox]][nondtwox].number = number;
+    m_metricNode[m_maxposition[nondtwox]][nondtwox].color = color;	   
+	m_metricNode[m_maxposition[nondtwox]][nondtwox].tools = 20;
+	m_maxposition[nondtwox] +=1;
+	m_metricNode[m_maxposition[nodethreex]][nodethreex].X = nodethreex;
+	m_metricNode[m_maxposition[nodethreex]][nodethreex].Y = m_maxposition[nodethreex];
+	m_metricNode[m_maxposition[nodethreex]][nodethreex].number = number;
+    m_metricNode[m_maxposition[nodethreex]][nodethreex].color = color;	   
+	m_metricNode[m_maxposition[nodethreex]][nodethreex].tools = 20;
+	m_maxposition[nodethreex] +=1;
 }

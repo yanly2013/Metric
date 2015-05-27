@@ -152,6 +152,8 @@ bool HelloWorld::init()
 	pauseflg = false;
 	readygocnt = 0;
 	nodeone = 0;
+	nodetwo = 0;
+	nodethree = 0;
 
 	createNextNode();
     ActivenextNode();
@@ -164,7 +166,7 @@ bool HelloWorld::init()
 	this->schedule(schedule_selector(HelloWorld::updateGame), 1.0f);
 	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
 	this->schedule(schedule_selector(HelloWorld::updateTime), 1.0f);
-    this->schedule(schedule_selector(HelloWorld::updateCrazymode), 2.0f);
+    this->schedule(schedule_selector(HelloWorld::updateCrazymode), 30.0f);
 
 	metriclogic = new MetricLogic();
 	metriclogic->init();
@@ -246,7 +248,7 @@ void HelloWorld::menuButtonCallback(CCObject* pSender)
 	}
 	checkConflid();
 
-		T_MetricNode* activenode = pactiveNode->getActiveNode();
+	T_MetricNode* activenode = pactiveNode->getActiveNode();
 	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
 	
 	activenode++;
@@ -278,12 +280,16 @@ void HelloWorld::menuPauseCallback(CCObject* pSender)
 
 void HelloWorld::updateCrazymode(float f)
 {
+	if (m_gamemode != 2)
+	{
+		return;
+	}
     static int timecount = 0;
 	timecount = (timecount == 1) ? 0 : 1;
 
     if (timecount == 0)
     {
-        //addNewNodefrombottom();
+        addNewNodefrombottom();
     }
 	else
 	{
@@ -294,32 +300,69 @@ void HelloWorld::updateCrazymode(float f)
 
 void HelloWorld::addNewNodefrombottom()
 {
-    metriclogic->addNewNodefrombottom();
+	int randnumber = (CCRANDOM_0_1() * 100);
+    metriclogic->addNewNodefrombottom(randnumber);
 	displayMetric();
 }
 void HelloWorld::addNewNodefromup()
 {
     unsigned char *maxpos = NULL;
 	maxpos = metriclogic->getmaxposition();
-    int x = 0;
-	int y = 0;
-	int col = 0;
+
+	int randgap[] = {0, 3, 5, 8, 9, 1, 2, 6, 4, 7};
+	static int randcnt = 0;
+	int randnumber = (CCRANDOM_0_1() * 100);
+	int randnum = randnumber%10;
+	int randcolorx = randnumber%5;
+	int randcolory = randnumber%10;
+	int col1 = (randnum + randgap[randcnt])%10;
+	randcnt = (randcnt+1) % 10;
+	int col2 = (randnum + randgap[randcnt])%10;
+	randcnt = (randcnt+1) % 10;
+    int col3 = (randnum + randgap[randcnt])%10;
+	randcnt = (randcnt+1) % 10;
+
 	if (nodeone != 0)
 	{
 			batchnode->removeChild(nodeone, true);
 	}
-
-	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[x][y]);
+	if (nodetwo != 0)
+	{
+			batchnode->removeChild(nodetwo, true);
+	}
+	if (nodethree != 0)
+	{
+			batchnode->removeChild(nodethree, true);
+	}
+	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[randcolorx][randcolory]);
 	nodeone = CCSprite::createWithSpriteFrame(frame1); 
 	
-	nodeone->setPosition(ccp(XLogictoPhysic[col],YLogictoPhysic[23]));
+	nodeone->setPosition(ccp(XLogictoPhysic[col1],YLogictoPhysic[23]));
     nodeone->setScale(ScaleFactor);
 	batchnode->addChild(nodeone);
-    CCActionInterval * moveaction = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col], YLogictoPhysic[*(maxpos+col)]));
-    nodeone->runAction(moveaction);
+    CCActionInterval * moveaction1 = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col1], YLogictoPhysic[*(maxpos+col1)]));
+    nodeone->runAction(moveaction1);
+
+		
+	CCSpriteFrame *frame2 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[randcolorx][randcolory]);
+	nodetwo = CCSprite::createWithSpriteFrame(frame2); 
 	
+	nodetwo->setPosition(ccp(XLogictoPhysic[col2],YLogictoPhysic[23]));
+    nodetwo->setScale(ScaleFactor);
+	batchnode->addChild(nodetwo);
+    CCActionInterval * moveaction2 = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col2], YLogictoPhysic[*(maxpos+col2)]));
+    nodetwo->runAction(moveaction2);
+		
+	CCSpriteFrame *frame3 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[randcolorx][randcolory]);
+	nodethree = CCSprite::createWithSpriteFrame(frame3); 
+	
+	nodethree->setPosition(ccp(XLogictoPhysic[col3],YLogictoPhysic[23]));
+    nodethree->setScale(ScaleFactor);
+	batchnode->addChild(nodethree);
+    CCActionInterval * moveaction3 = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col3], YLogictoPhysic[*(maxpos+col3)]));
+    nodethree->runAction(moveaction3);
     
-    metriclogic->addNewNodefromup(col,2,3);
+    metriclogic->addNewNodefromup(col1,col2,col3,randcolorx,randcolory);
 	displayMetric();
 
 	

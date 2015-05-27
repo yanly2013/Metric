@@ -75,8 +75,8 @@ public:
 	bool isGameover();
 	void memsetdismisscount();
 	unsigned int* getdismissline();
-	void addNewNodefrombottom();
-    void addNewNodefromup(int nodeonex, int nondtwox, int nodethreex);
+	void addNewNodefrombottom(int randnum);
+    void addNewNodefromup(int nodeonex, int nondtwox, int nodethreex, int color, int number);
 
 
 private:

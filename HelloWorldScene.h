@@ -63,6 +63,8 @@ private:
 	cocos2d::CCSprite *pNodeSprite[24*10];
 
 	cocos2d::CCSprite *nodeone;
+	cocos2d::CCSprite *nodetwo;
+	cocos2d::CCSprite *nodethree;
 
 	cocos2d::CCSprite *pgood;
 	cocos2d::CCSprite *pdismissline;
