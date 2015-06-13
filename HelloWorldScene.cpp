@@ -184,7 +184,7 @@ bool HelloWorld::init()
 	sp21->setPosition(ccp(300,400));
 	batchnode->addChild(sp21);
 */
-	/*
+/*
 	labelmaxpos = CCLabelTTF::create("maxpos", "Arial", 20);
     labelmaxpos->setPosition(ccp(200, 630));
     this->addChild(labelmaxpos,255);
@@ -193,7 +193,7 @@ bool HelloWorld::init()
 	labelconflidpos->setPosition(ccp(200, 590));
     this->addChild(labelconflidpos,255);
 */
-	if (m_gamemode == 3)
+	if (m_gamemode == 1)
 	{
         negtime = CCLabelTTF::create("10 : 00", "Arial", 20);
         negtime->setPosition(ccp(300, 585));
@@ -229,6 +229,7 @@ void HelloWorld::menuButtonCallback(CCObject* pSender)
 		pactiveNode->rotate();
         break;
 	case 4:
+		pactiveNode->setLoopTime();
 		pactiveNode->loopNumber();
         break;
 	case 5:
@@ -247,18 +248,7 @@ void HelloWorld::menuButtonCallback(CCObject* pSender)
 		break;
 	}
 	checkConflid();
-
-	T_MetricNode* activenode = pactiveNode->getActiveNode();
-	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-	
-	activenode++;
-	pMetric1->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-
-	activenode++;
-	pMetric2->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-
-	activenode++;
-	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+    setMetricPosbyOrder();
 }
 void HelloWorld::menuPauseCallback(CCObject* pSender)
 {
@@ -301,6 +291,8 @@ void HelloWorld::updateCrazymode(float f)
 void HelloWorld::addNewNodefrombottom()
 {
 	int randnumber = (CCRANDOM_0_1() * 100);
+
+	randnumber = randnumber % 6;
     metriclogic->addNewNodefrombottom(randnumber);
 	displayMetric();
 }
@@ -325,14 +317,17 @@ void HelloWorld::addNewNodefromup()
 	if (nodeone != 0)
 	{
 			batchnode->removeChild(nodeone, true);
+			nodeone = 0;
 	}
 	if (nodetwo != 0)
 	{
 			batchnode->removeChild(nodetwo, true);
+			nodetwo = 0;
 	}
 	if (nodethree != 0)
 	{
 			batchnode->removeChild(nodethree, true);
+			nodethree = 0;
 	}
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[randcolorx][randcolory]);
 	nodeone = CCSprite::createWithSpriteFrame(frame1); 
@@ -363,14 +358,14 @@ void HelloWorld::addNewNodefromup()
     nodethree->runAction(moveaction3);
     
     metriclogic->addNewNodefromup(col1,col2,col3,randcolorx,randcolory);
-	displayMetric();
+	//displayMetric();
 
 	
 }
 void HelloWorld::updateTime(float f)
 {
     char a[10]; 
-    if (m_gamemode == 3)
+    if (m_gamemode == 1)
 	{
 		if (m_second >0)
 		{
@@ -406,6 +401,26 @@ void HelloWorld::updateTime(float f)
 	}
 
 }
+void HelloWorld::setMetricPosbyOrder()
+{
+    T_MetricNode* activenode = pactiveNode->getActiveNode();
+	unsigned int looptime = pactiveNode->getLoopTime();
+	
+	CCSprite *pMetric[4];
+	pMetric[0] = pMetric0;
+	pMetric[1] = pMetric1;
+    pMetric[2] = pMetric2;
+    pMetric[3] = pMetric3;
+	
+	int startindex = looptime;
+	for (int i = 0; i < 4; i++)
+	{
+        pMetric[startindex]->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+		activenode++;
+		startindex = (startindex+1)%4;
+	}
+}
+
 void HelloWorld::updateGame(float f)
 {
 	if (readygocnt <=1)
@@ -418,21 +433,11 @@ void HelloWorld::updateGame(float f)
 	pactiveNode->moveDown();
 	if (!checkConflid())
 	{
-	T_MetricNode* activenode = pactiveNode->getActiveNode();
-	pMetric0->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-	
-	activenode++;
-	pMetric1->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-
-	activenode++;
-	pMetric2->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
-
-	activenode++;
-	pMetric3->setPosition(ccp(XLogictoPhysic[activenode->X], YLogictoPhysic[activenode->Y]));
+		setMetricPosbyOrder();
 	}
 	//dismissLineShow();
 //////////////////////////////////////////////////////////////////
-	/*
+/*	
 	unsigned char* p= NULL;
 	unsigned char maxposition[10];
     p = metriclogic->getmaxposition();
@@ -444,7 +449,7 @@ void HelloWorld::updateGame(float f)
 	char str[100];
 	sprintf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", maxposition[0], maxposition[1],maxposition[2],maxposition[3],maxposition[4],maxposition[5],maxposition[6],maxposition[7],maxposition[8],maxposition[9]);
 	labelmaxpos->setString(str);
-    */
+ */   
 }
 void  HelloWorld::readygo()
 {
@@ -770,6 +775,24 @@ bool HelloWorld::checkConflid()
 
 	if (flag ==1)
 	{
+		if (m_gamemode == 2)
+		{
+			if (nodeone != 0)
+			{
+					batchnode->removeChild(nodeone, true);
+					nodeone = 0;
+			}
+			if (nodetwo != 0)
+			{
+					batchnode->removeChild(nodetwo, true);
+					nodetwo = 0;
+			}
+			if (nodethree != 0)
+			{
+					batchnode->removeChild(nodethree, true);
+					nodethree = 0;
+			}
+		}
 		metriclogic->addnewNode(oldactivenode);
 		metriclogic->dismissLine();
 		dismissLineShow();

@@ -33,6 +33,7 @@ private:
 	void updateTime(float f);
     void updateCrazymode(float f);
     bool checkConflid();
+    void setMetricPosbyOrder();
 	NodeType createNodeType();
 	NodeColor createNodeColor();
 
@@ -46,6 +47,8 @@ private:
 
 	void dismissLineShow();
 	void gameOverShow();
+
+
 
 	void addNewNodefrombottom();
     void addNewNodefromup();

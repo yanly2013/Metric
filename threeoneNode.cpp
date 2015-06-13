@@ -29,6 +29,7 @@ void ThreeOneNode::initnext(NodeColor color)
 
 void ThreeOneNode::init(NodeColor color)
 {
+    looptime = 0;
 	m_activeNode[0].X = 4;
 	m_activeNode[0].Y = 23;
 	m_activeNode[0].number = getAnumber();
