@@ -11,10 +11,11 @@ public:
 	std::string getName(int index);
 	int getScore(int index);
 	void readSetting();
-	void saveSetting(bool music, bool sound, bool vibrate);
+	void saveSetting(bool music, bool sound, bool vibrate, bool tool);
 	bool IsMusic();
 	bool IsSound();
 	bool IsVibrate();
+	bool IsTool();
 	void saveGamemode(int gamemode);
 	int getGamemode();
 
@@ -34,6 +35,7 @@ private:
     bool isMusic;
 	bool isSound;
 	bool isVibrate;
+	bool isTool;
 	
 	int m_gamemode;
 	

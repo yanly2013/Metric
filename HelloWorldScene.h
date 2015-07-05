@@ -32,6 +32,7 @@ private:
 	void updateScore(float f);
 	void updateTime(float f);
     void updateCrazymode(float f);
+	void updateTool(float f);
     bool checkConflid();
 	NodeType createNodeType();
 	NodeColor createNodeColor();
@@ -49,6 +50,12 @@ private:
 
 	void addNewNodefrombottom();
     void addNewNodefromup();
+
+	void createTool();
+	void destroryTool();
+	void showTool();
+	void tooldismissAnimate();
+    void removeToolAnimate();
 	
     MetricFactory *factory;
 	cocos2d::CCSpriteBatchNode * batchnode;
@@ -65,6 +72,8 @@ private:
 	cocos2d::CCSprite *nodeone;
 	cocos2d::CCSprite *nodetwo;
 	cocos2d::CCSprite *nodethree;
+
+	cocos2d::CCSprite *ptoolNode;
 
 	cocos2d::CCSprite *pgood;
 	cocos2d::CCSprite *pdismissline;
@@ -95,6 +104,15 @@ private:
 	int m_minute;
 	int m_second;
 	bool m_timetoover;
+
+
+	bool isToolOn;
+	bool isToolActive;
+	int toolposx;
+	int toolposy;
+	int tooltypeno;
+	int gettoolTime;
+	bool isToolGet;
 	//cocos2d::CCLabelTTF *labelmaxpos;
     //cocos2d::CCLabelTTF *labelconflidpos;
 };

@@ -68,7 +68,7 @@ public:
     T_MetricNode* getmetricnode();
 	unsigned char*  getmaxposition();
 	void addnewNode(T_MetricNode a[4]);
-	void dismissLine();
+	bool dismissLine();
 	unsigned int getLevel();
 	unsigned int getScore();
 	unsigned int getLine();
@@ -77,12 +77,17 @@ public:
 	unsigned int* getdismissline();
 	void addNewNodefrombottom(int randnum);
     void addNewNodefromup(int nodeonex, int nondtwox, int nodethreex, int color, int number);
-
+	int getPosy(int posx);
+	void setToolAttr(int toolposx, int toolposy);
+	void removeToolAttr(int toolposx, int toolposy);
+	void setScoreTimes(int times);
 
 private:
 
 	void calcdismissScore(int dismisslinenum);
 	void calcNodeScore(T_MetricNode lineNode[]);
+
+
 	T_MetricNode m_metricNode[24][10];
 	unsigned char m_maxposition[10];
 
@@ -91,6 +96,8 @@ private:
     unsigned int m_line;
 
 	unsigned int dismisscount[10];
+
+	int scoreTimes;
 
 
 

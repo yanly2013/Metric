@@ -56,6 +56,8 @@ bool HelloWorld::init()
 
     SaveData::getInstant()->readNameandScore();
 	SaveData::getInstant()->readSetting();
+	isToolOn = SaveData::getInstant()->IsTool();
+	isToolActive = false;
 	
     CCSprite* pSprite = CCSprite::create("bg.png");
 	pSprite->setScale(ScaleFactor);               // ¾«ÁéµÄËõ·Å
@@ -155,6 +157,8 @@ bool HelloWorld::init()
 	nodetwo = 0;
 	nodethree = 0;
 
+	isToolGet = false;
+
 	createNextNode();
     ActivenextNode();
     batchnode->removeChild(pnextMetric0, true);
@@ -167,6 +171,8 @@ bool HelloWorld::init()
 	this->schedule(schedule_selector(HelloWorld::updateScore), 0.1f);
 	this->schedule(schedule_selector(HelloWorld::updateTime), 1.0f);
     this->schedule(schedule_selector(HelloWorld::updateCrazymode), 30.0f);
+    this->schedule(schedule_selector(HelloWorld::updateTool), 1.0f);
+
 
 	metriclogic = new MetricLogic();
 	metriclogic->init();
@@ -324,15 +330,18 @@ void HelloWorld::addNewNodefromup()
 
 	if (nodeone != 0)
 	{
-			batchnode->removeChild(nodeone, true);
+		batchnode->removeChild(nodeone, true);
+		nodeone = 0;
 	}
 	if (nodetwo != 0)
 	{
-			batchnode->removeChild(nodetwo, true);
+		batchnode->removeChild(nodetwo, true);
+		nodetwo = 0;
 	}
 	if (nodethree != 0)
 	{
-			batchnode->removeChild(nodethree, true);
+		batchnode->removeChild(nodethree, true);
+		nodethree = 0;
 	}
 	CCSpriteFrame *frame1 = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(SpriteNodeName[randcolorx][randcolory]);
 	nodeone = CCSprite::createWithSpriteFrame(frame1); 
@@ -361,9 +370,11 @@ void HelloWorld::addNewNodefromup()
 	batchnode->addChild(nodethree);
     CCActionInterval * moveaction3 = CCMoveTo::create(1.0f,ccp(XLogictoPhysic[col3], YLogictoPhysic[*(maxpos+col3)]));
     nodethree->runAction(moveaction3);
-    
+ 	  
     metriclogic->addNewNodefromup(col1,col2,col3,randcolorx,randcolory);
-	displayMetric();
+
+	
+	//displayMetric();
 
 	
 }
@@ -446,6 +457,43 @@ void HelloWorld::updateGame(float f)
 	labelmaxpos->setString(str);
     */
 }
+void HelloWorld::updateTool(float f)
+{
+	if (!isToolOn)
+	{
+		return;
+	}
+
+	static int timecount = 0;
+	timecount = (timecount+1)%60;
+
+
+
+	if (timecount == 1)
+	{
+		createTool();
+		isToolActive = true;
+	}
+	else if (timecount == 30 && !isToolGet)
+	{
+		destroryTool();
+		isToolActive = false;
+	}
+	else if (timecount > 1 && timecount < 30 && !isToolGet)
+	{
+		showTool();
+	}
+	if (isToolGet)
+	{
+	    gettoolTime++;
+	    if (gettoolTime == 30)
+	    {
+		     removeToolAnimate();
+	    }
+	}
+	
+}
+
 void  HelloWorld::readygo()
 {
 	CCSprite *ready = NULL;
@@ -770,9 +818,33 @@ bool HelloWorld::checkConflid()
 
 	if (flag ==1)
 	{
+	    if (m_gamemode != 2)
+	    {
+			if (nodeone != 0)
+	       {
+	     		batchnode->removeChild(nodeone, true);
+		    	nodeone = 0;
+	       }
+	       if (nodetwo != 0)
+	       {
+			   batchnode->removeChild(nodetwo, true);
+			   nodetwo = 0;
+	       }
+	       if (nodethree != 0)
+	       {
+			   batchnode->removeChild(nodethree, true);
+			   nodethree = 0;
+        	}
+
+	    }
+
 		metriclogic->addnewNode(oldactivenode);
-		metriclogic->dismissLine();
+		isToolGet  = metriclogic->dismissLine();
 		dismissLineShow();
+		if (isToolGet)
+		{
+		    tooldismissAnimate();
+		}
 		if (metriclogic->isGameover())
 		{
 		    gameOverShow();
@@ -846,6 +918,106 @@ void HelloWorld::dismissLineShow()
 		metriclogic->memsetdismisscount();
 	}
 	
+}
+void HelloWorld::createTool()
+{
+	tooltypeno = ((int)(CCRANDOM_0_1() * 100))%7;
+
+	char *toolname[] = {"toolscoreX2.png", "toolscoreX3.png", "toolscoreX4.png", "toolscoreX5.png", "toolspeeddown.png","toolspeedup.png","toolbombon.png","toolbomboff.png"};
+	
+	toolposx = ((int)(CCRANDOM_0_1() * 100))%10;
+	toolposy = metriclogic->getPosy(toolposx);
+	metriclogic->setToolAttr(toolposx, toolposy);
+
+     ptoolNode = CCSprite::create(toolname[tooltypeno]);
+	 ptoolNode->setPosition(ccp(XLogictoPhysic[toolposx],YLogictoPhysic[toolposy]));
+	 ptoolNode->setScale(ScaleFactor);
+	 this->addChild(ptoolNode);
+}
+void HelloWorld::destroryTool()
+{
+    metriclogic->removeToolAttr(toolposx, toolposy);
+	this->removeChild(ptoolNode);
+	ptoolNode = 0;
+}
+void HelloWorld::showTool()
+{
+    CCActionInterval * blink = CCBlink::create(1.0f,1);
+	if (ptoolNode != 0)
+	{
+	    ptoolNode->runAction(blink);
+	}
+}
+void HelloWorld::tooldismissAnimate()
+{
+	CCActionInterval * move = CCMoveTo::create(1.0f,ccp(290, 610));
+	ptoolNode->setScale(0.7f);
+	ptoolNode->runAction(move);
+	gettoolTime = 0;
+	int templevel;
+    switch (tooltypeno)
+	{
+	case 0://X2
+		metriclogic->setScoreTimes(2);
+		break;
+	case 1://X3
+		metriclogic->setScoreTimes(3);
+		break;
+	case 2://X4
+		metriclogic->setScoreTimes(4);
+		break;
+	case 3://X5
+		metriclogic->setScoreTimes(5);
+		break;
+	case 4://down
+		templevel = metriclogic->getLevel();
+		templevel = templevel - 2;
+		if (templevel < 0)
+		{
+			templevel = 0;
+		}
+        this->schedule(schedule_selector(HelloWorld::updateGame), leveltotime[templevel]);
+		break;
+	case 5://up
+		templevel = metriclogic->getLevel();
+		templevel = templevel + 2;
+		if (templevel > 14)
+		{
+			templevel = 14;
+		}
+        this->schedule(schedule_selector(HelloWorld::updateGame), leveltotime[templevel]);
+
+		break;
+	case 6://bomb
+		break;
+
+	}
+}
+void HelloWorld::removeToolAnimate()
+{
+	CCActionInterval * blink = CCBlink::create(1.0f,3);
+	ptoolNode->runAction(blink);
+	this->removeChild(ptoolNode);
+
+	switch (tooltypeno)
+	{
+	case 0://X2
+	case 1://X3
+	case 2://X4
+	case 3://X5
+		metriclogic->setScoreTimes(1);
+		break;
+	case 4://down
+	case 5://up
+		level = metriclogic->getLevel();
+        this->schedule(schedule_selector(HelloWorld::updateGame), leveltotime[level]);
+		break;
+	case 6://bomb
+		break;
+
+	}
+
+
 }
 void HelloWorld::gameOverShow()
 {

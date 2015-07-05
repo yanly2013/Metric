@@ -39,12 +39,12 @@ void ActiveNode::moveDown()
 }
 void ActiveNode::loopNumber()
 {
-	T_MetricNode temp;
-	temp = m_activeNode[3];
-	m_activeNode[3] = m_activeNode[2];
-	m_activeNode[2] = m_activeNode[1];
-	m_activeNode[1] = m_activeNode[0];
-	m_activeNode[0] = temp;
+	unsigned short temp;
+	temp = m_activeNode[3].number;
+	m_activeNode[3].number = m_activeNode[2].number;
+	m_activeNode[2].number = m_activeNode[1].number;
+	m_activeNode[1].number = m_activeNode[0].number;
+	m_activeNode[0].number = temp;
 }
 
 T_MetricNode* ActiveNode::getActiveNode()

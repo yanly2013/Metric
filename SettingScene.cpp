@@ -43,6 +43,7 @@ bool Setting::init()
 	isMusic = SaveData::getInstant()->IsMusic();
 	isSound = SaveData::getInstant()->IsSound();
 	isVibrate = SaveData::getInstant()->IsVibrate();
+	isTool =  SaveData::getInstant()->IsTool();
 	
     CCMenuItemImage *pmusiconItem = CCMenuItemImage::create(  
                                   "musicon.png", //png.jpg等图片格式都是可以的  
@@ -97,10 +98,30 @@ bool Setting::init()
 
     pvibratetoggle->setTag(3);
 	pvibratetoggle->setPosition(ccp(0,0));
-	CCMenu* pSettingMenu = CCMenu::create(pmusictoggle, psoundtoggle, pvibratetoggle, NULL);
+
+    CCMenuItemImage *ptoolonItem = CCMenuItemImage::create(  
+                                  "toolon.png", //png.jpg等图片格式都是可以的  
+                                  "toolon.png");  
+    CCMenuItemImage *ptooloffItem = CCMenuItemImage::create(  
+                                  "tooloff.png", //png.jpg等图片格式都是可以的  
+                                  "tooloff.png"); 
+    CCMenuItemToggle *ptooltoggle = NULL;
+	if (isTool)
+	{
+        ptooltoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),ptoolonItem, ptooloffItem, NULL);
+    }
+	else
+	{
+        ptooltoggle = CCMenuItemToggle::createWithTarget(this, menu_selector(Setting::menuSettingCallback),ptooloffItem, ptoolonItem, NULL);
+	}
+	ptooltoggle->setTag(4);
+	ptooltoggle->setPosition(ccp(0,-200));
+
+	CCMenu* pSettingMenu = CCMenu::create(pmusictoggle, psoundtoggle, pvibratetoggle, ptooltoggle, NULL);
 	pSettingMenu->setPosition(ccp(100,100));
 	pSettingMenu->setScale(ScaleFactor);
 	this->addChild(pSettingMenu, 1);
+
 
 	
     CCMenuItemImage *pokItem = CCMenuItemImage::create(  
@@ -150,12 +171,15 @@ void Setting::menuSettingCallback(CCObject* pSender)
 	case 3:
         isVibrate = !isVibrate;
 		break;
+	case 4:
+		isTool = !isTool;
+		break;
 	}
 }
 
 void  Setting::menuOKCallback(CCObject* pSender)
 {
-    SaveData::getInstant()->saveSetting(isMusic, isSound, isVibrate);
+    SaveData::getInstant()->saveSetting(isMusic, isSound, isVibrate, isTool);
 
     CCScene *pScene = Start::scene();
 

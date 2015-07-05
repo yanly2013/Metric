@@ -316,15 +316,19 @@ void SaveData::readSetting()
 	isMusic = CCUserDefault::sharedUserDefault()->getBoolForKey("music");
 	isSound = CCUserDefault::sharedUserDefault()->getBoolForKey("sound");	
 	isVibrate = CCUserDefault::sharedUserDefault()->getBoolForKey("vibrate");
+	isTool = CCUserDefault::sharedUserDefault()->getBoolForKey("tool");
 }
-void SaveData::saveSetting(bool music, bool sound, bool vibrate)
+void SaveData::saveSetting(bool music, bool sound, bool vibrate, bool tool)
 {
     isMusic = music;
 	isSound = sound;
 	isVibrate = vibrate;
+	isTool = tool;
     CCUserDefault::sharedUserDefault()->setBoolForKey("music", music);
     CCUserDefault::sharedUserDefault()->setBoolForKey("sound", sound);
     CCUserDefault::sharedUserDefault()->setBoolForKey("vibrate", vibrate);
+    CCUserDefault::sharedUserDefault()->setBoolForKey("tool", tool);
+
 	CCUserDefault::sharedUserDefault()->flush();//
 }
 bool SaveData::IsMusic()
@@ -338,4 +342,8 @@ bool SaveData::IsSound()
 bool SaveData::IsVibrate()
 {
     return isVibrate;
+}
+bool SaveData::IsTool()
+{
+	return isTool;
 }

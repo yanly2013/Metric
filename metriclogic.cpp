@@ -7,6 +7,7 @@ void MetricLogic::init()
     m_level = 1;
 	m_score = 0;
     m_line = 0;
+	scoreTimes = 1;
 	
 	memset(&m_metricNode, 0xff, sizeof(m_metricNode));
 	m_metricNode[0][0].X = 0;
@@ -68,7 +69,7 @@ void MetricLogic::init()
 	m_metricNode[1][3].color = PURPLE;
 	m_metricNode[1][4].X = 4;
 	m_metricNode[1][4].Y = 1;
-	m_metricNode[1][4].number = 3;
+	m_metricNode[1][4].number = 20;
 	m_metricNode[1][4].color = PURPLE;
 	m_metricNode[1][5].X = 5;
 	m_metricNode[1][5].Y = 1;
@@ -166,10 +167,12 @@ void MetricLogic::memsetdismisscount()
 		dismisscount[i]=100;
 	}
 }
-void MetricLogic::dismissLine()
+bool MetricLogic::dismissLine()
 {
 	int linecount = 0;
 	int dismissnum = 0;
+	bool toolvalid = false;
+	bool tooldismiss = false;
 
 	int templine = 0;
 	T_MetricNode tempnode[24][10];
@@ -181,19 +184,28 @@ void MetricLogic::dismissLine()
     for (int i = 0; i<23; i++)
 	{
 		linecount = 0;
+		toolvalid = false;
 		for (int j = 0; j<10; j++)
 		{
 			if (m_metricNode[i][j].number < 10)
 			{
 				linecount++;
+				if (m_metricNode[i][j].tools == 1)
+				{
+					toolvalid = true;
+				}
 			}
 		}
 		if (linecount == 10)
 		{
+			if (toolvalid)
+			{
+			    tooldismiss = true;
+			}
 			dismisscount[dismissnum]=i;
 			dismissnum++;
 			m_line++;
-					}
+		}
 		else
 		{
 			memcpy(&tempnode[templine], &m_metricNode[i], sizeof(T_MetricNode)*10);
@@ -240,7 +252,7 @@ void MetricLogic::dismissLine()
 		//calcdismissScore(dismissnum);
 		
 	}
-		
+	return tooldismiss;	
 }
 
 void MetricLogic::calcdismissScore(int dismisslinenum)
@@ -258,7 +270,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
       for (int j = 0; j< 10; j++)
       {
           // 正常积分值
-		  m_score += m_metricNode[line][j].number;
+		  m_score += (m_metricNode[line][j].number * scoreTimes);
           // 数字连续递增积分，连续个数*number累计值
 		  if ((j > 0) && (m_metricNode[line][j-1].number+1 == m_metricNode[line][j].number))
 		  {
@@ -270,7 +282,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
 		      if (continueincnum >= 4)
 		      {
 		          cotinueincscore += m_metricNode[line][j-continueincnum].number;
-		          m_score += continueincnum* cotinueincscore;
+		          m_score += (continueincnum* cotinueincscore*scoreTimes);
 		      }
 		      continueincnum = 1;
 			  cotinueincscore = 0;
@@ -286,7 +298,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
 		      if (continuedecnum >= 4)
 		      {
 		          cotinuedecscore += m_metricNode[line][j-continuedecnum].number;
-		          m_score += continuedecnum* cotinuedecscore;
+		          m_score += (continuedecnum* cotinuedecscore*scoreTimes);
 		      }
 		      continuedecnum = 1;
 			  cotinuedecscore = 0;
@@ -302,7 +314,7 @@ void MetricLogic::calcdismissScore(int dismisslinenum)
 		      if (samenum >= 4)
 		      {
 		          samescore += m_metricNode[line][j-samenum].number;
-		          m_score += samenum* samescore;
+		          m_score += (samenum* samescore*scoreTimes);
 		      }
 		      samenum = 1;
 			  samescore = 0;
@@ -390,4 +402,31 @@ void MetricLogic::addNewNodefromup(int nodeonex, int nondtwox, int nodethreex,  
     m_metricNode[m_maxposition[nodethreex]][nodethreex].color = color;	   
 	m_metricNode[m_maxposition[nodethreex]][nodethreex].tools = 20;
 	m_maxposition[nodethreex] +=1;
+}
+
+int  MetricLogic::getPosy(int posx)
+{
+	int randposy = 0;
+
+	for (int i = m_maxposition[posx]; i >= 0 ; i--)
+	{
+		if (m_metricNode[i][posx].number < 10)
+		{
+			return i;
+		}
+	}
+	return randposy;
+}
+void MetricLogic::setToolAttr(int toolposx, int toolposy)
+{
+	m_metricNode[toolposy][toolposx].tools = 1;
+}
+void MetricLogic::removeToolAttr(int toolposx, int toolposy)
+{
+	m_metricNode[toolposy][toolposx].tools = 0;
+
+}
+void MetricLogic::setScoreTimes(int times)
+{
+	scoreTimes = times;
 }

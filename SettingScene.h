@@ -26,6 +26,7 @@ private:
     bool isMusic;
 	bool isSound;
 	bool isVibrate;
+	bool isTool;
 
 };
 
