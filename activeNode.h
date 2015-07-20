@@ -30,12 +30,15 @@ public:
 	virtual T_MetricNode* getActiveNode();
 	virtual unsigned char getAnumber();
 
+	void setLoopTime();
+	unsigned int getLoopTime();
 
 
 protected:
     NodeType m_activeNodeType;
     T_MetricNode m_activeNode[4];
 	unsigned char rotatenum;
+	unsigned int looptime;
 };
 
 

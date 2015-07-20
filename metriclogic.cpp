@@ -341,11 +341,6 @@ unsigned int* MetricLogic::getdismissline()
  
 void MetricLogic::addNewNodefrombottom(int randnum)
 {
-   if (randnum > 8)
-   {
-	   return;
-   }
-
    for (int i = 22; i>= 0; i--)
    {
         memcpy(&m_metricNode[i+1], &m_metricNode[i], sizeof(T_MetricNode)*10);

@@ -29,6 +29,7 @@ void TwoTwoRightNode::initnext(NodeColor color)
 
 void TwoTwoRightNode::init(NodeColor color)
 {
+    looptime = 0;
 	m_activeNode[0].X = 4;
 	m_activeNode[0].Y = 22;
 	m_activeNode[0].number = getAnumber();

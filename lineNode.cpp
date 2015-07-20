@@ -29,6 +29,7 @@ void LineNode::initnext(NodeColor color)
 
 void LineNode::init(NodeColor color)
 {
+	looptime = 0;
 	m_activeNode[0].X = 3;
 	m_activeNode[0].Y = 23;
 	m_activeNode[0].number = getAnumber();

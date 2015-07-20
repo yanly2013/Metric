@@ -34,6 +34,7 @@ private:
     void updateCrazymode(float f);
 	void updateTool(float f);
     bool checkConflid();
+    void setMetricPosbyOrder();
 	NodeType createNodeType();
 	NodeColor createNodeColor();
 
@@ -47,6 +48,8 @@ private:
 
 	void dismissLineShow();
 	void gameOverShow();
+
+
 
 	void addNewNodefrombottom();
     void addNewNodefromup();
@@ -112,6 +115,7 @@ private:
 	int toolposy;
 	int tooltypeno;
 	int gettoolTime;
+
 	bool isToolGet;
 	//cocos2d::CCLabelTTF *labelmaxpos;
     //cocos2d::CCLabelTTF *labelconflidpos;
